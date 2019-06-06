@@ -1,9 +1,11 @@
 const amqp = require('amqplib/callback_api')
 const scheduleService = require('./schedule-service')
+const config = require('../config')
 
 module.exports = {
   receiveSchedule: function () {
-    amqp.connect('amqp://localhost', function (err, conn) {
+    const messageQueue = config.messageQueue
+    amqp.connect(messageQueue, function (err, conn) {
       if (err) {
         console.log(err)
       }
