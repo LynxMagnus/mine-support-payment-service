@@ -1,0 +1,27 @@
+environment: development
+containers:
+  service:
+    name: mine-support-payment-service
+    port: 3004
+    registry:
+    image: mine-support-payment-service
+    tag: latest
+    imagePullPolicy: IfNotPresent
+    requestMemory: 30Mi
+    requestCpu: 10m
+    limitMemory: 60Mi
+    limitCpu: 40m
+    runAsNonRoot: true
+    runAsUser: 1000
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    restartPolicy: Always   
+    messageQueue: amqp://mine-support-message-service
+database:
+  name: mine-support-postgres-payments
+  externalName: host.docker.internal
+  port: 5432   
+replicas: 2
+minReadySeconds: 10
+maxSurge: 1
+maxUnavailable: 1
