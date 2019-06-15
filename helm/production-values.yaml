@@ -2,4 +2,5 @@ environment: production
 containers:
   service:
     registry: 'minesupport.azurecr.io'
+    imagePullPolicy: Always
 
