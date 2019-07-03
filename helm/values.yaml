@@ -1,4 +1,6 @@
 environment: development
+postgresUsername: postgres@mine-support2
+postgresPassword: changeme
 containers:
   service:
     name: mine-support-payment-service
@@ -15,12 +17,12 @@ containers:
     runAsUser: 1000
     readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false
-    restartPolicy: Always   
+    restartPolicy: Always
     messageQueue: amqp://mine-support-message-service
 database:
   name: mine-support-postgres-payments
   externalName: host.docker.internal
-  port: 5432   
+  port: 5432
 replicas: 1
 minReadySeconds: 10
 maxSurge: 1
