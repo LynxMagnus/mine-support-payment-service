@@ -1,6 +1,6 @@
 version: '3'
 services:
-  mine-support-claim-service:
+  mine-support-payment-service:
     build: .
     image: mine-support-payment-service
     container_name: mine-support-payment-service
