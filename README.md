@@ -10,7 +10,12 @@ Digital service mock to claim public money in the event property subsides into m
 |PORT|Port number|no|3004|||
 |POSTGRES_USERNAME|Postgres username|yes||||
 |POSTGRES_PASSWORD|Postgres password|yes||||
-|MINE_SUPPORT_MESSAGE_QUEUE|Message queue url|no|amqp://localhost|||
+|MINE_SUPPORT_MESSAGE_QUEUE_HOST||||||
+|MINE_SUPPORT_MESSAGE_QUEUE|Message queue url|no|mine-support-artemis|||
+|MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT|Message transport|no|tcp|||
+|MINE_SUPPORT_MESSAGE_QUEUE_USER||||||
+|MINE_SUPPORT_MESSAGE_QUEUE_PASSWORD||||||
+|MINE_SUPPORT_MESSAGE_QUEUE_PORT|Message queue port|no|5672|||
 
 # Prerequisites
 Node v10+

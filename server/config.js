@@ -4,20 +4,32 @@ const joi = require('joi')
 const schema = {
   port: joi.number().default(3004),
   env: joi.string().valid('development', 'test', 'production').default('development'),
-  messageQueue: joi.string().default('mine-support-artemis'),
-  messageQueueUser: joi.string(),
-  messageQueuePass: joi.string(),
-  messageQueuePort: joi.number().default(5672)
+  messageQueue: {
+    host: joi.string().default('localhost'),
+    valueAddress: joi.string().default('value'),
+    scheduleAddress: joi.string().default('schedule'),
+    transport: joi.string().default('tcp'),
+    user: joi.string(),
+    password: joi.string(),
+    port: joi.number().default(5672),
+    reconnectLimit: joi.number().default(2)
+  }
 }
 
 // Build config
 const config = {
   port: process.env.PORT,
   env: process.env.NODE_ENV,
-  messageQueue: process.env.MINE_SUPPORT_MESSAGE_QUEUE,
-  messageQueueUser: process.env.MINE_SUPPORT_MESSAGE_QUEUE_USER,
-  messageQueuePass: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PASS,
-  messageQueuePort: process.env.MINE_SUPPORR_MESSAGE_QUEUE_PORT
+  messageQueue: {
+    host: process.env.MINE_SUPPORT_MESSAGE_QUEUE_HOST,
+    valueAddress: process.env.MINE_SUPPORT_MESSAGE_QUEUE_VALUE_ADDRESS,
+    scheduleAddress: process.env.MINE_SUPPORT_MESSAGE_QUEUE_SCHEDULE_ADDRESS,
+    transport: process.env.MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT,
+    user: process.env.MINE_SUPPORT_MESSAGE_QUEUE_USER,
+    password: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PASSWORD,
+    port: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PORT,
+    reconnectLimit: process.env.MINE_SUPPORT_MESSAGE_QUEUE_RECONNECT_LIMIT
+  }
 }
 
 // Validate config

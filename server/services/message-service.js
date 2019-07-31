@@ -1,32 +1,78 @@
-const container = require('rhea')
+const rheaPromise = require('rhea-promise')
 const config = require('../config')
 const scheduleService = require('./schedule-service')
 
 module.exports = {
-  receiveSchedule: function () {
-    const scheduleQueue = 'schedule'
-    const valueQueue = 'value'
-    const activeMQOptions = {
-      transport: config.messageQueuePort === 5672 ? 'tcp' : 'ssl',
-      port: config.messageQueuePort,
-      reconnect_limit: 10,
-      host: config.messageQueue,
-      hostname: config.messageQueue,
-      username: config.messageQueueUser,
-      password: config.messageQueuePass
+  receiveSchedule: async function (messageQueueOptions) {
+    const configureMQ = function (options) {
+      return {
+        transport: options.transport,
+        host: options.host,
+        username: options.user,
+        password: options.password,
+        port: options.port,
+        reconnect_limit: options.reconnectLimit
+      }
     }
-    container.on('connection_open', (context) => {
-      context.connection.open_receiver(valueQueue).on('message', (context) => {
-        console.log(`calculation received for payment - ${context.message.body}`)
-        scheduleService.updateValue(JSON.parse(context.message.body))
-        context.delivery.release({ undeliverable_here: true })
-      })
-      context.connection.open_receiver(scheduleQueue).on('message', (context) => {
+
+    const receiveSchedule = async function (connection) {
+      const receiverOptions = {
+        name: 'payment-service-schedule',
+        source: {
+          address: config.messageQueue.scheduleAddress
+        },
+        onSessionError: (context) => {
+          const sessionError = context.session && context.session.error
+          if (sessionError) {
+            console.log(`session error for schedule receiver - ${sessionError}`)
+          }
+        }
+      }
+      const receiver = await connection.createReceiver(receiverOptions)
+      receiver.on(rheaPromise.ReceiverEvents.message, (context) => {
         console.log(`claim received for scheduling - ${context.message.body}`)
         scheduleService.create(JSON.parse(context.message.body))
-        context.delivery.release({ undeliverable_here: true })
       })
-    })
-    container.connect(activeMQOptions)
+      receiver.on(rheaPromise.ReceiverEvents.receiverError, (context) => {
+        const receiverError = context.receiver && context.receiver.error
+        if (receiverError) {
+          console.log(`receipt error for schedule receiver - ${receiverError}`)
+        }
+      })
+    }
+
+    const receiveValue = async function (connection) {
+      const receiverOptions = {
+        name: 'payment-service-value',
+        source: {
+          address: config.messageQueue.valueAddress
+        },
+        onSessionError: (context) => {
+          const sessionError = context.session && context.session.error
+          if (sessionError) {
+            console.log(`session error for value receiver - ${sessionError}`)
+          }
+        }
+      }
+
+      const receiver = await connection.createReceiver(receiverOptions)
+      receiver.on(rheaPromise.ReceiverEvents.message, (context) => {
+        console.log(`calculation received for payment - ${context.message.body}`)
+        scheduleService.updateValue(JSON.parse(context.message.body))
+      })
+      receiver.on(rheaPromise.ReceiverEvents.receiverError, (context) => {
+        const receiverError = context.receiver && context.receiver.error
+        if (receiverError) {
+          console.log(`receipt error for value receiver - ${receiverError}`)
+        }
+      })
+    }
+
+    const connectionOptions = configureMQ(messageQueueOptions || config.messageQueue)
+    const connection = new rheaPromise.Connection(connectionOptions)
+
+    await connection.open()
+    receiveSchedule(connection)
+    receiveValue(connection)
   }
 }
