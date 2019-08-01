@@ -24,7 +24,7 @@ async function createServer () {
     await server.register(require('./plugins/logging'))
   }
 
-  messageService.receiveSchedule()
+  await messageService.setupReceivers()
 
   return server
 }
