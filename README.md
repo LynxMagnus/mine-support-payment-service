@@ -10,17 +10,19 @@ Digital service mock to claim public money in the event property subsides into m
 |PORT|Port number|no|3004|||
 |POSTGRES_USERNAME|Postgres username|yes||||
 |POSTGRES_PASSWORD|Postgres password|yes||||
-|MINE_SUPPORT_MESSAGE_QUEUE_HOST||||||
-|MINE_SUPPORT_MESSAGE_QUEUE|Message queue url|no|mine-support-artemis|||
-|MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT|Message transport|no|tcp|||
-|MINE_SUPPORT_MESSAGE_QUEUE_USER||||||
-|MINE_SUPPORT_MESSAGE_QUEUE_PASSWORD||||||
+|MINE_SUPPORT_MESSAGE_QUEUE_HOST|Host address of message queue|no|localhost|||
+|MINE_SUPPORT_MESSAGE_QUEUE_SCHEDULE_ADDRESS|Message queue name for receipt of claims for scheduling|no|schedule|||
+|MINE_SUPPORT_MESSAGE_QUEUE_VALUE_ADDRESS|Message queue name for receipt of claim calculations|no|value|||
+|MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT|Message queue transport|no|tcp|||
+|MINE_SUPPORT_MESSAGE_QUEUE_USER|Message queue username|yes||||
+|MINE_SUPPORT_MESSAGE_QUEUE_PASSWORD|Message queue password|yes||||
 |MINE_SUPPORT_MESSAGE_QUEUE_PORT|Message queue port|no|5672|||
+|MINE_SUPPORT_MESSAGE_QUEUE_RECONNECT_LIMIT|Reconnection limit for message queue|no|10|||
 
 # Prerequisites
 Node v10+
 PostgreSQL
-Message queue - amqp protocol
+Message queue - AMQP 1.0 protocol
 
 # Running the application
 The application is ready to run:

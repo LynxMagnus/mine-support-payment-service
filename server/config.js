@@ -12,7 +12,7 @@ const schema = {
     user: joi.string(),
     password: joi.string(),
     port: joi.number().default(5672),
-    reconnectLimit: joi.number().default(2)
+    reconnectLimit: joi.number().default(10)
   }
 }
 
