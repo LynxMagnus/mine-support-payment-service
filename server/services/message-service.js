@@ -9,12 +9,12 @@ module.exports = {
 
     try {
       await connection.open()
-      connection.then(function () {
-        Promise.all([setupScheduleReceiver(connection), setupValueReceiver(connection)])
-      })
     } catch (err) {
       console.log(`unable to connect to message queue ${err}`)
     }
+
+    Promise.all([setupReceiver(connection, 'payment-service-schedule', config.messageQueue.scheduleAddress),
+      setupReceiver(connection, 'payment-service-value', config.messageQueue.valueAddress)])
   }
 }
 
@@ -29,55 +29,28 @@ function configureMQ (options) {
   }
 }
 
-async function setupScheduleReceiver (connection) {
+async function setupReceiver (connection, name, address) {
   const receiverOptions = {
-    name: 'payment-service-schedule',
+    name: name,
     source: {
-      address: config.messageQueue.scheduleAddress
+      address: address
     },
     onSessionError: (context) => {
       const sessionError = context.session && context.session.error
       if (sessionError) {
-        console.log(`session error for schedule receiver - ${sessionError}`)
+        console.log(`session error for ${name} receiver - ${sessionError}`)
       }
     }
   }
   const receiver = await connection.createReceiver(receiverOptions)
   receiver.on(rheaPromise.ReceiverEvents.message, (context) => {
-    console.log(`claim received for scheduling - ${context.message.body}`)
+    console.log(`message received - ${name} - ${context.message.body}`)
     scheduleService.create(JSON.parse(context.message.body))
   })
   receiver.on(rheaPromise.ReceiverEvents.receiverError, (context) => {
     const receiverError = context.receiver && context.receiver.error
     if (receiverError) {
-      console.log(`receipt error for schedule receiver - ${receiverError}`)
-    }
-  })
-}
-
-async function setupValueReceiver (connection) {
-  const receiverOptions = {
-    name: 'payment-service-value',
-    source: {
-      address: config.messageQueue.valueAddress
-    },
-    onSessionError: (context) => {
-      const sessionError = context.session && context.session.error
-      if (sessionError) {
-        console.log(`session error for value receiver - ${sessionError}`)
-      }
-    }
-  }
-
-  const receiver = await connection.createReceiver(receiverOptions)
-  receiver.on(rheaPromise.ReceiverEvents.message, (context) => {
-    console.log(`calculation received for payment - ${context.message.body}`)
-    scheduleService.updateValue(JSON.parse(context.message.body))
-  })
-  receiver.on(rheaPromise.ReceiverEvents.receiverError, (context) => {
-    const receiverError = context.receiver && context.receiver.error
-    if (receiverError) {
-      console.log(`receipt error for value receiver - ${receiverError}`)
+      console.log(`receipt error for ${name} receiver - ${receiverError}`)
     }
   })
 }
