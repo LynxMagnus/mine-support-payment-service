@@ -8,6 +8,7 @@ module.exports = {
     const connection = new rheaPromise.Connection(connectionOptions)
 
     try {
+      console.log('opening connection')
       await connection.open()
     } catch (err) {
       console.log(`unable to connect to message queue ${err}`)
@@ -17,6 +18,12 @@ module.exports = {
       setupReceiver(connection, 'payment-service-schedule', config.messageQueue.scheduleAddress),
       setupReceiver(connection, 'payment-service-value', config.messageQueue.valueAddress)
     ])
+
+    process.on('SIGTERM', async function () {
+      console.log('closing connection')
+      await connection.close()
+      process.exit(0)
+    })
   }
 }
 
