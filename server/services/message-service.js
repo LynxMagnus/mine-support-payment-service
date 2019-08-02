@@ -13,8 +13,10 @@ module.exports = {
       console.log(`unable to connect to message queue ${err}`)
     }
 
-    Promise.all([setupReceiver(connection, 'payment-service-schedule', config.messageQueue.scheduleAddress),
-      setupReceiver(connection, 'payment-service-value', config.messageQueue.valueAddress)])
+    Promise.all([
+      setupReceiver(connection, 'payment-service-schedule', config.messageQueue.scheduleAddress),
+      setupReceiver(connection, 'payment-service-value', config.messageQueue.valueAddress)
+    ])
   }
 }
 
@@ -33,7 +35,7 @@ async function setupReceiver (connection, name, address) {
   const receiverOptions = {
     name: name,
     source: {
-      address: address
+      address
     },
     onSessionError: (context) => {
       const sessionError = context.session && context.session.error
