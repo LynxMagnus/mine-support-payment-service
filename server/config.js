@@ -21,14 +21,14 @@ const config = {
   port: process.env.PORT,
   env: process.env.NODE_ENV,
   messageQueue: {
-    host: process.env.MINE_SUPPORT_MESSAGE_QUEUE_HOST,
+    host: process.env.MESSAGE_QUEUE_HOST,
     valueAddress: process.env.MINE_SUPPORT_MESSAGE_QUEUE_VALUE_ADDRESS,
     scheduleAddress: process.env.MINE_SUPPORT_MESSAGE_QUEUE_SCHEDULE_ADDRESS,
-    transport: process.env.MINE_SUPPORT_MESSAGE_QUEUE_TRANSPORT,
-    user: process.env.MINE_SUPPORT_MESSAGE_QUEUE_USER,
-    password: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PASSWORD,
-    port: process.env.MINE_SUPPORT_MESSAGE_QUEUE_PORT,
-    reconnectLimit: process.env.MINE_SUPPORT_MESSAGE_QUEUE_RECONNECT_LIMIT
+    transport: process.env.MESSAGE_QUEUE_TRANSPORT,
+    user: process.env.MESSAGE_QUEUE_USER,
+    password: process.env.MESSAGE_QUEUE_PASSWORD,
+    port: process.env.MESSAGE_QUEUE_PORT,
+    reconnectLimit: process.env.MESSAGE_QUEUE_RECONNECT_LIMIT
   }
 }
 

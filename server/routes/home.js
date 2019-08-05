@@ -4,7 +4,7 @@ module.exports = {
   options: {
     handler: (request, h) => {
       return {
-        hello: 'world'
+        message: 'mine support payment service'
       }
     }
   }
