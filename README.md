@@ -10,14 +10,16 @@ Digital service mock to claim public money in the event property subsides into m
 |PORT|Port number|no|3004|||
 |POSTGRES_USERNAME|Postgres username|yes||||
 |POSTGRES_PASSWORD|Postgres password|yes||||
-|MINE_SUPPORT_MESSAGE_QUEUE_SCHEDULE_ADDRESS|Message queue name for receipt of claims for scheduling|no|schedule|||
-|MINE_SUPPORT_MESSAGE_QUEUE_VALUE_ADDRESS|Message queue name for receipt of claim calculations|no|value|||
 |MESSAGE_QUEUE_HOST|Host address of message queue|no|localhost|||
-|MESSAGE_QUEUE_TRANSPORT|Message queue transport|no|tcp|||
-|MESSAGE_QUEUE_USER|Message queue username|yes||||
-|MESSAGE_QUEUE_PASSWORD|Message queue password|yes||||
 |MESSAGE_QUEUE_PORT|Message queue port|no|5672|||
 |MESSAGE_QUEUE_RECONNECT_LIMIT|Reconnection limit for message queue|no|10|||
+|MESSAGE_QUEUE_TRANSPORT|Message queue transport|no|tcp|||
+|SCHEDULE_QUEUE_ADDRESS|Message queue name for receipt of claims for scheduling|no|schedule|||
+|SCHEDULE_QUEUE_USER|Message queue username|yes||||
+|SCHEDULE_QUEUE_PASSWORD|Message queue password|yes||||
+|VALUE_QUEUE_ADDRESS|Message queue name for receipt of claim calculations|no|value|||
+|VALUE_QUEUE_USER|Message queue username|yes||||
+|VALUE_QUEUE_PASSWORD|Message queue password|yes||||
 
 # Prerequisites
 Node v10+

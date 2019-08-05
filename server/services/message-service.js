@@ -3,38 +3,55 @@ const config = require('../config')
 const scheduleService = require('./schedule-service')
 
 module.exports = {
-  setupReceivers: async function (messageQueueOptions) {
-    const connectionOptions = configureMQ(messageQueueOptions || config.messageQueue)
-    const connection = new rheaPromise.Connection(connectionOptions)
+  setupReceivers: async function () {
+    const scheduleConnection = await setupConnection(config.messageQueue, config.scheduleQueue)
+    const valueConnection = await setupConnection(config.messageQueue, config.valueQueue)
 
-    try {
-      console.log('opening connection')
-      await connection.open()
-    } catch (err) {
-      console.log(`unable to connect to message queue ${err}`)
-    }
-
-    Promise.all([
-      setupReceiver(connection, 'payment-service-schedule', config.messageQueue.scheduleAddress),
-      setupReceiver(connection, 'payment-service-value', config.messageQueue.valueAddress)
+    console.log('opening connections')
+    const openConnections = await Promise.all([
+      scheduleConnection.open(),
+      valueConnection.open()
     ])
+      .catch((err) => console.log(`unable to connect to message queue - ${err}`))
+
+    openConnections.map(() => console.log(`connection open`))
+
+    const receivers = await Promise.all([
+      setupReceiver(scheduleConnection, 'payment-service-schedule', config.scheduleQueue.address),
+      setupReceiver(valueConnection, 'payment-service-value', config.valueQueue.address)
+    ])
+      .catch((err) => console.log(err))
+
+    receivers.map(() => console.log(`receiver ready`))
 
     process.on('SIGTERM', async function () {
       console.log('closing connection')
-      await connection.close()
+      const closeConnections = await Promise.all([
+        scheduleConnection.close(),
+        valueConnection.close()
+      ])
+        .catch((err) => console.log(err))
+
+      closeConnections.map(() => console.log(`connection closed`))
       process.exit(0)
     })
   }
 }
 
-function configureMQ (options) {
+async function setupConnection (hostConfig, queueConfig) {
+  const connectionOptions = configureMQ(hostConfig, queueConfig)
+  const connection = new rheaPromise.Connection(connectionOptions)
+  return connection
+}
+
+function configureMQ (hostConfig, queueConfig) {
   return {
-    transport: options.transport,
-    host: options.host,
-    username: options.user,
-    password: options.password,
-    port: options.port,
-    reconnect_limit: options.reconnectLimit
+    host: hostConfig.host,
+    port: hostConfig.port,
+    transport: hostConfig.transport,
+    reconnect_limit: hostConfig.reconnectLimit,
+    username: queueConfig.user,
+    password: queueConfig.password
   }
 }
 

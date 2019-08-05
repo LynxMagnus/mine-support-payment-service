@@ -6,13 +6,19 @@ const schema = {
   env: joi.string().valid('development', 'test', 'production').default('development'),
   messageQueue: {
     host: joi.string().default('localhost'),
-    valueAddress: joi.string().default('value'),
-    scheduleAddress: joi.string().default('schedule'),
-    transport: joi.string().default('tcp'),
-    user: joi.string(),
-    password: joi.string(),
     port: joi.number().default(5672),
-    reconnectLimit: joi.number().default(10)
+    reconnectLimit: joi.number().default(10),
+    transport: joi.string().default('tcp')
+  },
+  scheduleQueue: {
+    address: joi.string().default('schedule'),
+    user: joi.string(),
+    password: joi.string()
+  },
+  valueQueue: {
+    address: joi.string().default('value'),
+    user: joi.string(),
+    password: joi.string()
   }
 }
 
@@ -22,13 +28,19 @@ const config = {
   env: process.env.NODE_ENV,
   messageQueue: {
     host: process.env.MESSAGE_QUEUE_HOST,
-    valueAddress: process.env.MINE_SUPPORT_MESSAGE_QUEUE_VALUE_ADDRESS,
-    scheduleAddress: process.env.MINE_SUPPORT_MESSAGE_QUEUE_SCHEDULE_ADDRESS,
-    transport: process.env.MESSAGE_QUEUE_TRANSPORT,
-    user: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
     port: process.env.MESSAGE_QUEUE_PORT,
-    reconnectLimit: process.env.MESSAGE_QUEUE_RECONNECT_LIMIT
+    reconnectLimit: process.env.MESSAGE_QUEUE_RECONNECT_LIMIT,
+    transport: process.env.MESSAGE_QUEUE_TRANSPORT
+  },
+  scheduleQueue: {
+    address: process.env.SCHEDULE_QUEUE_ADDRESS,
+    user: process.env.SCHEDULE_QUEUE_USER,
+    password: process.env.SCHEDULE_QUEUE_PASSWORD
+  },
+  valueQueue: {
+    address: process.env.VALUE_QUEUE_ADDRESS,
+    user: process.env.VALUE_QUEUE_USER,
+    password: process.env.VALUE_QUEUE_PASSWORD
   }
 }
 
