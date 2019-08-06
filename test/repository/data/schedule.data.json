@@ -1,0 +1,17 @@
+{
+  "schedules": 
+  [
+    {
+      "scheduleId" : 1,
+      "claimId": "MINE001"
+    },
+    {
+      "scheduleId" : 2,
+      "claimId": "MINE001"
+    },
+    {
+      "scheduleId" : 3,
+      "claimId": "MINE002"
+    }
+  ]
+}
