@@ -24,7 +24,7 @@ async function createServer () {
     await server.register(require('./plugins/logging'))
   }
 
-  await messageService.setupReceivers()
+  await messageService.setupConnections()
 
   return server
 }
