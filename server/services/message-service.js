@@ -8,31 +8,30 @@ module.exports = {
     const valueConnection = await setupConnection(config.messageQueue, config.valueQueue)
 
     console.log('opening connections')
-    const openConnections = await Promise.all([
-      scheduleConnection.open(),
-      valueConnection.open()
-    ])
-      .catch((err) => console.log(`unable to connect to message queue - ${err}`))
+    try {
+      await scheduleConnection.open()
+      await valueConnection.open()
+    } catch (err) {
+      console.log(`unable to connect to message queue - ${err}`)
+    }
 
-    openConnections.map(() => console.log(`connection open`))
-
-    const receivers = await Promise.all([
-      setupReceiver(scheduleConnection, 'payment-service-schedule', config.scheduleQueue.address),
-      setupReceiver(valueConnection, 'payment-service-value', config.valueQueue.address)
-    ])
-      .catch((err) => console.log(err))
-
-    receivers.map(() => console.log(`receiver ready`))
+    try {
+      await setupReceiver(scheduleConnection, 'payment-service-schedule', config.scheduleQueue.address)
+      await setupReceiver(valueConnection, 'payment-service-value', config.valueQueue.address)
+    } catch (err) {
+      console.log(`unable to setup receiver - ${err}`)
+    }
 
     process.on('SIGTERM', async function () {
       console.log('closing connection')
-      const closeConnections = await Promise.all([
-        scheduleConnection.close(),
+      
+      try {
+        scheduleConnection.close()
         valueConnection.close()
-      ])
-        .catch((err) => console.log(err))
+      } catch (err) {
+        console.log(`unable to close connection - ${err}`)
+      }
 
-      closeConnections.map(() => console.log(`connection closed`))
       process.exit(0)
     })
   }
