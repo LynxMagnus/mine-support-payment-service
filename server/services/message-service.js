@@ -5,33 +5,31 @@ const scheduleService = require('./schedule-service')
 module.exports = {
   setupReceivers: async function () {
     const scheduleConnection = await setupConnection(config.messageQueue, config.scheduleQueue)
-    const valueConnection = await setupConnection(config.messageQueue, config.valueQueue)
+    const paymentConnection = await setupConnection(config.messageQueue, config.paymentQueue)
 
     console.log('opening connections')
     try {
       await scheduleConnection.open()
-      await valueConnection.open()
+      await paymentConnection.open()
     } catch (err) {
       console.log(`unable to connect to message queue - ${err}`)
     }
 
     try {
       await setupReceiver(scheduleConnection, 'payment-service-schedule', config.scheduleQueue.address)
-      await setupReceiver(valueConnection, 'payment-service-value', config.valueQueue.address)
+      await setupReceiver(paymentConnection, 'payment-service-payment', config.valueQueue.address)
     } catch (err) {
       console.log(`unable to setup receiver - ${err}`)
     }
 
     process.on('SIGTERM', async function () {
       console.log('closing connection')
-      
       try {
         scheduleConnection.close()
-        valueConnection.close()
+        paymentConnection.close()
       } catch (err) {
         console.log(`unable to close connection - ${err}`)
       }
-
       process.exit(0)
     })
   }
@@ -70,6 +68,7 @@ async function setupReceiver (connection, name, address) {
   const receiver = await connection.createReceiver(receiverOptions)
   receiver.on(rheaPromise.ReceiverEvents.message, (context) => {
     console.log(`message received - ${name} - ${context.message.body}`)
+    // TODO handle if message is from payment queue
     scheduleService.create(JSON.parse(context.message.body))
   })
   receiver.on(rheaPromise.ReceiverEvents.receiverError, (context) => {

@@ -15,8 +15,8 @@ const schema = {
     user: joi.string(),
     password: joi.string()
   },
-  valueQueue: {
-    address: joi.string().default('value'),
+  paymentQueue: {
+    address: joi.string().default('payment'),
     user: joi.string(),
     password: joi.string()
   }
@@ -37,10 +37,10 @@ const config = {
     user: process.env.SCHEDULE_QUEUE_USER,
     password: process.env.SCHEDULE_QUEUE_PASSWORD
   },
-  valueQueue: {
-    address: process.env.VALUE_QUEUE_ADDRESS,
-    user: process.env.VALUE_QUEUE_USER,
-    password: process.env.VALUE_QUEUE_PASSWORD
+  paymentQueue: {
+    address: process.env.PAYMENT_QUEUE_ADDRESS,
+    user: process.env.PAYMENT_QUEUE_USER,
+    password: process.env.PAYMENT_QUEUE_PASSWORD
   }
 }
 

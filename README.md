@@ -17,9 +17,9 @@ Digital service mock to claim public money in the event property subsides into m
 |SCHEDULE_QUEUE_ADDRESS|Message queue name for receipt of claims for scheduling|no|schedule|||
 |SCHEDULE_QUEUE_USER|Message queue username|yes||||
 |SCHEDULE_QUEUE_PASSWORD|Message queue password|yes||||
-|VALUE_QUEUE_ADDRESS|Message queue name for receipt of claim calculations|no|value|||
-|VALUE_QUEUE_USER|Message queue username|yes||||
-|VALUE_QUEUE_PASSWORD|Message queue password|yes||||
+|PAYMENT_QUEUE_ADDRESS|Message queue name for receipt of claim calculations|no|payment|||
+|PAYMENT_QUEUE_USER|Message queue username|yes||||
+|PAYMENT_QUEUE_PASSWORD|Message queue password|yes||||
 
 # Prerequisites
 Node v10+
