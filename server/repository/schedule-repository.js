@@ -25,20 +25,5 @@ module.exports = {
       console.log(err)
       throw err
     }
-  },
-  update: async function (schedule) {
-    try {
-      const scheduleRecord = await db.schedule.upsert({
-        scheduleId: schedule.scheduleId,
-        claimId: schedule.claimId,
-        paymentDate: schedule.paymentDate,
-        value: schedule.value
-      })
-
-      return scheduleRecord
-    } catch (err) {
-      console.log(err)
-      throw err
-    }
   }
 }

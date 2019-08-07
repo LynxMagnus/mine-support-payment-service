@@ -7,7 +7,9 @@
     "lint": "standard",
     "unit-test": "jest",
     "test": "npm run lint && npm run unit-test",
-    "migrate": "sequelize db:migrate"
+    "migrate": "sequelize db:migrate",
+    "watch:build": "nodemon --exec npm run build --ext scss --legacy-watch",
+    "watch:unit": "jest --coverage=false --onlyChanged --watch"
   },
   "author": "",
   "license": "ISC",

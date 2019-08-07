@@ -8,8 +8,5 @@ module.exports = {
   },
   create: async function (schedule) {
     return true
-  },
-  update: async function (schedule) {
-    return true
   }
 }
