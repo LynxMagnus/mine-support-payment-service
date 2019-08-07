@@ -1,33 +1,12 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="158" lines-covered="38" line-rate="0.24050000000000002" branches-valid="29" branches-covered="4" branch-rate="0.1379" timestamp="1565170923076" complexity="0" version="0.1">
+<coverage lines-valid="134" lines-covered="48" line-rate="0.3582" branches-valid="19" branches-covered="6" branch-rate="0.31579999999999997" timestamp="1565175506479" complexity="0" version="0.1">
   <sources>
     <source>/c/Users/ddts_220606/Source/Repos/mine-support-payment-service</source>
   </sources>
   <packages>
     <package name="mine-support-payment-service" line-rate="0" branch-rate="1">
       <classes>
-        <class name="index.js" filename="index.js" line-rate="0" branch-rate="1">
-          <methods>
-            <method name="(anonymous_0)" hits="0" signature="()V">
-              <lines>
-                <line number="4" hits="0"/>
-              </lines>
-            </method>
-            <method name="(anonymous_1)" hits="0" signature="()V">
-              <lines>
-                <line number="5" hits="0"/>
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="1" hits="0" branch="false"/>
-            <line number="3" hits="0" branch="false"/>
-            <line number="4" hits="0" branch="false"/>
-            <line number="6" hits="0" branch="false"/>
-            <line number="7" hits="0" branch="false"/>
-          </lines>
-        </class>
         <class name="jest.config.js" filename="jest.config.js" line-rate="0" branch-rate="1">
           <methods>
           </methods>
@@ -80,21 +59,21 @@
         </class>
       </classes>
     </package>
-    <package name="mine-support-payment-service.server.config" line-rate="0" branch-rate="1">
+    <package name="mine-support-payment-service.server.config" line-rate="1" branch-rate="1">
       <classes>
-        <class name="config.js" filename="server/config/config.js" line-rate="0" branch-rate="1">
+        <class name="config.js" filename="server/config/config.js" line-rate="1" branch-rate="1">
           <methods>
           </methods>
           <lines>
-            <line number="1" hits="0" branch="false"/>
-            <line number="20" hits="0" branch="false"/>
+            <line number="1" hits="1" branch="false"/>
+            <line number="20" hits="1" branch="false"/>
           </lines>
         </class>
       </classes>
     </package>
-    <package name="mine-support-payment-service.server.models" line-rate="0" branch-rate="0">
+    <package name="mine-support-payment-service.server.models" line-rate="0.3333" branch-rate="0.11109999999999999">
       <classes>
-        <class name="index.js" filename="server/models/index.js" line-rate="0" branch-rate="0">
+        <class name="index.js" filename="server/models/index.js" line-rate="0.4" branch-rate="0.11109999999999999">
           <methods>
             <method name="(anonymous_0)" hits="0" signature="()V">
               <lines>
@@ -113,14 +92,14 @@
             </method>
           </methods>
           <lines>
-            <line number="3" hits="0" branch="false"/>
-            <line number="4" hits="0" branch="false"/>
-            <line number="5" hits="0" branch="false"/>
-            <line number="6" hits="0" branch="false"/>
-            <line number="7" hits="0" branch="true" condition-coverage="0% (0/2)"/>
-            <line number="8" hits="0" branch="false"/>
-            <line number="9" hits="0" branch="false"/>
-            <line number="12" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="3" hits="1" branch="false"/>
+            <line number="4" hits="1" branch="false"/>
+            <line number="5" hits="1" branch="false"/>
+            <line number="6" hits="1" branch="false"/>
+            <line number="7" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="8" hits="1" branch="false"/>
+            <line number="9" hits="1" branch="false"/>
+            <line number="12" hits="1" branch="true" condition-coverage="0% (0/2)"/>
             <line number="13" hits="0" branch="false"/>
             <line number="15" hits="0" branch="false"/>
             <line number="18" hits="0" branch="false"/>
@@ -135,7 +114,7 @@
             <line number="37" hits="0" branch="false"/>
           </lines>
         </class>
-        <class name="schedule.js" filename="server/models/schedule.js" line-rate="0" branch-rate="1">
+        <class name="payment.js" filename="server/models/payment.js" line-rate="0" branch-rate="1">
           <methods>
             <method name="(anonymous_0)" hits="0" signature="()V">
               <lines>
@@ -144,15 +123,15 @@
             </method>
             <method name="(anonymous_1)" hits="0" signature="()V">
               <lines>
-                <line number="12" hits="0"/>
+                <line number="7" hits="0"/>
               </lines>
             </method>
           </methods>
           <lines>
             <line number="2" hits="0" branch="false"/>
             <line number="3" hits="0" branch="false"/>
-            <line number="12" hits="0" branch="false"/>
-            <line number="15" hits="0" branch="false"/>
+            <line number="7" hits="0" branch="false"/>
+            <line number="10" hits="0" branch="false"/>
           </lines>
         </class>
       </classes>
@@ -186,23 +165,6 @@
             <line number="1" hits="0" branch="false"/>
           </lines>
         </class>
-        <class name="process-error-response.js" filename="server/plugins/process-error-response.js" line-rate="0" branch-rate="0">
-          <methods>
-            <method name="processErrorResponse" hits="0" signature="()V">
-              <lines>
-                <line number="1" hits="0"/>
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="2" hits="0" branch="false"/>
-            <line number="3" hits="0" branch="false"/>
-            <line number="4" hits="0" branch="true" condition-coverage="0% (0/2)"/>
-            <line number="5" hits="0" branch="false"/>
-            <line number="11" hits="0" branch="false"/>
-            <line number="14" hits="0" branch="false"/>
-          </lines>
-        </class>
         <class name="router.js" filename="server/plugins/router.js" line-rate="0" branch-rate="1">
           <methods>
             <method name="(anonymous_0)" hits="0" signature="()V">
@@ -219,8 +181,34 @@
         </class>
       </classes>
     </package>
-    <package name="mine-support-payment-service.server.repository" line-rate="0" branch-rate="1">
+    <package name="mine-support-payment-service.server.repository" line-rate="0.04" branch-rate="1">
       <classes>
+        <class name="payment-repository.js" filename="server/repository/payment-repository.js" line-rate="0.1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="4" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="15" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="1" branch="false"/>
+            <line number="3" hits="0" branch="false"/>
+            <line number="5" hits="0" branch="false"/>
+            <line number="6" hits="0" branch="false"/>
+            <line number="12" hits="0" branch="false"/>
+            <line number="16" hits="0" branch="false"/>
+            <line number="17" hits="0" branch="false"/>
+            <line number="22" hits="0" branch="false"/>
+            <line number="24" hits="0" branch="false"/>
+            <line number="25" hits="0" branch="false"/>
+          </lines>
+        </class>
         <class name="schedule-repository.js" filename="server/repository/schedule-repository.js" line-rate="0" branch-rate="1">
           <methods>
             <method name="(anonymous_0)" hits="0" signature="()V">
@@ -259,123 +247,43 @@
         </class>
       </classes>
     </package>
-    <package name="mine-support-payment-service.server.routes" line-rate="0" branch-rate="1">
+    <package name="mine-support-payment-service.server.services" line-rate="0.5385" branch-rate="1">
       <classes>
-        <class name="home.js" filename="server/routes/home.js" line-rate="0" branch-rate="1">
+        <class name="message-service.js" filename="server/services/message-service.js" line-rate="0.1429" branch-rate="1">
           <methods>
             <method name="(anonymous_0)" hits="0" signature="()V">
               <lines>
-                <line number="5" hits="0"/>
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="1" hits="0" branch="false"/>
-            <line number="6" hits="0" branch="false"/>
-          </lines>
-        </class>
-      </classes>
-    </package>
-    <package name="mine-support-payment-service.server.services" line-rate="0.3973" branch-rate="0.25">
-      <classes>
-        <class name="connection-service.js" filename="server/services/connection-service.js" line-rate="0.0909" branch-rate="0">
-          <methods>
-            <method name="(anonymous_0)" hits="0" signature="()V">
-              <lines>
-                <line number="4" hits="0"/>
-              </lines>
-            </method>
-            <method name="(anonymous_1)" hits="0" signature="()V">
-              <lines>
-                <line number="9" hits="0"/>
-              </lines>
-            </method>
-            <method name="(anonymous_2)" hits="0" signature="()V">
-              <lines>
-                <line number="19" hits="0"/>
-              </lines>
-            </method>
-            <method name="(anonymous_3)" hits="0" signature="()V">
-              <lines>
-                <line number="25" hits="0"/>
-              </lines>
-            </method>
-            <method name="(anonymous_4)" hits="0" signature="()V">
-              <lines>
-                <line number="33" hits="0"/>
-              </lines>
-            </method>
-            <method name="(anonymous_5)" hits="0" signature="()V">
-              <lines>
-                <line number="41" hits="0"/>
-              </lines>
-            </method>
-            <method name="(anonymous_6)" hits="0" signature="()V">
-              <lines>
-                <line number="48" hits="0"/>
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="1" hits="1" branch="false"/>
-            <line number="3" hits="1" branch="false"/>
-            <line number="5" hits="0" branch="false"/>
-            <line number="6" hits="0" branch="false"/>
-            <line number="7" hits="0" branch="false"/>
-            <line number="10" hits="0" branch="false"/>
-            <line number="20" hits="0" branch="false"/>
-            <line number="26" hits="0" branch="true" condition-coverage="0% (0/2)"/>
-            <line number="27" hits="0" branch="true" condition-coverage="0% (0/2)"/>
-            <line number="28" hits="0" branch="false"/>
-            <line number="32" hits="0" branch="false"/>
-            <line number="33" hits="0" branch="false"/>
-            <line number="34" hits="0" branch="true" condition-coverage="0% (0/2)"/>
-            <line number="35" hits="0" branch="true" condition-coverage="0% (0/2)"/>
-            <line number="36" hits="0" branch="false"/>
-            <line number="39" hits="0" branch="false"/>
-            <line number="42" hits="0" branch="false"/>
-            <line number="43" hits="0" branch="false"/>
-            <line number="45" hits="0" branch="false"/>
-            <line number="49" hits="0" branch="false"/>
-            <line number="50" hits="0" branch="false"/>
-            <line number="52" hits="0" branch="false"/>
-          </lines>
-        </class>
-        <class name="message-service.js" filename="server/services/message-service.js" line-rate="0.1852" branch-rate="1">
-          <methods>
-            <method name="(anonymous_0)" hits="0" signature="()V">
-              <lines>
-                <line number="7" hits="0"/>
+                <line number="8" hits="0"/>
               </lines>
             </method>
             <method name="setupScheduleConnection" hits="0" signature="()V">
               <lines>
-                <line number="17" hits="0"/>
+                <line number="18" hits="0"/>
               </lines>
             </method>
             <method name="(anonymous_2)" hits="0" signature="()V">
               <lines>
-                <line number="23" hits="0"/>
+                <line number="24" hits="0"/>
               </lines>
             </method>
             <method name="(anonymous_3)" hits="0" signature="()V">
               <lines>
-                <line number="28" hits="0"/>
+                <line number="29" hits="0"/>
               </lines>
             </method>
             <method name="setupPaymentConnection" hits="0" signature="()V">
               <lines>
-                <line number="34" hits="0"/>
+                <line number="35" hits="0"/>
               </lines>
             </method>
             <method name="(anonymous_5)" hits="0" signature="()V">
               <lines>
-                <line number="41" hits="0"/>
+                <line number="42" hits="0"/>
               </lines>
             </method>
             <method name="(anonymous_6)" hits="0" signature="()V">
               <lines>
-                <line number="46" hits="0"/>
+                <line number="47" hits="0"/>
               </lines>
             </method>
           </methods>
@@ -384,84 +292,86 @@
             <line number="2" hits="1" branch="false"/>
             <line number="3" hits="1" branch="false"/>
             <line number="4" hits="1" branch="false"/>
-            <line number="6" hits="1" branch="false"/>
-            <line number="8" hits="0" branch="false"/>
+            <line number="5" hits="0" branch="false"/>
+            <line number="7" hits="0" branch="false"/>
             <line number="9" hits="0" branch="false"/>
             <line number="10" hits="0" branch="false"/>
-            <line number="12" hits="0" branch="false"/>
-            <line number="18" hits="0" branch="false"/>
+            <line number="11" hits="0" branch="false"/>
+            <line number="13" hits="0" branch="false"/>
             <line number="19" hits="0" branch="false"/>
             <line number="20" hits="0" branch="false"/>
-            <line number="23" hits="0" branch="false"/>
+            <line number="21" hits="0" branch="false"/>
             <line number="24" hits="0" branch="false"/>
             <line number="25" hits="0" branch="false"/>
-            <line number="28" hits="0" branch="false"/>
+            <line number="26" hits="0" branch="false"/>
             <line number="29" hits="0" branch="false"/>
             <line number="30" hits="0" branch="false"/>
-            <line number="35" hits="0" branch="false"/>
+            <line number="31" hits="0" branch="false"/>
             <line number="36" hits="0" branch="false"/>
-            <line number="38" hits="0" branch="false"/>
-            <line number="41" hits="0" branch="false"/>
+            <line number="37" hits="0" branch="false"/>
+            <line number="39" hits="0" branch="false"/>
             <line number="42" hits="0" branch="false"/>
             <line number="43" hits="0" branch="false"/>
-            <line number="46" hits="0" branch="false"/>
+            <line number="44" hits="0" branch="false"/>
             <line number="47" hits="0" branch="false"/>
             <line number="48" hits="0" branch="false"/>
+            <line number="49" hits="0" branch="false"/>
           </lines>
         </class>
-        <class name="schedule-service.js" filename="server/services/schedule-service.js" line-rate="0.9167000000000001" branch-rate="0.75">
+        <class name="payment-service.js" filename="server/services/payment-service.js" line-rate="1" branch-rate="1">
           <methods>
             <method name="(anonymous_0)" hits="2" signature="()V">
               <lines>
-                <line number="5" hits="2"/>
-              </lines>
-            </method>
-            <method name="(anonymous_1)" hits="6" signature="()V">
-              <lines>
-                <line number="13" hits="6"/>
-              </lines>
-            </method>
-            <method name="(anonymous_2)" hits="1" signature="()V">
-              <lines>
-                <line number="20" hits="1"/>
-              </lines>
-            </method>
-            <method name="(anonymous_3)" hits="2" signature="()V">
-              <lines>
-                <line number="26" hits="2"/>
-              </lines>
-            </method>
-            <method name="getPaymentDates" hits="1" signature="()V">
-              <lines>
-                <line number="33" hits="1"/>
+                <line number="4" hits="2"/>
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="1" hits="4" branch="false"/>
-            <line number="2" hits="4" branch="false"/>
-            <line number="4" hits="4" branch="false"/>
-            <line number="6" hits="2" branch="false"/>
-            <line number="7" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="1" hits="3" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+            <line number="6" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="7" hits="1" branch="false"/>
             <line number="8" hits="1" branch="false"/>
+            <line number="10" hits="1" branch="false"/>
+          </lines>
+        </class>
+        <class name="schedule-service.js" filename="server/services/schedule-service.js" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="2" signature="()V">
+              <lines>
+                <line number="6" hits="2"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="6" signature="()V">
+              <lines>
+                <line number="14" hits="6"/>
+              </lines>
+            </method>
+            <method name="getPaymentDates" hits="1" signature="()V">
+              <lines>
+                <line number="23" hits="1"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="3" branch="false"/>
+            <line number="3" hits="3" branch="false"/>
+            <line number="5" hits="3" branch="false"/>
+            <line number="7" hits="2" branch="false"/>
+            <line number="8" hits="2" branch="true" condition-coverage="100% (2/2)"/>
             <line number="9" hits="1" branch="false"/>
-            <line number="12" hits="1" branch="false"/>
+            <line number="10" hits="1" branch="false"/>
             <line number="13" hits="1" branch="false"/>
-            <line number="14" hits="6" branch="false"/>
-            <line number="21" hits="1" branch="false"/>
-            <line number="22" hits="1" branch="true" condition-coverage="50% (1/2)"/>
-            <line number="23" hits="0" branch="false"/>
-            <line number="24" hits="0" branch="false"/>
+            <line number="14" hits="1" branch="false"/>
+            <line number="15" hits="6" branch="false"/>
+            <line number="24" hits="1" branch="false"/>
+            <line number="25" hits="1" branch="false"/>
             <line number="26" hits="1" branch="false"/>
-            <line number="27" hits="2" branch="false"/>
-            <line number="28" hits="2" branch="false"/>
-            <line number="34" hits="1" branch="false"/>
-            <line number="35" hits="1" branch="false"/>
-            <line number="36" hits="1" branch="false"/>
-            <line number="37" hits="6" branch="false"/>
-            <line number="38" hits="6" branch="false"/>
-            <line number="39" hits="6" branch="false"/>
-            <line number="41" hits="1" branch="false"/>
+            <line number="27" hits="6" branch="false"/>
+            <line number="28" hits="6" branch="false"/>
+            <line number="29" hits="6" branch="false"/>
+            <line number="31" hits="1" branch="false"/>
           </lines>
         </class>
       </classes>

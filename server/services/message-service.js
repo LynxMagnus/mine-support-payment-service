@@ -1,6 +1,7 @@
 const rheaPromise = require('rhea-promise')
 const config = require('../config')
 const scheduleService = require('./schedule-service')
+const paymentService = require('./payment-service')
 const connectionService = require('./connection-service')
 
 module.exports = {
@@ -40,7 +41,7 @@ async function setupPaymentConnection () {
 
   paymentReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
     console.log(`message received - payment - ${context.message.body}`)
-    scheduleService.updateValue(JSON.parse(context.message.body))
+    paymentService.create(JSON.parse(context.message.body))
   })
 
   process.on('SIGTERM', async function () {

@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="4" failures="1" time="8.975">
-  <testsuite name="Schedule service tests" errors="0" failures="0" skipped="0" timestamp="2019-08-07T09:41:55" time="1.629" tests="3">
-    <testcase classname="Schedule service tests create creates all payment schedules" name="Schedule service tests create creates all payment schedules" time="0.015">
+<testsuites name="jest tests" tests="5" failures="1" time="13.761">
+  <testsuite name="Schedule service tests" errors="0" failures="0" skipped="0" timestamp="2019-08-07T10:58:14" time="3.039" tests="2">
+    <testcase classname="Schedule service tests create creates all payment schedules" name="Schedule service tests create creates all payment schedules" time="0.02">
     </testcase>
-    <testcase classname="Schedule service tests create does not created schedule if already exists" name="Schedule service tests create does not created schedule if already exists" time="0.045">
-    </testcase>
-    <testcase classname="Schedule service tests updateValue updates all schedules" name="Schedule service tests updateValue updates all schedules" time="0.001">
+    <testcase classname="Schedule service tests create does not created schedule if already exists" name="Schedule service tests create does not created schedule if already exists" time="0.056">
     </testcase>
   </testsuite>
-  <testsuite name="Message service tests" errors="0" failures="1" skipped="0" timestamp="2019-08-07T09:41:55" time="3.135" tests="1">
-    <testcase classname="Message service tests setupReceivers sets up both receivers" name="Message service tests setupReceivers sets up both receivers" time="1.531">
-      <failure>Error: Cannot spy the setupConnection property because it is not a function; undefined given instead
-    at ModuleMockerClass.spyOn (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-mock/build/index.js:841:15)
+  <testsuite name="Payment service tests" errors="0" failures="0" skipped="0" timestamp="2019-08-07T10:58:14" time="5.057" tests="2">
+    <testcase classname="Payment service tests updateValue creates payment" name="Payment service tests updateValue creates payment" time="2.034">
+    </testcase>
+    <testcase classname="Payment service tests updateValue does not create duplicate payment" name="Payment service tests updateValue does not create duplicate payment" time="0.064">
+    </testcase>
+  </testsuite>
+  <testsuite name="Message service tests" errors="0" failures="1" skipped="0" timestamp="2019-08-07T10:58:14" time="6.444" tests="1">
+    <testcase classname="Message service tests setupReceivers sets up both receivers" name="Message service tests setupReceivers sets up both receivers" time="3.409">
+      <failure>TypeError: Cannot read property &apos;use_env_variable&apos; of undefined
+    at Object.use_env_variable (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/server/models/index.js:12:12)
+    at Runtime._execModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:888:13)
+    at Runtime._loadModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:577:12)
+    at Runtime.requireModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:433:10)
+    at Runtime.requireModuleOrMock (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:598:21)
+    at Object.require (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/server/repository/payment-repository.js:1:12)
+    at Runtime._execModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:888:13)
+    at Runtime._loadModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:577:12)
+    at Runtime.requireModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:433:10)
+    at Runtime.requireModuleOrMock (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:598:21)
+    at Object.require (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/server/services/payment-service.js:1:27)
+    at Runtime._execModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:888:13)
+    at Runtime._loadModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:577:12)
+    at Runtime.requireModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:433:10)
+    at Runtime.requireModuleOrMock (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:598:21)
+    at Object.require (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/server/services/message-service.js:4:24)
+    at Runtime._execModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:888:13)
+    at Runtime._loadModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:577:12)
+    at Runtime.requireModule (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:433:10)
+    at Runtime.requireModuleOrMock (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-runtime/build/index.js:598:21)
+    at Object.require (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/test/services/message-service.test.js:7:22)
+    at Object.asyncJestLifecycle (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:53:37)</failure>
+      <failure>Error: Cannot spyOn on a primitive value; undefined given
+    at ModuleMockerClass.spyOn (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-mock/build/index.js:832:13)
     at Object.spyOn (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/test/services/message-service.test.js:15:22)
     at Object.asyncJestTest (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:102:37)
     at resolve (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-jasmine2/build/queueRunner.js:43:12)

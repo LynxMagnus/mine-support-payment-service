@@ -34,17 +34,4 @@ describe('Schedule service tests', () => {
     expect(spy).toHaveBeenCalledTimes(0)
     spy.mockRestore()
   })
-
-  test('updateValue updates all schedules', async () => {
-    const calculation = {
-      claimId: 'MINE001',
-      value: 100
-    }
-    const spy = jest.spyOn(mockScheduleRespository, 'update')
-
-    await scheduleService.updateValue(calculation)
-
-    expect(spy).toHaveBeenCalledTimes(2)
-    spy.mockRestore()
-  })
 })

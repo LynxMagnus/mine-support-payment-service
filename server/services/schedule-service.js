@@ -1,4 +1,5 @@
 const scheduleRepository = require('../repository/schedule-repository')
+
 const basePayments = 6
 
 module.exports = {
@@ -15,17 +16,6 @@ module.exports = {
         claimId: claim.claimId,
         paymentDate: paymentDate
       })
-    })
-  },
-  updateValue: async function (calculation) {
-    const existingSchedule = await scheduleRepository.getById(calculation.claimId)
-    if (existingSchedule == null) {
-      console.log('no schedule to update')
-      return
-    }
-    existingSchedule.forEach(schedule => {
-      schedule.value = calculation.value
-      scheduleRepository.update(schedule)
     })
   }
 }
