@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for mine-support-payment-service/server/services/message-service.js</title>
+    <title>Code coverage report for mine-support-payment-service/server/services/connection-service.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -16,18 +16,18 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../../index.html">All files</a> / <a href="index.html">mine-support-payment-service/server/services</a> message-service.js
+      <a href="../../../index.html">All files</a> / <a href="index.html">mine-support-payment-service/server/services</a> connection-service.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">18.52% </span>
+        <span class="strong">9.09% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/27</span>
+        <span class='fraction'>2/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>0/8</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>0/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">18.52% </span>
+        <span class="strong">9.09% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>5/27</span>
+        <span class='fraction'>2/22</span>
       </div>
     </div>
     <p class="quiet">
@@ -96,10 +96,12 @@
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -107,6 +109,17 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -118,16 +131,15 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -136,65 +148,68 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const rheaPromise = require('rhea-promise')
-const config = require('../config')
-const scheduleService = require('./schedule-service')
-const connectionService = require('./connection-service')
 &nbsp;
 module.exports = {
-  setupConnections: <span class="fstat-no" title="function not covered" >as</span>ync function () {
+  setupConnection: <span class="fstat-no" title="function not covered" >as</span>ync function (hostConfig, queueConfig) {
+    const connectionOptions = <span class="cstat-no" title="statement not covered" >this.configureMQ(hostConfig, queueConfig)</span>
+    const connection = <span class="cstat-no" title="statement not covered" >new rheaPromise.Connection(connectionOptions)</span>
+<span class="cstat-no" title="statement not covered" >    return connection</span>
+  },
+  configureMQ: <span class="fstat-no" title="function not covered" >fu</span>nction (hostConfig, queueConfig) {
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      host: hostConfig.host,
+      port: hostConfig.port,
+      transport: hostConfig.transport,
+      reconnect_limit: hostConfig.reconnectLimit,
+      username: queueConfig.user,
+      password: queueConfig.password
+    }
+  },
+  setupReceiver: <span class="fstat-no" title="function not covered" >as</span>ync function (connection, name, address) {
+    const receiverOptions = <span class="cstat-no" title="statement not covered" >{</span>
+      name: name,
+      source: {
+        address
+      },
+      onSessionError: <span class="fstat-no" title="function not covered" >(c</span>ontext) =&gt; {
+        const sessionError = <span class="cstat-no" title="statement not covered" >context.session &amp;&amp; context.session.error</span>
+<span class="cstat-no" title="statement not covered" >        if (sessionError) {</span>
+<span class="cstat-no" title="statement not covered" >          console.log(`session error for ${name} receiver - ${sessionError}`)</span>
+        }
+      }
+    }
+    const receiver = <span class="cstat-no" title="statement not covered" >await connection.createReceiver(receiverOptions)</span>
+<span class="cstat-no" title="statement not covered" >    receiver.on(rheaPromise.ReceiverEvents.receiverError, <span class="fstat-no" title="function not covered" >(c</span>ontext) =&gt; {</span>
+      const receiverError = <span class="cstat-no" title="statement not covered" >context.receiver &amp;&amp; context.receiver.error</span>
+<span class="cstat-no" title="statement not covered" >      if (receiverError) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log(`receipt error for ${name} receiver - ${receiverError}`)</span>
+      }
+    })
+<span class="cstat-no" title="statement not covered" >    return receiver</span>
+  },
+  openConnection: <span class="fstat-no" title="function not covered" >as</span>ync function (connection) {
 <span class="cstat-no" title="statement not covered" >    try {</span>
-<span class="cstat-no" title="statement not covered" >      await setupScheduleConnection()</span>
-<span class="cstat-no" title="statement not covered" >      await setupPaymentConnection()</span>
+<span class="cstat-no" title="statement not covered" >      await connection.open()</span>
     } catch (err) {
 <span class="cstat-no" title="statement not covered" >      console.log(`unable to connect to message queue - ${err}`)</span>
     }
+  },
+  closeConnection: <span class="fstat-no" title="function not covered" >as</span>ync function (connection) {
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >      connection.close()</span>
+    } catch (err) {
+<span class="cstat-no" title="statement not covered" >      console.log(`unable to close connection - ${err}`)</span>
+    }
   }
-}
-&nbsp;
-async function <span class="fstat-no" title="function not covered" >setupScheduleConnection </span>() {
-  const scheduleConnection = <span class="cstat-no" title="statement not covered" >await connectionService.setupConnection(config.messageQueue, config.scheduleQueue)</span>
-<span class="cstat-no" title="statement not covered" >  await connectionService.openConnection(scheduleConnection)</span>
-  const scheduleReceiver = <span class="cstat-no" title="statement not covered" >await connectionService.setupReceiver(</span>
-    scheduleConnection, 'payment-service-schedule', config.scheduleQueue.address)
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  scheduleReceiver.on(rheaPromise.ReceiverEvents.message, <span class="fstat-no" title="function not covered" >(c</span>ontext) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    console.log(`message received - schedule - ${context.message.body}`)</span>
-<span class="cstat-no" title="statement not covered" >    scheduleService.create(JSON.parse(context.message.body))</span>
-  })
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  process.on('SIGTERM', <span class="fstat-no" title="function not covered" >as</span>ync function () {</span>
-<span class="cstat-no" title="statement not covered" >    await connectionService.closeConnection(scheduleConnection)</span>
-<span class="cstat-no" title="statement not covered" >    process.exit(0)</span>
-  })
-}
-&nbsp;
-async function <span class="fstat-no" title="function not covered" >setupPaymentConnection </span>() {
-  const paymentConnection = <span class="cstat-no" title="statement not covered" >await connectionService.setupConnection(config.messageQueue, config.paymentQueue)</span>
-<span class="cstat-no" title="statement not covered" >  await connectionService.openConnection(paymentConnection)</span>
-&nbsp;
-  const paymentReceiver = <span class="cstat-no" title="statement not covered" >await connectionService.setupReceiver(</span>
-    paymentConnection, 'payment-service-payment', config.paymentQueue.address)
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  paymentReceiver.on(rheaPromise.ReceiverEvents.message, <span class="fstat-no" title="function not covered" >(c</span>ontext) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    console.log(`message received - payment - ${context.message.body}`)</span>
-<span class="cstat-no" title="statement not covered" >    scheduleService.updateValue(JSON.parse(context.message.body))</span>
-  })
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  process.on('SIGTERM', <span class="fstat-no" title="function not covered" >as</span>ync function () {</span>
-<span class="cstat-no" title="statement not covered" >    await connectionService.closeConnection(paymentConnection)</span>
-<span class="cstat-no" title="statement not covered" >    process.exit(0)</span>
-  })
 }
 &nbsp;</pre></td></tr>
 </table></pre>

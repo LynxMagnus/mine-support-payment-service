@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="4" failures="1" time="11.282">
-  <testsuite name="Schedule service tests" errors="0" failures="0" skipped="0" timestamp="2019-08-06T13:44:07" time="2.678" tests="3">
-    <testcase classname="Schedule service tests create creates all payment schedules" name="Schedule service tests create creates all payment schedules" time="0.029">
+<testsuites name="jest tests" tests="4" failures="1" time="8.975">
+  <testsuite name="Schedule service tests" errors="0" failures="0" skipped="0" timestamp="2019-08-07T09:41:55" time="1.629" tests="3">
+    <testcase classname="Schedule service tests create creates all payment schedules" name="Schedule service tests create creates all payment schedules" time="0.015">
     </testcase>
-    <testcase classname="Schedule service tests create does not created schedule if already exists" name="Schedule service tests create does not created schedule if already exists" time="0.072">
+    <testcase classname="Schedule service tests create does not created schedule if already exists" name="Schedule service tests create does not created schedule if already exists" time="0.045">
     </testcase>
-    <testcase classname="Schedule service tests updateValue updates all schedules" name="Schedule service tests updateValue updates all schedules" time="0.002">
+    <testcase classname="Schedule service tests updateValue updates all schedules" name="Schedule service tests updateValue updates all schedules" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="Message service tests" errors="0" failures="1" skipped="0" timestamp="2019-08-06T13:44:07" time="4.266" tests="1">
-    <testcase classname="Message service tests setupReceivers sets up both receivers" name="Message service tests setupReceivers sets up both receivers" time="0.521">
+  <testsuite name="Message service tests" errors="0" failures="1" skipped="0" timestamp="2019-08-07T09:41:55" time="3.135" tests="1">
+    <testcase classname="Message service tests setupReceivers sets up both receivers" name="Message service tests setupReceivers sets up both receivers" time="1.531">
       <failure>Error: Cannot spy the setupConnection property because it is not a function; undefined given instead
     at ModuleMockerClass.spyOn (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/node_modules/jest-mock/build/index.js:841:15)
     at Object.spyOn (/c/Users/ddts_220606/Source/Repos/mine-support-payment-service/test/services/message-service.test.js:15:22)

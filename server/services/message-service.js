@@ -5,8 +5,12 @@ const connectionService = require('./connection-service')
 
 module.exports = {
   setupConnections: async function () {
-    await setupScheduleConnection()
-    await setupPaymentConnection()
+    try {
+      await setupScheduleConnection()
+      await setupPaymentConnection()
+    } catch (err) {
+      console.log(`unable to connect to message queue - ${err}`)
+    }
   }
 }
 
