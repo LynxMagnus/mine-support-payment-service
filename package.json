@@ -9,9 +9,11 @@
     "test": "npm run lint && npm run unit-test",
     "migrate": "sequelize db:migrate",
     "watch:build": "nodemon --exec npm run build --ext scss --legacy-watch",
-    "watch:unit": "jest --coverage=false --onlyChanged --watch"
+    "watch:unit": "jest --coverage=false --onlyChanged --watch",
+    "start": "node index.js",
+    "start-watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js"
   },
-  "author": "",
+  "author": "John Watson, Mark Harrop, Matthew Collins, David Bingham",
   "license": "ISC",
   "dependencies": {
     "boom": "^7.2.2",
@@ -24,6 +26,7 @@
     "sequelize": "^6.0.0"
   },
   "devDependencies": {
+    "nodemon": "^1.19.1",
     "blipp": "^3.1.1",
     "code": "^5.2.3",
     "codeclimate-test-reporter": "^0.5.1",

@@ -1,14 +1,22 @@
-version: '3'
+version: '3.4'
 services:
   mine-support-payment-service:
     build: .
     image: mine-support-payment-service
     container_name: mine-support-payment-service
-    networks:
-      - mine-support
-    ports:
-      - "3004:3004"
+    depends_on:
+      - mine-support-postgres-payments
+    environment:
+      POSTGRES_DB: mine_payments
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
+      POSTGRES_HOST: mine-support-postgres-payments
+      POSTGRES_PORT: 5432
 
-networks:
-  mine-support:
-    external: true
+  mine-support-postgres-payments:
+    container_name: mine-support-postgres-payments
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: mine_payments
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
