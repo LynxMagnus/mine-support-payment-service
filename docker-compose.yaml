@@ -4,6 +4,7 @@ services:
     build: .
     image: mine-support-payment-service
     container_name: mine-support-payment-service
+    command: npm run watch:server
     ports:
       - "3004:3004"
     volumes:
