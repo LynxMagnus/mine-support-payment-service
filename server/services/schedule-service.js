@@ -11,12 +11,14 @@ module.exports = {
     }
 
     const paymentDates = getPaymentDates()
-    paymentDates.forEach(paymentDate => {
-      scheduleRepository.create({
+
+    for (let i = 0; i < paymentDates.length; i++) {
+      console.log('creating schedule')
+      await scheduleRepository.create({
         claimId: claim.claimId,
-        paymentDate: paymentDate
+        paymentDate: paymentDates[i]
       })
-    })
+    }
   }
 }
 

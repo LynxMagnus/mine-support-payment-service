@@ -16,8 +16,7 @@ module.exports = {
     try {
       const scheduleRecord = await db.schedule.upsert({
         claimId: schedule.claimId,
-        paymentDate: schedule.paymentDate,
-        value: schedule.value
+        paymentDate: schedule.paymentDate
       })
 
       return scheduleRecord

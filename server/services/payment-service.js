@@ -7,6 +7,7 @@ module.exports = {
       console.log('payment already exists')
       return
     }
+    console.log('creating payment')
     await paymentRepository.create(calculation)
   }
 }
