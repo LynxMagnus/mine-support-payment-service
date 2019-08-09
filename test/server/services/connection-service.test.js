@@ -2,7 +2,7 @@ describe('Schedule repository tests', () => {
   let connectionService
 
   beforeEach(async () => {
-    connectionService = require('../../server/services/connection-service')
+    connectionService = require('../../../server/services/connection-service')
   })
 
   test('configureMQ returns config', async () => {

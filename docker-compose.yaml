@@ -6,6 +6,7 @@ services:
     container_name: mine-support-payment-service
     depends_on:
       - mine-support-postgres-payments
+      - amq
     environment:
       POSTGRES_DB: mine_payments
       POSTGRES_PASSWORD: ppp
@@ -18,6 +19,16 @@ services:
       SCHEDULE_QUEUE_PASSWORD: artemis
       PAYMENT_QUEUE_USER: artemis
       PAYMENT_QUEUE_PASSWORD: artemis
+      
+  amq:
+    image: vromero/activemq-artemis:latest-alpine
+    ports:
+    - "8161:8161"
+    - "61616:61616"
+    - "5672:5672"
+    environment:
+      ARTEMIS_USERNAME: artemis
+      ARTEMIS_PASSWORD: artemis
 
   mine-support-postgres-payments:
     container_name: mine-support-postgres-payments

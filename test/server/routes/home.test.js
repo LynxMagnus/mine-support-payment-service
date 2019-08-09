@@ -6,18 +6,18 @@ describe('Home route tests', () => {
   let server
 
   beforeEach(async () => {
-    jest.mock('../../server/repository/schedule-repository', () => mockScheduleRespository)
-    jest.mock('../../server/repository/payment-repository', () => mockPaymentRepository)
-    jest.mock('../../server/services/connection-service', () => mockConnectionService)
-    createServer = require('../../server')
+    jest.mock('../../../server/repository/schedule-repository', () => mockScheduleRespository)
+    jest.mock('../../../server/repository/payment-repository', () => mockPaymentRepository)
+    jest.mock('../../../server/services/connection-service', () => mockConnectionService)
+    createServer = require('../../../server')
     server = await createServer()
     await server.initialize()
   })
 
   afterEach(async () => {
-    jest.unmock('../../server/repository/schedule-repository')
-    jest.unmock('../../server/repository/payment-repository')
-    jest.unmock('../../server/services/connection-service')
+    jest.unmock('../../../server/repository/schedule-repository')
+    jest.unmock('../../../server/repository/payment-repository')
+    jest.unmock('../../../server/services/connection-service')
   })
 
   test('GET / route returns message', async () => {
