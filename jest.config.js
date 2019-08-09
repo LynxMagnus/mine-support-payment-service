@@ -18,8 +18,7 @@ module.exports = {
     '.*/__mocks__/.*',
     '<rootDir>/server/migrations/',
     '<rootDir>/server/models/',
-    '<rootDir>/server/config/',
-    '<rootDir>/server/plugins/'
+    '<rootDir>/server/config/'
   ],
   'coverageThreshold': {
     'global': {
