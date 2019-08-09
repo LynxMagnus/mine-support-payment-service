@@ -25,11 +25,6 @@ async function setupScheduleConnection () {
     console.log(`message received - schedule - ${context.message.body}`)
     scheduleService.create(JSON.parse(context.message.body))
   })
-
-  process.on('SIGTERM', async function () {
-    await connectionService.closeConnection(scheduleConnection)
-    process.exit(0)
-  })
 }
 
 async function setupPaymentConnection () {
@@ -42,10 +37,5 @@ async function setupPaymentConnection () {
   paymentReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
     console.log(`message received - payment - ${context.message.body}`)
     paymentService.create(JSON.parse(context.message.body))
-  })
-
-  process.on('SIGTERM', async function () {
-    await connectionService.closeConnection(paymentConnection)
-    process.exit(0)
   })
 }

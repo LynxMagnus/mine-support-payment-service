@@ -1,9 +1,11 @@
 const rheaPromise = require('rhea-promise')
+const connections = []
 
 module.exports = {
   setupConnection: async function (hostConfig, queueConfig) {
     const connectionOptions = this.configureMQ(hostConfig, queueConfig)
     const connection = new rheaPromise.Connection(connectionOptions)
+    connections.push(connection)
     return connection
   },
   configureMQ: function (hostConfig, queueConfig) {
@@ -47,9 +49,16 @@ module.exports = {
   },
   closeConnection: async function (connection) {
     try {
-      connection.close()
+      await connection.close()
     } catch (err) {
       console.log(`unable to close connection - ${err}`)
     }
   }
 }
+
+process.on('SIGTERM', async function () {
+  for (let i = 0; i < connections.length; i++) {
+    await this.closeConnection(connections[i])
+  }
+  process.exit(0)
+})

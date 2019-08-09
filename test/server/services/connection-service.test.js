@@ -1,4 +1,5 @@
 describe('Schedule repository tests', () => {
+  const EventEmitter = require('events')
   let connectionService
 
   beforeEach(async () => {
@@ -12,7 +13,6 @@ describe('Schedule repository tests', () => {
       transport: 'tcp',
       reconnectLimit: 10
     }
-
     const queueConfig = {
       user: 'user',
       password: 'password'
@@ -30,23 +30,69 @@ describe('Schedule repository tests', () => {
     })
   })
 
-  test('setupConnection function exists', async () => {
-    expect(connectionService.setupConnection).toBeDefined()
+  test('setupConnection sets up connection', async () => {
+    const hostConfig = {
+      host: 'localhost',
+      port: 3000,
+      transport: 'tcp',
+      reconnectLimit: 10
+    }
+    const queueConfig = {
+      user: 'user',
+      password: 'password'
+    }
+
+    const connection = await connectionService.setupConnection(hostConfig, queueConfig)
+    expect(connection).toBeDefined()
   })
 
-  test('configureMQ function exists', async () => {
-    expect(connectionService.configureMQ).toBeDefined()
+  test('setupReceiver returns receiver', async () => {
+    const connection = {
+      createReceiver: async function (options) {
+        return new EventEmitter()
+      }
+    }
+
+    const receiver = await connectionService.setupReceiver(connection, 'name', 'address')
+
+    expect(receiver).toBeDefined()
   })
 
-  test('setupReceiver function exists', async () => {
-    expect(connectionService.setupReceiver).toBeDefined()
+  test('openConnection opens connection', async () => {
+    const connection = {
+      open: async function () {}
+    }
+
+    expect(async () => connectionService.openConnection(connection)).not.toThrow()
   })
 
-  test('openConnection function exists', async () => {
-    expect(connectionService.openConnection).toBeDefined()
+  test('openConnection logs error', async () => {
+    const spy = jest.spyOn(global.console, 'log')
+
+    try {
+      await connectionService.openConnection()
+    } catch (err) {}
+
+    expect(spy).toHaveBeenCalledTimes(1)
+    spy.mockRestore()
   })
 
-  test('closeConnection function exists', async () => {
-    expect(connectionService.closeConnection).toBeDefined()
+  test('closeConnection closes connection', async () => {
+    const connection = {
+      close: async function () {}
+    }
+
+    expect(async () => connectionService.closeConnection(connection)).not.toThrow()
+  })
+
+  test('closeConnection logs error', async () => {
+    const spy = jest.spyOn(global.console, 'log')
+
+    try {
+      await connectionService.closeConnection()
+    } catch (err) {}
+
+    expect(spy).toHaveBeenCalledTimes(1)
+    spy.mockRestore()
   })
 })

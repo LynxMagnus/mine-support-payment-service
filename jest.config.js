@@ -20,11 +20,6 @@ module.exports = {
     '<rootDir>/server/models/',
     '<rootDir>/server/config/'
   ],
-  'coverageThreshold': {
-    'global': {
-      'statements': 90
-    }
-  },
   'modulePathIgnorePatterns': [
     'node_modules'
   ],
@@ -39,7 +34,5 @@ module.exports = {
       }
     ]
   ],
-  'resetModules': true,
-  'restoreMocks': true,
   'testEnvironment': 'node'
 }
