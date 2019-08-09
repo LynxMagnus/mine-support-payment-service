@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "standard",
-    "unit-test": "lab -c -r console -o stdout -r lcov -o lcov.info",
-    "test": "npm run lint && npm run unit-test",
-    "migrate": "sequelize db:migrate"
+    "migrate": "sequelize db:migrate",
+    "pretest": "npm run test:lint",
+    "test": "npm run test:unit",
+    "test:lint": "standard",
+    "test:unit": "lab -c -r console -o stdout -r lcov -o lcov.info"
   },
   "author": "",
   "license": "ISC",
