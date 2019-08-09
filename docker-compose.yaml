@@ -4,11 +4,11 @@ services:
     build: .
     image: mine-support-payment-service
     container_name: mine-support-payment-service
-    networks:
-      - mine-support
     ports:
       - "3004:3004"
+    volumes:
+      - node_modules:/mine-support-payment-service/node_modules
+      - .:/mine-support-payment-service
 
-networks:
-  mine-support:
-    external: true
+volumes:
+  node_modules:
