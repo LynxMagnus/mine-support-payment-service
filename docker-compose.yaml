@@ -4,12 +4,38 @@ services:
     build: .
     image: mine-support-payment-service
     container_name: mine-support-payment-service
-    command: npm run watch:server
+    command: sh -c "npx wait-on -v tcp:mine-support-payment-postgres:5432 && npm run migrate && npm run watch:server"
+    depends_on:
+      - mine-support-payment-postgres
+    environment:
+      POSTGRES_DB: mine_payments
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
+      POSTGRES_HOST: mine-support-payment-postgres
+      POSTGRES_PORT: 5432
+    networks:
+      - mine-support-payments
     ports:
       - "3004:3004"
     volumes:
       - node_modules:/home/node/node_modules
       - .:/home/node
 
+  mine-support-payment-postgres:
+    container_name: mine-support-payment-postgres
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: mine_payments
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
+    networks:
+      - mine-support-payments
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+networks:
+  mine-support-payments: {}
+
 volumes:
   node_modules:
+  postgres_data:
