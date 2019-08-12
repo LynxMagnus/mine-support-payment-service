@@ -69,6 +69,10 @@ This service depends on an external Docker network named `mine-support` to commu
 
 The external network is declared in a secondary Docker Compose configuration (referenced by the above scripts) so that this service can be run in isolation without creating an external Docker network.
 
+This service also depends on an AMQP 1.0+ compatible message queue service. One is declared in `docker-compose.override.yml` so that this service can be run without external dependencies. To do this, use the convenience script:
+
+`scripts/start-isolated`
+
 ## Using Kubernetes
 
 The service has been developed with the intention of running on Kubernetes in production.  A helm chart is included in the `.\helm` folder.
