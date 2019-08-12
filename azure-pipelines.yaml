@@ -175,6 +175,11 @@ steps:
 - script: |
     echo "Build available for review in namespace $(imageName)-$(containerTag)"
   displayName: display namespace of deployed build
+  # install helm on build agent
+- task: HelmInstaller@0
+  displayName: 'Install Helm 2.9.1'
+  inputs:
+    helmVersion: 2.9.1
   # package helm chart for release
 - task: HelmDeploy@0
   displayName: 'helm package'
@@ -182,7 +187,6 @@ steps:
     command: package
     chartPath: ./helm
     save: false
-    destination: $(Build.ArtifactStagingDirectory)
   # copy yaml values for release  
 - task: CopyFiles@2
   displayName: 'Copy values files'
