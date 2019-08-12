@@ -8,8 +8,8 @@ services:
     ports:
       - "3004:3004"
     volumes:
-      - node_modules:/mine-support-payment-service/node_modules
-      - .:/mine-support-payment-service
+      - node_modules:/home/node/node_modules
+      - .:/home/node
 
 volumes:
   node_modules:
