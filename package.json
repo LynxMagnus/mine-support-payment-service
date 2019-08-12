@@ -30,7 +30,6 @@
     "nodemon": "^1.19.1",
     "blipp": "^3.1.1",
     "code": "^5.2.3",
-    "codeclimate-test-reporter": "^0.5.1",
     "good": "^8.1.1",
     "good-console": "^7.1.0",
     "good-file": "^6.0.1",
