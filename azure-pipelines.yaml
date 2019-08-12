@@ -182,6 +182,7 @@ steps:
     command: package
     chartPath: ./helm
     save: false
+    destination: $(Build.ArtifactStagingDirectory)
   # copy yaml values for release  
 - task: CopyFiles@2
   displayName: 'Copy values files'
