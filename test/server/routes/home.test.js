@@ -18,6 +18,7 @@ describe('Home route tests', () => {
     jest.unmock('../../../server/repository/schedule-repository')
     jest.unmock('../../../server/repository/payment-repository')
     jest.unmock('../../../server/services/connection-service')
+    await server.stop()
   })
 
   test('GET / route returns message', async () => {
