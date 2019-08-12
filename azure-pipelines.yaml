@@ -180,7 +180,7 @@ steps:
   displayName: 'helm package'
   inputs:
     command: package
-    chartPath: helm
+    chartPath: ./helm
     save: false
   # copy yaml values for release  
 - task: CopyFiles@2
