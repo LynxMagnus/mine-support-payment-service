@@ -175,11 +175,13 @@ steps:
 - script: |
     echo "Build available for review in namespace $(imageName)-$(containerTag)"
   displayName: display namespace of deployed build
+  # copy yaml values for release
 - task: CopyFiles@2
   displayName: 'Copy values files'
   inputs:
     SourceFolder: helm
     Contents: '*-values.yaml'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  # publish artifact for release
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts: drop'
