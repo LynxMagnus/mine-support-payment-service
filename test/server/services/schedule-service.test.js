@@ -11,7 +11,7 @@ describe('Schedule service tests', () => {
     jest.unmock('../../../server/repository/schedule-repository')
   })
 
-  test('create creates all payment schedules', async () => {
+  test('create creates all payment schedules', async (done) => {
     const claim = {
       claimId: 'MINE003'
     }
@@ -21,9 +21,10 @@ describe('Schedule service tests', () => {
 
     expect(spy).toHaveBeenCalledTimes(6)
     spy.mockRestore()
+    done()
   })
 
-  test('create does not created schedule if already exists', async () => {
+  test('create does not created schedule if already exists', async (done) => {
     const claim = {
       claimId: 'MINE001'
     }
@@ -33,5 +34,6 @@ describe('Schedule service tests', () => {
 
     expect(spy).toHaveBeenCalledTimes(0)
     spy.mockRestore()
+    done()
   })
 })

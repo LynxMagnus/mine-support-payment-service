@@ -11,7 +11,7 @@ describe('Payment repository tests', () => {
     jest.unmock('../../../server/models')
   })
 
-  test('create function creates', async () => {
+  test('create function creates', async (done) => {
     const calculation = {
       claimId: 'MINE123',
       value: 100
@@ -23,9 +23,10 @@ describe('Payment repository tests', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     spy.mockRestore()
+    done()
   })
 
-  test('create function logs error', async () => {
+  test('create function logs error', async (done) => {
     const spy = jest.spyOn(global.console, 'log')
 
     try {
@@ -34,14 +35,16 @@ describe('Payment repository tests', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     spy.mockRestore()
+    done()
   })
 
-  test('getById calls findOne', async () => {
+  test('getById calls findOne', async (done) => {
     const spy = jest.spyOn(mockDb.payment, 'findOne')
 
     await paymentRepository.getById('MINE123')
 
     expect(spy).toHaveBeenCalledTimes(1)
     spy.mockRestore()
+    done()
   })
 })

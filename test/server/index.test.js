@@ -31,7 +31,7 @@ describe('Server tests', () => {
     expect(server).toBeDefined()
   })
 
-  test('createServer returns server in development', async () => {
+  test('createServer returns server in development', async (done) => {
     jest.mock('../../server/config', () => {
       return {
         port: 3004,
@@ -43,5 +43,6 @@ describe('Server tests', () => {
     server = createServer()
 
     expect(server).toBeDefined()
+    done()
   })
 })

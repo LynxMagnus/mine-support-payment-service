@@ -14,7 +14,7 @@ describe('Process Error plugin tests', () => {
     expect(response).toStrictEqual(request.response)
   })
 
-  test('processErrorResponse returns 404 response', async () => {
+  test('processErrorResponse returns 404 response', async (done) => {
     const request = {
       response: {
         output: {
@@ -26,5 +26,6 @@ describe('Process Error plugin tests', () => {
 
     const response = processErrorResponse(request)
     expect(response).toStrictEqual(request.response)
+    done()
   })
 })
