@@ -1,6 +1,6 @@
 const scheduleRepository = require('../repository/schedule-repository')
 
-const basePayments = 6
+const BASE_PAYMENTS = 6
 
 module.exports = {
   create: async function (claim) {
@@ -10,7 +10,7 @@ module.exports = {
       return
     }
 
-    const paymentDates = getPaymentDates()
+    const paymentDates = new Array(BASE_PAYMENTS).fill(new Date()).map(getDate)
 
     for (let i = 0; i < paymentDates.length; i++) {
       console.log('creating schedule')
@@ -22,13 +22,9 @@ module.exports = {
   }
 }
 
-function getPaymentDates () {
-  const dates = []
-  const date = new Date()
-  for (let i = 0; i < basePayments; i++) {
-    date.setMonth(date.getMonth() + 1)
-    date.setDate(1)
-    dates.push(date)
-  }
-  return dates
+function getDate (dateIn, index) {
+  const date = new Date(dateIn)
+  date.setMonth(date.getMonth() + 1 + index)
+  date.setDate(1)
+  return date
 }
