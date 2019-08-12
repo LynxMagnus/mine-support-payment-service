@@ -3,7 +3,7 @@ const db = require('../models')
 module.exports = {
   getById: async function (claimId) {
     try {
-      return db.schedule.findAll({
+      return db.payment.findOne({
         where: {
           claimId: claimId
         }
@@ -12,14 +12,14 @@ module.exports = {
       console.log(err)
     }
   },
-  create: async function (schedule) {
+  create: async function (calculation) {
     try {
-      const scheduleRecord = await db.schedule.upsert({
-        claimId: schedule.claimId,
-        paymentDate: schedule.paymentDate
+      const calculationRecord = await db.payment.upsert({
+        claimId: calculation.claimId,
+        value: calculation.value
       })
 
-      return scheduleRecord
+      return calculationRecord
     } catch (err) {
       console.log(err)
       throw err
