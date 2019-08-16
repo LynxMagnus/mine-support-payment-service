@@ -20,7 +20,7 @@ containers:
     restartPolicy: Always
     messageQueue: amqp://mine-support-message-service
 database:
-  name: mine-support-postgres-payments
+  name: mine-support-payment-postgres
   externalName: host.docker.internal
   port: 5432
 replicas: 1

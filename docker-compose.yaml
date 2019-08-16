@@ -1,18 +1,25 @@
-version: '3'
+version: '3.4'
 services:
   mine-support-payment-service:
     build: .
     image: mine-support-payment-service
     container_name: mine-support-payment-service
-    command: sh -c "npx wait-on -v tcp:mine-support-payment-postgres:5432 && npm run migrate && npm run start:watch"
+    command: ./wait-for mine-support-payment-postgres:5432 -- ./wait-for amq:8161 -- sh -c "npm run migrate && npm run start:watch"
     depends_on:
       - mine-support-payment-postgres
+      - amq
     environment:
       POSTGRES_DB: mine_payments
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: mine-support-payment-postgres
       POSTGRES_PORT: 5432
+      MESSAGE_QUEUE_HOST: host.docker.internal
+      MESSAGE_QUEUE_PORT: 5672
+      SCHEDULE_QUEUE_USER: artemis
+      SCHEDULE_QUEUE_PASSWORD: artemis
+      PAYMENT_QUEUE_USER: artemis
+      PAYMENT_QUEUE_PASSWORD: artemis
     networks:
       - mine-support-payments
     ports:
@@ -20,6 +27,15 @@ services:
     volumes:
       - node_modules:/usr/src/app/node_modules
       - .:/usr/src/app
+
+  amq:
+    image: vromero/activemq-artemis:latest-alpine
+    ports:
+    - "8161:8161"
+    - "5672:5672"
+    environment:
+      ARTEMIS_USERNAME: artemis
+      ARTEMIS_PASSWORD: artemis
 
   mine-support-payment-postgres:
     container_name: mine-support-payment-postgres
@@ -32,6 +48,10 @@ services:
       - mine-support-payments
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  mine-support-message-queue:
+    container_name: mine-support-message-queue
+    image: vromero/activemq-artemis:2.9.0-alpine
 
 networks:
   mine-support-payments: {}

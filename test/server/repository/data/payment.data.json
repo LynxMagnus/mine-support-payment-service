@@ -1,0 +1,13 @@
+{
+  "payments": 
+  [
+    {
+      "claimId": "MINE001",
+      "value": 100
+    },
+    {
+      "claimId": "MINE002",
+      "value": 200
+    }
+  ]
+}

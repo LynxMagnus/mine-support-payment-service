@@ -3,8 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Schedule = sequelize.define('schedule', {
     scheduleId: { type: DataTypes.INTEGER, primaryKey: true },
     claimId: DataTypes.STRING,
-    paymentDate: DataTypes.DATE,
-    value: DataTypes.DECIMAL
+    paymentDate: DataTypes.DATE
   }, {
     freezeTableName: true,
     tableName: 'schedules'

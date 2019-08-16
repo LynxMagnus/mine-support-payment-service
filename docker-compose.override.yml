@@ -1,8 +1,8 @@
-version: '3'
+version: '3.4'
 services:
   mine-support-payment-service:
     environment:
-      MINE_SUPPORT_MESSAGE_QUEUE: amqp://mine-support-message-queue
+      MESSAGE_QUEUE_HOST: amqp://mine-support-message-queue
     networks:
       - mine-support-payments
 

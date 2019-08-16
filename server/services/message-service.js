@@ -1,38 +1,41 @@
-const amqp = require('amqplib/callback_api')
-const scheduleService = require('./schedule-service')
+const rheaPromise = require('rhea-promise')
 const config = require('../config')
+const scheduleService = require('./schedule-service')
+const paymentService = require('./payment-service')
+const connectionService = require('./connection-service')
 
 module.exports = {
-  receiveSchedule: function () {
-    const messageQueue = config.messageQueue
-    amqp.connect(messageQueue, function (err, conn) {
-      if (err) {
-        console.log(err)
-      } else {
-        conn.createChannel(function (err, ch) {
-          if (err) {
-            console.log(err)
-          } else {
-            const scheduleQueue = 'schedule'
-            ch.assertQueue(scheduleQueue, { durable: false })
-            console.log('waiting for new claims')
-
-            ch.consume(scheduleQueue, function (msg) {
-              console.log(`claim received for scheduling - ${msg.content.toString()}`)
-              scheduleService.create(JSON.parse(msg.content))
-            }, { noAck: true })
-
-            const valueQueue = 'value'
-            ch.assertQueue(valueQueue, { durable: false })
-            console.log('waiting for new calculation')
-
-            ch.consume(valueQueue, function (msg) {
-              console.log(`calculation received for payment - ${msg.content.toString()}`)
-              scheduleService.updateValue(JSON.parse(msg.content))
-            }, { noAck: true })
-          }
-        })
-      }
-    })
+  setupConnections: async function () {
+    try {
+      await setupScheduleConnection()
+      await setupPaymentConnection()
+    } catch (err) {
+      console.log(`unable to connect to message queue - ${err}`)
+    }
   }
+}
+
+async function setupScheduleConnection () {
+  const scheduleConnection = await connectionService.setupConnection(config.messageQueue, config.scheduleQueue)
+  await connectionService.openConnection(scheduleConnection)
+  const scheduleReceiver = await connectionService.setupReceiver(
+    scheduleConnection, 'payment-service-schedule', config.scheduleQueue.address)
+
+  scheduleReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
+    console.log(`message received - schedule - ${context.message.body}`)
+    scheduleService.create(JSON.parse(context.message.body))
+  })
+}
+
+async function setupPaymentConnection () {
+  const paymentConnection = await connectionService.setupConnection(config.messageQueue, config.paymentQueue)
+  await connectionService.openConnection(paymentConnection)
+
+  const paymentReceiver = await connectionService.setupReceiver(
+    paymentConnection, 'payment-service-payment', config.paymentQueue.address)
+
+  paymentReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
+    console.log(`message received - payment - ${context.message.body}`)
+    paymentService.create(JSON.parse(context.message.body))
+  })
 }

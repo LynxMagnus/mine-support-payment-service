@@ -1,11 +1,23 @@
-version: '3'
+version: '3.4'
 services:
   mine-support-payment-service:
-    environment:
-      MINE_SUPPORT_MESSAGE_QUEUE: amqp://mine-support-message-queue
+    command: npm run start:watch
     networks:
       - mine-support
+      - mine-support-payments
+    ports:
+      - "3004:3004"
+    volumes:
+      - node_modules:/usr/src/app/node_modules
+      - .:/usr/src/app
+
+  mine-support-payment-postgres:
+    networks:
+     - mine-support-payments
 
 networks:
   mine-support:
-    external: true
+   external: true
+  mine-support-payments: {}
+volumes:
+  node_modules:

@@ -1,5 +1,6 @@
 const scheduleRepository = require('../repository/schedule-repository')
-const basePayments = 6
+
+const BASE_PAYMENTS = 6
 
 module.exports = {
   create: async function (claim) {
@@ -9,34 +10,21 @@ module.exports = {
       return
     }
 
-    const paymentDates = getPaymentDates()
-    paymentDates.forEach(paymentDate => {
-      scheduleRepository.create({
+    const paymentDates = new Array(BASE_PAYMENTS).fill(new Date()).map(getDate)
+
+    for (let i = 0; i < paymentDates.length; i++) {
+      console.log('creating schedule')
+      await scheduleRepository.create({
         claimId: claim.claimId,
-        paymentDate: paymentDate
+        paymentDate: paymentDates[i]
       })
-    })
-  },
-  updateValue: async function (calculation) {
-    const existingSchedule = await scheduleRepository.getById(calculation.claimId)
-    if (existingSchedule == null) {
-      console.log('no schedule to update')
-      return
     }
-    existingSchedule.forEach(schedule => {
-      schedule.value = calculation.value
-      scheduleRepository.update(schedule)
-    })
   }
 }
 
-function getPaymentDates () {
-  const dates = []
-  const date = new Date()
-  for (let i = 0; i < basePayments; i++) {
-    date.setMonth(date.getMonth() + 1)
-    date.setDate(1)
-    dates.push(date)
-  }
-  return dates
+function getDate (dateIn, index) {
+  const date = new Date(dateIn)
+  date.setMonth(date.getMonth() + 1 + index)
+  date.setDate(1)
+  return date
 }
