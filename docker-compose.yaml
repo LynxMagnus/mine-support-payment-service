@@ -18,8 +18,8 @@ services:
     ports:
       - "3004:3004"
     volumes:
-      - node_modules:/home/node/node_modules
-      - .:/home/node
+      - node_modules:/usr/src/app/node_modules
+      - .:/usr/src/app
 
   mine-support-payment-postgres:
     container_name: mine-support-payment-postgres
