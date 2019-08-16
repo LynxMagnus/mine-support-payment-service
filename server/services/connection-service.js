@@ -44,7 +44,7 @@ module.exports = {
     try {
       await connection.open()
     } catch (err) {
-      console.log(`unable to connect to message queue - ${err.toString()}`)
+      console.log(`unable to connect to message queue - ${JSON.stringify(err)}`)
     }
   },
   closeConnection: async function (connection) {
