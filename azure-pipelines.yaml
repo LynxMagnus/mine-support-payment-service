@@ -120,6 +120,7 @@ steps:
     chartType: filepath
     chartPath: helm
     releaseName: $(imageName)-$(containerTag)
+    overrideValues: 'container.messageQueueHost=$(messageQueueHost),container.messageQueuePort=$(messageQueuePort),container.messageQueueTransport=$(messageQueueTransport),container.scheduleQueueAddress=$(scheduleQueueAddress),container.scheduleQueueUser=$(scheduleQueueUser),container.scheduleQueuePassword=$(scheduleQueuePassword),container.paymentQueueAddress=$(paymentQueueAddress),container.paymentQueueUser=$(paymentQueueUser),container.paymentQueuePassword=$(paymentQueuePassword),postgresExternalName=$(postgresExternalName),postgresPassword=$(postgresPassword)'
     arguments: --set image=$(azureContainerRegistryFull)/$(imageName):$(containerTag) --set container.redeployOnChange=$(Build.BuildId) --set container.imagePullPolicy=Always
     install: true
     waitForExecution: true
