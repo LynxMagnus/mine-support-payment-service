@@ -10,7 +10,7 @@ module.exports = {
       await setupScheduleConnection()
       await setupPaymentConnection()
     } catch (err) {
-      console.log(`unable to connect to message queue - ${err}`)
+      console.log(`unable to connect to message queue - ${JSON.stringify(err)}`)
     }
   }
 }
