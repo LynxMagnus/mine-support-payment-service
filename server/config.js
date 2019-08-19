@@ -6,6 +6,7 @@ const schema = {
   env: joi.string().valid('development', 'test', 'production').default('development'),
   messageQueue: {
     host: joi.string().default('localhost'),
+    hostname: joi.string().default('localhost'),
     port: joi.number().default(5672),
     reconnectLimit: joi.number().default(10),
     transport: joi.string().default('tcp')
@@ -28,6 +29,7 @@ const config = {
   env: process.env.NODE_ENV,
   messageQueue: {
     host: process.env.MESSAGE_QUEUE_HOST,
+    hostname: process.env.MESSAGE_QUEUE_HOST,
     port: process.env.MESSAGE_QUEUE_PORT,
     reconnectLimit: process.env.MESSAGE_QUEUE_RECONNECT_LIMIT,
     transport: process.env.MESSAGE_QUEUE_TRANSPORT

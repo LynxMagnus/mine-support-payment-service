@@ -1,4 +1,4 @@
-[![Build status](https://defradev.visualstudio.com/DEFRA_FutureFarming/_apis/build/status/defra-ff-mine-support-payment-service)](https://defradev.visualstudio.com/DEFRA_FutureFarming/_build/latest?definitionId=565)
+[![Build Status](https://defradev.visualstudio.com/DEFRA_FutureFarming/_apis/build/status/DEFRA.mine-support-payment-service?branchName=master)](https://defradev.visualstudio.com/DEFRA_FutureFarming/_build/latest?definitionId=611&branchName=master)
 
 # Mine Support Payment Service
 

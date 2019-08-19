@@ -17,30 +17,33 @@ describe('Message service tests', () => {
     jest.unmock('../../../server/services/connection-service')
   })
 
-  test('setupReceivers sets up payment', async () => {
+  test('setupReceivers sets up payment', async (done) => {
     const spy = jest.spyOn(mockConnectionService, 'setupConnection')
 
     await messageService.setupConnections()
 
     expect(spy).toHaveBeenCalledTimes(2)
     spy.mockRestore()
+    done()
   })
 
-  test('setupReceivers opens connections', async () => {
+  test('setupReceivers opens connections', async (done) => {
     const spy = jest.spyOn(mockConnectionService, 'openConnection')
 
     await messageService.setupConnections()
 
     expect(spy).toHaveBeenCalledTimes(2)
     spy.mockRestore()
+    done()
   })
 
-  test('setupReceivers sets up receivers', async () => {
+  test('setupReceivers sets up receivers', async (done) => {
     const spy = jest.spyOn(mockConnectionService, 'setupReceiver')
 
     await messageService.setupConnections()
 
     expect(spy).toHaveBeenCalledTimes(2)
     spy.mockRestore()
+    done()
   })
 })

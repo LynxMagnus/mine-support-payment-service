@@ -18,9 +18,10 @@ describe('Home route tests', () => {
     jest.unmock('../../../server/repository/schedule-repository')
     jest.unmock('../../../server/repository/payment-repository')
     jest.unmock('../../../server/services/connection-service')
+    await server.stop()
   })
 
-  test('GET / route returns message', async () => {
+  test('GET / route returns message', async (done) => {
     const options = {
       method: 'GET',
       url: '/'
@@ -28,5 +29,6 @@ describe('Home route tests', () => {
 
     const response = await server.inject(options)
     expect(response.result.message).toBe('mine support payment service')
+    done()
   })
 })

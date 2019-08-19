@@ -1,11 +1,6 @@
 version: '3.4'
 services:
   mine-support-payment-service:
-    command: scripts/wait-for/wait-for mine-support-payment-postgres:5432 -- scripts/wait-for/wait-for amq:8161 -- sh -c "npm run migrate && npm run test"
+    command: sh -c "scripts/wait-for/wait-for mine-support-payment-postgres:5432 -- scripts/wait-for/wait-for mine-support-payment-artemis:8161 -- npm run migrate && npm run test"
     volumes:
-      - node_modules:/usr/src/app/node_modules
-      - .:/usr/src/app
       - ./test-output:/usr/src/app/test-output
-
-volumes:
-  node_modules:

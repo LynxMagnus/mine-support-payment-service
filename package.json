@@ -9,8 +9,8 @@
     "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
     "test": "npm run test:unit",
     "test:lint": "standard",
-    "test:unit": "jest",
-    "test:unit-watch": "jest --coverage=false --onlyChanged --watch"
+    "test:unit": "jest --forceExit",
+    "test:unit-watch": "jest --coverage=false --onlyChanged --watch --forceExit"
   },
   "author": "John Watson, Mark Harrop, Matthew Collins, David Bingham",
   "license": "ISC",

@@ -4,10 +4,10 @@ services:
     build: .
     image: mine-support-payment-service
     container_name: mine-support-payment-service
-    command: scripts/wait-for/wait-for mine-support-payment-postgres:5432 -- scripts/wait-for/wait-for amq:8161 -- sh -c "npm run migrate && npm run start:watch"
+    command: sh -c "scripts/wait-for/wait-for mine-support-payment-postgres:5432 -- scripts/wait-for/wait-for mine-support-payment-artemis:8161 -- npm run migrate && npm run start:watch"
     depends_on:
       - mine-support-payment-postgres
-      - amq
+      - mine-support-payment-artemis
     environment:
       POSTGRES_DB: mine_payments
       POSTGRES_PASSWORD: ppp
@@ -28,14 +28,17 @@ services:
       - node_modules:/usr/src/app/node_modules
       - .:/usr/src/app
 
-  amq:
+  mine-support-payment-artemis:
+    container_name: mine-support-payment-artemis
     image: vromero/activemq-artemis:latest-alpine
-    ports:
-    - "8161:8161"
-    - "5672:5672"
     environment:
       ARTEMIS_USERNAME: artemis
       ARTEMIS_PASSWORD: artemis
+    networks:
+      - mine-support-payments
+    ports:
+    - "8161:8161"
+    - "5672:5672"
 
   mine-support-payment-postgres:
     container_name: mine-support-payment-postgres
@@ -48,10 +51,6 @@ services:
       - mine-support-payments
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
-  mine-support-message-queue:
-    container_name: mine-support-message-queue
-    image: vromero/activemq-artemis:2.9.0-alpine
 
 networks:
   mine-support-payments: {}

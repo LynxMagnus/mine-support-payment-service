@@ -16,8 +16,9 @@ describe('Server tests', () => {
     jest.unmock('../server/services/connection-service')
   })
 
-  test('createServer returns server', async () => {
+  test('createServer returns server', async (done) => {
     createServer = require('../')
     expect(createServer).toBeDefined()
+    done()
   })
 })
