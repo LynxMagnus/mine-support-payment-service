@@ -4,7 +4,7 @@ services:
     build: .
     image: mine-support-payment-service
     container_name: mine-support-payment-service
-    command: ./wait-for mine-support-payment-postgres:5432 -- ./wait-for amq:8161 -- sh -c "npm run migrate && npm run start:watch"
+    command: scripts/wait-for/wait-for mine-support-payment-postgres:5432 -- scripts/wait-for/wait-for amq:8161 -- sh -c "npm run migrate && npm run start:watch"
     depends_on:
       - mine-support-payment-postgres
       - amq
