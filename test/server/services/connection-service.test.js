@@ -15,7 +15,7 @@ describe('Schedule repository tests', () => {
       reconnectLimit: 10
     }
     const queueConfig = {
-      user: 'user',git
+      user: 'user',
       password: 'password'
     }
 
