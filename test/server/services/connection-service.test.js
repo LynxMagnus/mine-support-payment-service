@@ -9,12 +9,13 @@ describe('Schedule repository tests', () => {
   test('configureMQ returns config', async (done) => {
     const hostConfig = {
       host: 'localhost',
+      hostname: 'localhost',
       port: 3000,
       transport: 'tcp',
       reconnectLimit: 10
     }
     const queueConfig = {
-      user: 'user',
+      user: 'user',git
       password: 'password'
     }
 
@@ -22,6 +23,7 @@ describe('Schedule repository tests', () => {
 
     expect(result).toStrictEqual({
       host: hostConfig.host,
+      hostname: hostConfig.hostname,
       port: hostConfig.port,
       transport: hostConfig.transport,
       reconnect_limit: hostConfig.reconnectLimit,
