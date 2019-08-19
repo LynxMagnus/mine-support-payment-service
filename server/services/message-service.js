@@ -19,7 +19,7 @@ async function setupScheduleConnection () {
   const scheduleConnection = await connectionService.setupConnection(config.messageQueue, config.scheduleQueue)
   await connectionService.openConnection(scheduleConnection)
   const scheduleReceiver = await connectionService.setupReceiver(
-    scheduleConnection, 'payment-service-schedule', config.scheduleQueue.address)
+    scheduleConnection, 'schedule', config.scheduleQueue.address)
 
   scheduleReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
     console.log(`message received - schedule - ${context.message.body}`)
@@ -32,7 +32,7 @@ async function setupPaymentConnection () {
   await connectionService.openConnection(paymentConnection)
 
   const paymentReceiver = await connectionService.setupReceiver(
-    paymentConnection, 'payment-service-payment', config.paymentQueue.address)
+    paymentConnection, 'payment', config.paymentQueue.address)
 
   paymentReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
     console.log(`message received - payment - ${context.message.body}`)
