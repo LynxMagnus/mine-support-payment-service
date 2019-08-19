@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "unit-test": "jest",
+    "unit-test": "jest --forceExit",
     "test": "npm run lint && npm run unit-test",
     "test-watch": "jest --watch",
     "migrate": "sequelize db:migrate",
     "watch:build": "nodemon --exec npm run build --ext scss --legacy-watch",
-    "watch:unit": "jest --coverage=false --onlyChanged --watch",
+    "watch:unit": "jest --coverage=false --onlyChanged --watch --forceExit",
     "start": "node index.js",
     "start-watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js"
   },

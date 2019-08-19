@@ -11,7 +11,7 @@ describe('Schedule repository tests', () => {
     jest.unmock('../../../server/models')
   })
 
-  test('create function creates', async () => {
+  test('create function creates', async (done) => {
     const schedule = {
       claimId: 'MINE123',
       paymentDate: new Date()
@@ -23,9 +23,10 @@ describe('Schedule repository tests', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     spy.mockRestore()
+    done()
   })
 
-  test('create function logs error', async () => {
+  test('create function logs error', async (done) => {
     const spy = jest.spyOn(global.console, 'log')
 
     try {
@@ -34,14 +35,16 @@ describe('Schedule repository tests', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     spy.mockRestore()
+    done()
   })
 
-  test('getById calls findAll', async () => {
+  test('getById calls findAll', async (done) => {
     const spy = jest.spyOn(mockDb.schedule, 'findAll')
 
     await scheduleRepository.getById('MINE123')
 
     expect(spy).toHaveBeenCalledTimes(1)
     spy.mockRestore()
+    done()
   })
 })
