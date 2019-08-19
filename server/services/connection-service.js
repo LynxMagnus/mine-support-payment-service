@@ -11,6 +11,7 @@ module.exports = {
   configureMQ: function (hostConfig, queueConfig) {
     return {
       host: hostConfig.host,
+      hostname: hostConfig.hostname,
       port: hostConfig.port,
       transport: hostConfig.transport,
       reconnect_limit: hostConfig.reconnectLimit,
