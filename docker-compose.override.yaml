@@ -4,7 +4,12 @@ services:
     build: .
     image: mine-support-payment-service
     container_name: mine-support-payment-service
-    command: sh -c "scripts/wait-for/wait-for mine-support-payment-postgres:5432 -- scripts/wait-for/wait-for mine-support-payment-message-queue:5672 -- npm run migrate && npm run start:watch"
+    command: >
+      sh -c "
+        scripts/wait-for/wait-for mine-support-payment-postgres:5432 --
+        scripts/wait-for/wait-for mine-support-payment-message-queue:5672 --
+        npm run migrate &&
+        npm run start:watch"
     depends_on:
       - mine-support-payment-message-queue
     volumes:
