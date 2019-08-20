@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "migrate": "sequelize db:migrate",
+    "migrate": "npx sequelize db:migrate",
     "pretest": "npm run test:lint",
     "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
     "test": "npm run test:unit",
@@ -36,6 +36,7 @@
     "jest-junit": "^7.0.0",
     "nodemon": "^1.19.1",
     "proxyquire": "^2.1.1",
+    "sequelize-cli": "^5.5.0",
     "sequelize-mock": "^0.10.2",
     "sinon": "^7.3.2",
     "standard": "^12.0.1"
