@@ -39,4 +39,4 @@ networks:
   mine-support-payment: {}
 
 volumes:
-  postgres_data:
+  postgres_data: {}
