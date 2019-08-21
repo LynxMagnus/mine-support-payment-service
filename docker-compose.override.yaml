@@ -1,4 +1,8 @@
 version: '3.4'
+
+# This override file should be used in development environments to
+# bind-mount the app from the host into the container
+
 services:
   mine-support-payment-service:
     build: .
