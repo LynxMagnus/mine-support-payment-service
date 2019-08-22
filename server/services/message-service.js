@@ -18,8 +18,11 @@ module.exports = {
 async function setupScheduleConnection () {
   const scheduleConnection = await connectionService.setupConnection(config.messageQueue, config.scheduleQueue)
   await connectionService.openConnection(scheduleConnection)
+  console.log('schedule connection open')
+
   const scheduleReceiver = await connectionService.setupReceiver(
     scheduleConnection, 'schedule', config.scheduleQueue.address)
+  console.log('schedule receiver listening')
 
   scheduleReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
     const message = JSON.parse(context.message.body)
@@ -31,9 +34,11 @@ async function setupScheduleConnection () {
 async function setupPaymentConnection () {
   const paymentConnection = await connectionService.setupConnection(config.messageQueue, config.paymentQueue)
   await connectionService.openConnection(paymentConnection)
+  console.log('payment connection open')
 
   const paymentReceiver = await connectionService.setupReceiver(
     paymentConnection, 'payment', config.paymentQueue.address)
+  console.log('payment receiver listening')
 
   paymentReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
     const message = JSON.parse(context.message.body)
