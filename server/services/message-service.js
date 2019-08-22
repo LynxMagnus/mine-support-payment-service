@@ -22,8 +22,9 @@ async function setupScheduleConnection () {
     scheduleConnection, 'schedule', config.scheduleQueue.address)
 
   scheduleReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
-    console.log(`message received - schedule - ${context.message.body}`)
-    scheduleService.create(JSON.parse(context.message.body))
+    const message = JSON.parse(context.message.body)
+    console.log(`message received - schedule - ${message}`)
+    scheduleService.create(message)
   })
 }
 
@@ -35,7 +36,8 @@ async function setupPaymentConnection () {
     paymentConnection, 'payment', config.paymentQueue.address)
 
   paymentReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
-    console.log(`message received - payment - ${context.message.body}`)
-    paymentService.create(JSON.parse(context.message.body))
+    const message = JSON.parse(context.message.body)
+    console.log(`message received - payment - ${message}`)
+    paymentService.create(message)
   })
 }
