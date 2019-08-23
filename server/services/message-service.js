@@ -24,10 +24,14 @@ async function setupScheduleConnection () {
     scheduleConnection, 'schedule', config.scheduleQueue.address)
   console.log('schedule receiver listening')
 
-  scheduleReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
-    const message = JSON.parse(context.message.body)
-    console.log(`message received - schedule - ${message}`)
-    scheduleService.create(message)
+  scheduleReceiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
+    try {
+      console.log(`message received - schedule`, context.message)
+      const message = JSON.parse(context.message.body)
+      await scheduleService.create(message)
+    } catch (ex) {
+      console.error(`unable to process message`, ex)
+    }
   })
 }
 
@@ -40,9 +44,13 @@ async function setupPaymentConnection () {
     paymentConnection, 'payment', config.paymentQueue.address)
   console.log('payment receiver listening')
 
-  paymentReceiver.on(rheaPromise.ReceiverEvents.message, (context) => {
-    const message = JSON.parse(context.message.body)
-    console.log(`message received - payment - ${message}`)
-    paymentService.create(message)
+  paymentReceiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
+    try {
+      console.log(`message received - payment`, context.message)
+      const message = JSON.parse(context.message.body)
+      await paymentService.create(message)
+    } catch (ex) {
+      console.error(`unable to process message`, ex)
+    }
   })
 }
