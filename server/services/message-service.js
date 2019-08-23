@@ -26,7 +26,7 @@ async function setupScheduleConnection () {
 
   scheduleReceiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
     try {
-      console.log(`message received - schedule`, context.message)
+      console.log(`message received - schedule`, context.message.body)
       const message = JSON.parse(context.message.body)
       await scheduleService.create(message)
     } catch (ex) {
@@ -46,7 +46,7 @@ async function setupPaymentConnection () {
 
   paymentReceiver.on(rheaPromise.ReceiverEvents.message, async (context) => {
     try {
-      console.log(`message received - payment`, context.message)
+      console.log(`message received - payment`, context.message.body)
       const message = JSON.parse(context.message.body)
       await paymentService.create(message)
     } catch (ex) {
