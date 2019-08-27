@@ -23,6 +23,7 @@ container:
   runAsUser: 1000
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
+  redeployOnChange: update this field to force a change
   restartPolicy: Always
   messageQueueHost: amq
   messageQueuePort: "5672"
@@ -33,7 +34,7 @@ container:
   paymentQueueAddress: payment
   paymentQueueUser: artemis
   paymentQueuePassword: artemis
-replicas: 1
+replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1
 maxUnavailable: 1

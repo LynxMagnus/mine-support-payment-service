@@ -28,7 +28,7 @@ module.exports = {
       onSessionError: (context) => {
         const sessionError = context.session && context.session.error
         if (sessionError) {
-          console.log(`session error for ${name} receiver - ${JSON.stringify(sessionError)}`)
+          console.log(`session error for ${name} receiver`, sessionError)
         }
       }
     }
@@ -36,7 +36,7 @@ module.exports = {
     receiver.on(rheaPromise.ReceiverEvents.receiverError, (context) => {
       const receiverError = context.receiver && context.receiver.error
       if (receiverError) {
-        console.log(`receipt error for ${name} receiver - ${JSON.stringify(receiverError)}`)
+        console.log(`receipt error for ${name} receiver`, receiverError)
       }
     })
     return receiver
@@ -45,14 +45,14 @@ module.exports = {
     try {
       await connection.open()
     } catch (err) {
-      console.log(`unable to connect to message queue - ${JSON.stringify(err)}`)
+      console.log('unable to connect to message queue', err)
     }
   },
   closeConnection: async function (connection) {
     try {
       await connection.close()
     } catch (err) {
-      console.log(`unable to close connection - ${JSON.stringify(err)}`)
+      console.log('unable to close connection', err)
     }
   }
 }

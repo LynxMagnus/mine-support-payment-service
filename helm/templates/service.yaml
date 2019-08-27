@@ -2,6 +2,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: {{ .Values.postgresHost }}
+  labels:
+    environment: {{ .Values.environment }}
 spec:
   type: ExternalName
   externalName: {{ .Values.postgresExternalName }}
@@ -15,6 +17,7 @@ metadata:
   name: {{ .Values.name }}
   labels:
     app: {{ .Values.name }}
+    environment: {{ .Values.environment }}
 spec:
   ports:
   - port: {{ .Values.service.port }}
