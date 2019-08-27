@@ -26,5 +26,5 @@ spec:
     name: http
   selector:
     app: {{ .Values.name }}
-    environment: {{ .Values.environment }}
   type: {{ .Values.service.type }}
+
