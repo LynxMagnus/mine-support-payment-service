@@ -6,13 +6,25 @@ Digital service mock to claim public money in the event property subsides into m
 
 # Environment variables
 
-| Name                       | Description       | Required | Default          | Valid                       | Notes |
-|----------------------------|-------------------|:--------:|------------------|-----------------------------|-------|
-| NODE_ENV                   | Node environment  | no       | development      | development,test,production |       |
-| PORT                       | Port number       | no       | 3004             |                             |       |
-| POSTGRES_USERNAME          | Postgres username | yes      |                  |                             |       |
-| POSTGRES_PASSWORD          | Postgres password | yes      |                  |                             |       |
-| MINE_SUPPORT_MESSAGE_QUEUE | Message queue url | no       | amqp://localhost |                             |       |
+| Name                          | Description                       | Required | Default     | Valid                       | Notes |
+|-------------------------------|-----------------------------------|:--------:|-------------|-----------------------------|-------|
+| NODE_ENV                      | Node environment                  | no       | development | development,test,production |       |
+| PORT                          | Port number                       | no       | 3004        |                             |       |
+| POSTGRES_HOST                 | Postgres host name                | yes      |             |                             |       |
+| POSTGRES_PORT                 | Postgres port                     | yes      |             |                             |       |
+| POSTGRES_DB                   | Postgres database name            | yes      |             |                             |       |
+| POSTGRES_USERNAME             | Postgres username                 | yes      |             |                             |       |
+| POSTGRES_PASSWORD             | Postgres password                 | yes      |             |                             |       |
+| MESSAGE_QUEUE_HOST            | Host address of message queue     | no       | localhost   |                             |       |
+| MESSAGE_QUEUE_PORT            | Message queue port                | no       | 5672        |                             |       |
+| MESSAGE_QUEUE_RECONNECT_LIMIT | Reconnection limit for message queues | no   | 10          |                             |       |
+| MESSAGE_QUEUE_TRANSPORT       | Message queue transport           | no       | tcp         |                             |       |
+| SCHEDULE_QUEUE_ADDRESS        | 'Schedule' message queue name     | no       | schedule    |                             |       |
+| SCHEDULE_QUEUE_USER           | 'Schedule' message queue username | yes      |             |                             |       |
+| SCHEDULE_QUEUE_PASSWORD       | 'Schedule' message queue password | yes      |             |                             |       |
+| PAYMENT_QUEUE_ADDRESS         | 'Payment' message queue name      | no       | payment     |                             |       |
+| PAYMENT_QUEUE_USER            | 'Payment' message queue username  | yes      |             |                             |       |
+| PAYMENT_QUEUE_PASSWORD        | 'Payment' message queue password  | yes      |             |                             |       |
 
 # Prerequisites
 
