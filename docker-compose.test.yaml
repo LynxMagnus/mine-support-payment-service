@@ -1,11 +1,15 @@
 version: '3.4'
+
+# This override file should be used when running automated tests so
+# that test output is saved to the host
+
 services:
   mine-support-payment-service:
-    volumes: 
-    - node_modules:/usr/src/app/node_modules
-    - .:/usr/src/app
-    - ./test-output:/usr/src/app/test-output
-    command: ./wait-for mine-support-postgres-payments:5432 -- ./wait-for amq:8161 -- ./migrate-test
-
-volumes:
-  node_modules:
+    command: >
+      sh -c "
+        scripts/wait-for/wait-for mine-support-payment-postgres:5432 --
+        scripts/wait-for/wait-for mine-support-payment-message-queue:5672 --
+        npm run migrate &&
+        npm run test"
+    volumes:
+      - ./test-output:/usr/src/app/test-output

@@ -1,2 +1,0 @@
-#!/bin/sh
-helm upgrade mine-support-payment-service --install --namespace mine-support-payment-service ./helm

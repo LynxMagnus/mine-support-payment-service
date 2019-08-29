@@ -1,0 +1,50 @@
+version: '3.4'
+
+# This override file should be used when running this service in isolation
+# to provide required sibling services for local testing
+
+services:
+  mine-support-payment-service:
+    build: .
+    image: mine-support-payment-service
+    container_name: mine-support-payment-service
+    command: >
+      sh -c "
+        scripts/wait-for/wait-for mine-support-payment-postgres:5432 --
+        scripts/wait-for/wait-for mine-support-payment-message-queue:5672 --
+        npm run migrate &&
+        npm run start:watch"
+    depends_on:
+      - mine-support-payment-message-queue
+    volumes:
+      - node_modules:/usr/src/app/node_modules
+      - .:/usr/src/app
+
+  mine-support-payment-message-queue:
+    container_name: mine-support-payment-message-queue
+    image: vromero/activemq-artemis:2.9.0-alpine
+    environment:
+      ARTEMIS_USERNAME: artemis
+      ARTEMIS_PASSWORD: artemis
+    networks:
+      - mine-support-payment
+    ports:
+      - "8161:8161"
+      - "5672:5672"
+    volumes:
+      - message-queue-data:/var/lib/artemis/data
+      - message-queue-tmp:/var/lib/artemis/tmp
+      - message-queue-etc:/var/lib/artemis/etc
+      - message-queue-etc-override:/var/lib/artemis/etc-override
+      - message-queue-lock:/var/lib/artemis/lock
+
+networks:
+  mine-support-payment: {}
+
+volumes:
+  message-queue-data: {}
+  message-queue-tmp: {}
+  message-queue-etc: {}
+  message-queue-etc-override: {}
+  message-queue-lock: {}
+  node_modules: {}
