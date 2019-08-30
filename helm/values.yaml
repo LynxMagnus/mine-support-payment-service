@@ -7,6 +7,7 @@ postgresExternalName: host.docker.internal
 postgresPort: 5432
 name: mine-support-payment-service
 image: mine-support-payment-service
+imagePullSecret:
 service:
   type: ClusterIP
   port: 80
@@ -34,6 +35,8 @@ container:
   paymentQueueAddress: payment
   paymentQueueUser: artemis
   paymentQueuePassword: artemis
+  command: ["/bin/sh","-c"]
+  args: ["npm --no-update-notifier run migrate; node index"]  
 replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1
