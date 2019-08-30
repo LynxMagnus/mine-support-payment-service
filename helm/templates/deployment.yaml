@@ -17,17 +17,21 @@ spec:
         redeployOnChange: {{ .Values.container.redeployOnChange | quote }}
     spec:
       restartPolicy: {{ .Values.container.restartPolicy }}
-      containers:   
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      containers:
       - name: {{ .Values.name }}
         image: {{ .Values.image }}
         {{- if .Values.container.command }}
         {{- with .Values.container.command }}
-          command:
-            {{- toYaml . | nindent 12 }}
+        command:
+          {{- toYaml . | nindent 12 }}
         {{- end }}
         {{- with .Values.container.args }}
-          args:
-            {{- toYaml . | nindent 12 }}
+        args:
+          {{- toYaml . | nindent 12 }}
         {{- end }}
         {{- end }}
         imagePullPolicy: {{ .Values.container.imagePullPolicy }}
@@ -36,7 +40,7 @@ spec:
           runAsNonRoot: {{ .Values.container.runAsNonRoot }}
           readOnlyRootFilesystem: {{ .Values.container.readOnlyRootFilesystem }}
           allowPrivilegeEscalation: {{ .Values.container.allowPrivilegeEscalation }}
-        env:                
+        env:
         - name: NODE_ENV
           value: {{ .Values.environment }}
         - name: POSTGRES_USERNAME
@@ -71,8 +75,6 @@ spec:
           value: "3004"
         ports:
         - containerPort: {{ .Values.container.port }}
-        command: ["/bin/sh","-c"]
-        args: ["sequelize db:migrate; node index"]
         resources:
           requests:
             memory: {{ .Values.container.requestMemory }}
