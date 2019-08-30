@@ -5,8 +5,10 @@ module.exports = {
   options: {
     handler: (request, h) => {
       try {
-        require('../models')
-        return h.response('ok').code(200)
+        const db = require('../models')
+        if (db.hasOwnProperty('sequelize')) {
+          return h.response('ok').code(200)
+        }
       } catch (err) {
         return h.response(err).code(500)
       }
