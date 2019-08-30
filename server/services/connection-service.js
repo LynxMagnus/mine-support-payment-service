@@ -69,6 +69,6 @@ module.exports = {
 }
 
 process.on('SIGTERM', async function () {
-  connections.map(x => this.closeConnection(x))
+  await Promise.all(connections.map(x => x.close()))
   process.exit(0)
 })
