@@ -54,6 +54,17 @@ module.exports = {
     } catch (err) {
       console.log('unable to close connection', err)
     }
+  },
+  isConnected: async function () {
+    if (connections.length !== 2) {
+      return false
+    }
+    connections.forEach(connection => {
+      if (!connection.isOpen()) {
+        return false
+      }
+    })
+    return true
   }
 }
 
