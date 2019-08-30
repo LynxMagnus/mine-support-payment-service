@@ -1,14 +1,14 @@
-const databaseService = require('../services/database-service')
 
 module.exports = {
   method: 'GET',
   path: '/healthy',
   options: {
     handler: (request, h) => {
-      if (databaseService.isConnected()) {
+      try {
+        require('../models')
         return h.response('ok').code(200)
-      } else {
-        return h.response('database unavailable').code(500)
+      } catch (err) {
+        return h.response(err).code(500)
       }
     }
   }
