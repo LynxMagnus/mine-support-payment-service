@@ -1,8 +1,11 @@
 describe('Healthy test', () => {
   let createServer
   let server
+  let db
 
   beforeAll(async () => {
+    jest.mock('../../../server/models')
+    db = require('../../../server/models')
     createServer = require('../../../server')
   })
 
@@ -11,31 +14,25 @@ describe('Healthy test', () => {
     await server.initialize()
   })
 
-  afterEach(async () => {
-    jest.resetModules()
-  })
-
   test('GET /healthy route returns 200', async () => {
-    jest.mock('../../../server/models', () => {
-      return {
-        sequelize: {}
-      }
-    })
     const options = {
       method: 'GET',
       url: '/healthy'
     }
+
+    db.isConnected = jest.fn(() => true)
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
   })
 
   test('GET /healthy route returns error if database unavailable', async () => {
-    jest.mock('../../../server/models', () => {})
     const options = {
       method: 'GET',
       url: '/healthy'
     }
+
+    db.isConnected = jest.fn(() => false)
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(500)
@@ -43,5 +40,9 @@ describe('Healthy test', () => {
 
   afterEach(async () => {
     await server.stop()
+  })
+
+  afterAll(async () => {
+    jest.unmock('../../../server/models')
   })
 })

@@ -31,6 +31,16 @@ Object.keys(db).forEach(modelName => {
   }
 })
 
+db.isConnected = async () => {
+  try {
+    await sequelize.authenticate()
+    return true
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}
+
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 

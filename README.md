@@ -100,3 +100,10 @@ scripts/build
 # Deploy to the current Helm context
 scripts/deploy
 ```
+
+### Probes
+
+The service has both an Http readiness probe and an Http liveness probe configured to receive at the below end points.
+
+Readiness: `/healthy`
+Liveness: `/healthz`
