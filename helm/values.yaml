@@ -41,3 +41,17 @@ replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1
 maxUnavailable: 1
+
+readinessProbe:
+  path: /healthy
+  port: 3004
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  failureThreshold: 3
+
+livenessProbe:
+  path: /healthz
+  port: 3004
+  initialDelaySeconds: 70
+  periodSeconds: 10
+  failureThreshold: 3

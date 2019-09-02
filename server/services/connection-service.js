@@ -1,5 +1,6 @@
 const rheaPromise = require('rhea-promise')
 const connections = []
+const EXPECTED_CONNECTIONS = 2
 
 module.exports = {
   setupConnection: async function (hostConfig, queueConfig) {
@@ -25,10 +26,12 @@ module.exports = {
       source: {
         address
       },
-      onSessionError: (context) => {
+      onSessionError: async (context) => {
         const sessionError = context.session && context.session.error
         if (sessionError) {
           console.log(`session error for ${name} receiver`, sessionError)
+          await Promise.all(connections.map(x => x.close()))
+          process.exit(0)
         }
       }
     }
@@ -54,12 +57,16 @@ module.exports = {
     } catch (err) {
       console.log('unable to close connection', err)
     }
+  },
+  isConnected: function () {
+    if (connections.length !== EXPECTED_CONNECTIONS) {
+      return false
+    }
+    return !connections.some(x => !x.isOpen())
   }
 }
 
 process.on('SIGTERM', async function () {
-  for (let i = 0; i < connections.length; i++) {
-    await this.closeConnection(connections[i])
-  }
+  await Promise.all(connections.map(x => x.close()))
   process.exit(0)
 })
