@@ -62,11 +62,7 @@ module.exports = {
     if (connections.length !== EXPECTED_CONNECTIONS) {
       return false
     }
-    const inactiveConnections = connections.find(x => !x.isOpen())
-    if (inactiveConnections !== undefined) {
-      return false
-    }
-    return true
+    return !connections.some(x => !x.isOpen())
   }
 }
 
