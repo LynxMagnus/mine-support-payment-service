@@ -25,20 +25,20 @@ module.exports = {
       source: {
         address
       },
-      onSessionError: (context) => {
+      onSessionError: async (context) => {
         const sessionError = context.session && context.session.error
         if (sessionError) {
           console.log(`session error for ${name} receiver`, sessionError)
+          await Promise.all(connections.map(x => x.close()))
+          process.exit(0)
         }
       }
     }
     const receiver = await connection.createReceiver(receiverOptions)
-    receiver.on(rheaPromise.ReceiverEvents.receiverError, async (context) => {
+    receiver.on(rheaPromise.ReceiverEvents.receiverError, (context) => {
       const receiverError = context.receiver && context.receiver.error
       if (receiverError) {
         console.log(`receipt error for ${name} receiver`, receiverError)
-        await Promise.all(connections.map(x => x.close()))
-        process.exit(0)
       }
     })
     return receiver
