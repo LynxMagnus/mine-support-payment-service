@@ -58,7 +58,7 @@ module.exports = {
       console.log('unable to close connection', err)
     }
   },
-  isConnected: async function () {
+  isConnected: function () {
     if (connections.length !== EXPECTED_CONNECTIONS) {
       return false
     }
