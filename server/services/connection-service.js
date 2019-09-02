@@ -1,5 +1,6 @@
 const rheaPromise = require('rhea-promise')
 const connections = []
+const EXPECTED_CONNECTIONS = 2
 
 module.exports = {
   setupConnection: async function (hostConfig, queueConfig) {
@@ -58,14 +59,13 @@ module.exports = {
     }
   },
   isConnected: async function () {
-    if (connections.length !== 2) {
+    if (connections.length !== EXPECTED_CONNECTIONS) {
       return false
     }
-    connections.forEach(connection => {
-      if (!connection.isOpen()) {
-        return false
-      }
-    })
+    const inactiveConnections = connections.find(x => !x.isOpen())
+    if (inactiveConnections !== undefined) {
+      return false
+    }
     return true
   }
 }

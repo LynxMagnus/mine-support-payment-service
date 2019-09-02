@@ -107,3 +107,7 @@ The service has both an Http readiness probe and an Http liveness probe configur
 
 Readiness: `/healthy`
 Liveness: `/healthz`
+
+The readiness probe will test for both the availability of a PostgreSQL database and the two active message queue connections.
+
+Sequelize's `authenticate` function is used to test database connectivity.  This function tries to run a basic query within the database.
