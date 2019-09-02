@@ -33,10 +33,12 @@ module.exports = {
       }
     }
     const receiver = await connection.createReceiver(receiverOptions)
-    receiver.on(rheaPromise.ReceiverEvents.receiverError, (context) => {
+    receiver.on(rheaPromise.ReceiverEvents.receiverError, async (context) => {
       const receiverError = context.receiver && context.receiver.error
       if (receiverError) {
         console.log(`receipt error for ${name} receiver`, receiverError)
+        await Promise.all(connections.map(x => x.close()))
+        process.exit(0)
       }
     })
     return receiver

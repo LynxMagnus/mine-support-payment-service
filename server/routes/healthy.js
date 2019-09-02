@@ -6,7 +6,7 @@ module.exports = {
   path: '/healthy',
   options: {
     handler: async (request, h) => {
-      if (await databaseService.isConnected() && connectionService.isConnected()) {
+      if (await databaseService.isConnected() && await connectionService.isConnected()) {
         return h.response('ok').code(200)
       }
       return h.response('services unavailable').code(500)
