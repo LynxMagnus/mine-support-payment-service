@@ -5,7 +5,8 @@ const EXPECTED_CONNECTIONS = 2
 module.exports = {
   setupConnection: async function (hostConfig, queueConfig) {
     const connectionOptions = this.configureMQ(hostConfig, queueConfig)
-    const connection = new rheaPromise.Connection(connectionOptions)
+    const container = new rheaPromise.Container()
+    const connection = container.createConnection(connectionOptions)
     connections.push(connection)
     return connection
   },

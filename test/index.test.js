@@ -17,8 +17,9 @@ describe('Server tests', () => {
   })
 
   test('createServer returns server', async (done) => {
-    createServer = require('../')
-    expect(createServer).toBeDefined()
+    createServer = require('../server')
+    const server = await createServer()
+    expect(server).toBeDefined()
     done()
   })
 })
