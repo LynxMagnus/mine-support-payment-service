@@ -4,7 +4,7 @@ module.exports = {
   options: {
     handler: (request, h) => {
       return {
-        message: 'mine support payment service'
+        message: 'ffc demo payment service'
       }
     }
   }

@@ -4,30 +4,30 @@ version: '3.4'
 # to provide required sibling services for local testing
 
 services:
-  mine-support-payment-service:
+  ffc-demo-payment-service:
     build: .
-    image: mine-support-payment-service
-    container_name: mine-support-payment-service
+    image: ffc-demo-payment-service
+    container_name: ffc-demo-payment-service
     command: >
       sh -c "
-        scripts/wait-for/wait-for mine-support-payment-postgres:5432 --
-        scripts/wait-for/wait-for mine-support-payment-message-queue:5672 --
+        scripts/wait-for/wait-for ffc-demo-payment-postgres:5432 --
+        scripts/wait-for/wait-for ffc-demo-payment-message-queue:5672 --
         npm run migrate &&
         npm run start:watch"
     depends_on:
-      - mine-support-payment-message-queue
+      - ffc-demo-payment-message-queue
     volumes:
       - node_modules:/usr/src/app/node_modules
       - .:/usr/src/app
 
-  mine-support-payment-message-queue:
-    container_name: mine-support-payment-message-queue
+  ffc-demo-payment-message-queue:
+    container_name: ffc-demo-payment-message-queue
     image: vromero/activemq-artemis:2.9.0-alpine
     environment:
       ARTEMIS_USERNAME: artemis
       ARTEMIS_PASSWORD: artemis
     networks:
-      - mine-support-payment
+      - ffc-demo-payment
     ports:
       - "8161:8161"
       - "5672:5672"
@@ -39,7 +39,7 @@ services:
       - message-queue-lock:/var/lib/artemis/lock
 
 networks:
-  mine-support-payment: {}
+  ffc-demo-payment: {}
 
 volumes:
   message-queue-data: {}

@@ -1,16 +1,16 @@
 version: '3.4'
 services:
-  mine-support-payment-service:
+  ffc-demo-payment-service:
     build: .
-    image: mine-support-payment-service
-    container_name: mine-support-payment-service
+    image: ffc-demo-payment-service
+    container_name: ffc-demo-payment-service
     depends_on:
-      - mine-support-payment-postgres
+      - ffc-demo-payment-postgres
     environment:
-      POSTGRES_DB: mine_payments
+      POSTGRES_DB: ffc_demo_payments
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
-      POSTGRES_HOST: mine-support-payment-postgres
+      POSTGRES_HOST: ffc-demo-payment-postgres
       POSTGRES_PORT: 5432
       MESSAGE_QUEUE_HOST: host.docker.internal
       MESSAGE_QUEUE_PORT: 5672
@@ -21,24 +21,24 @@ services:
       PAYMENT_QUEUE_USER: artemis
       PAYMENT_QUEUE_PASSWORD: artemis
     networks:
-      - mine-support-payment
+      - ffc-demo-payment
     ports:
       - "3004:3004"
 
-  mine-support-payment-postgres:
-    container_name: mine-support-payment-postgres
+  ffc-demo-payment-postgres:
+    container_name: ffc-demo-payment-postgres
     image: postgres:11.4-alpine
     environment:
-      POSTGRES_DB: mine_payments
+      POSTGRES_DB: ffc_demo_payments
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
     networks:
-      - mine-support-payment
+      - ffc-demo-payment
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
 networks:
-  mine-support-payment: {}
+  ffc-demo-payment: {}
 
 volumes:
   postgres_data: {}

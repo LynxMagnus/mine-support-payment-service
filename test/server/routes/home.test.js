@@ -28,7 +28,7 @@ describe('Home route tests', () => {
     }
 
     const response = await server.inject(options)
-    expect(response.result.message).toBe('mine support payment service')
+    expect(response.result.message).toBe('ffc demo payment service')
     done()
   })
 })
