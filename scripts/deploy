@@ -5,5 +5,5 @@ projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; p
 
 (
   cd "${projectRoot}"
-  helm upgrade mine-support-payment-service --install --namespace mine-support-payment-service ./helm
+  helm upgrade ffc-demo-payment-service --install --namespace ffc-demo-payment-service ./helm
 )

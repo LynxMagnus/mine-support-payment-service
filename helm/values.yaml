@@ -2,11 +2,11 @@ environment: development
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
 postgresDatabase: mine_payments
-postgresHost: mine-support-postgres-payments
+postgresHost: ffc-demo-postgres-payments
 postgresExternalName: host.docker.internal
 postgresPort: 5432
-name: mine-support-payment-service
-image: mine-support-payment-service
+name: ffc-demo-payment-service
+image: ffc-demo-payment-service
 imagePullSecret:
 service:
   type: ClusterIP
