@@ -153,6 +153,6 @@ The [azure-pipelines.yaml](azure-pipelines.yaml) performs the following tasks:
 - Pushes containers to the registry tagged with the PR number or release version
 - Deletes PR deployments, containers, and namepace upon merge
 
-Builds will be deployed into a namespace with the format `mine-support-calculation-service-{identifier}` where `{identifier}` is either the release version, the PR number, or the branch name.
+Builds will be deployed into a namespace with the format `mine-support-payment-service-{identifier}` where `{identifier}` is either the release version, the PR number, or the branch name.
 
 A detailed description on the build pipeline and PR work flow is available in the [Defra Confluence page](https://eaflood.atlassian.net/wiki/spaces/FFCPD/pages/1281359920/Build+Pipeline+and+PR+Workflow)
