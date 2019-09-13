@@ -4,7 +4,24 @@
 
 Digital service mock to claim public money in the event property subsides into mine shaft.  The payment service subscribes to a message queue for new claims and saves a monthly payment schedule in a Postgresql database.  It also subscribes to the queue for new calculations and updates the value to pay in the database.
 
+# Prerequisites
+
+Either:
+- Docker
+- Docker Compose
+
+Or:
+- Kubernetes
+- Helm
+
+Or:
+- Node 10
+- PostgreSQL database
+- AMQP 1.0 message queue
+
 # Environment variables
+
+The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
 | Name                          | Description                       | Required | Default     | Valid                       | Notes |
 |-------------------------------|-----------------------------------|:--------:|-------------|-----------------------------|-------|
@@ -25,12 +42,6 @@ Digital service mock to claim public money in the event property subsides into m
 | PAYMENT_QUEUE_ADDRESS         | 'Payment' message queue name      | no       | payment     |                             |       |
 | PAYMENT_QUEUE_USER            | 'Payment' message queue username  | yes      |             |                             |       |
 | PAYMENT_QUEUE_PASSWORD        | 'Payment' message queue password  | yes      |             |                             |       |
-
-# Prerequisites
-
-- Node v10+
-- Access to a PostgreSQL database
-- Access to an AMQP 1.0 compatible message queue service
 
 # How to run tests
 
