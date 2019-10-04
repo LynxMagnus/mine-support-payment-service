@@ -1,7 +1,7 @@
 describe('Message service tests', () => {
-  let mockScheduleRespository = require('../repository/schedule-repository.mock')
-  let mockPaymentRepository = require('../repository/payment-repository.mock')
-  let mockConnectionService = require('./connection-service.mock')
+  const mockScheduleRespository = require('../repository/schedule-repository.mock')
+  const mockPaymentRepository = require('../repository/payment-repository.mock')
+  const mockConnectionService = require('./connection-service.mock')
   let messageService
 
   beforeEach(async () => {

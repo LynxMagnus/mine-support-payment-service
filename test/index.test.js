@@ -1,7 +1,7 @@
 describe('Server tests', () => {
-  let mockScheduleRespository = require('./server/repository/schedule-repository.mock')
-  let mockPaymentRepository = require('./server/repository/payment-repository.mock')
-  let mockConnectionService = require('./server/services/connection-service.mock')
+  const mockScheduleRespository = require('./server/repository/schedule-repository.mock')
+  const mockPaymentRepository = require('./server/repository/payment-repository.mock')
+  const mockConnectionService = require('./server/services/connection-service.mock')
   let createServer
 
   beforeEach(async () => {

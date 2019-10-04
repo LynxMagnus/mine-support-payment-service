@@ -1,5 +1,5 @@
 describe('Payment repository tests', () => {
-  let mockDb = require('./index.mock')
+  const mockDb = require('./index.mock')
   let paymentRepository
 
   beforeEach(async () => {

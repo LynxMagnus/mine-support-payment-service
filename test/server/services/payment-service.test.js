@@ -1,5 +1,5 @@
 describe('Payment service tests', () => {
-  let mockPaymentRepository = require('../repository/payment-repository.mock')
+  const mockPaymentRepository = require('../repository/payment-repository.mock')
   let paymentService
 
   beforeEach(async () => {
