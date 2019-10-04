@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Values.postgresHost }}
+  name: {{ .Values.postgresServiceName }}
   labels:
     environment: {{ .Values.environment }}
 spec:
@@ -27,4 +27,3 @@ spec:
   selector:
     app: {{ .Values.name }}
   type: {{ .Values.service.type }}
-
