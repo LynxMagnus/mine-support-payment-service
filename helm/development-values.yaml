@@ -3,6 +3,6 @@ container:
   args: ["node index"]
   messageQueueHost: ffc-demo-payment-artemis-activemq-artemis
 postgresHost: ffc-demo-payment-postgres-postgresql
-postgresServiceName: ffc-demo-payment-postgres
+postgresExternalName:
 service:
   port: 3004

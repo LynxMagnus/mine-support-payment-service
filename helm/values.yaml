@@ -3,7 +3,6 @@ postgresUsername: postgres@mine-support2
 postgresPassword: changeme
 postgresDatabase: mine_payments
 postgresHost: ffc-demo-payments-postgres
-postgresServiceName: ffc-demo-payments-postgres
 postgresExternalName: host.docker.internal
 postgresPort: 5432
 name: ffc-demo-payment-service
