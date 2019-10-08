@@ -1,7 +1,7 @@
 describe('Home route tests', () => {
-  let mockScheduleRespository = require('../repository/schedule-repository.mock')
-  let mockPaymentRepository = require('../repository/payment-repository.mock')
-  let mockConnectionService = require('../services/connection-service.mock')
+  const mockScheduleRespository = require('../repository/schedule-repository.mock')
+  const mockPaymentRepository = require('../repository/payment-repository.mock')
+  const mockConnectionService = require('../services/connection-service.mock')
   let createServer
   let server
 

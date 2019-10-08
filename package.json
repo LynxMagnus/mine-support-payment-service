@@ -14,33 +14,25 @@
     "test:unit-watch": "jest --coverage=false --onlyChanged --watch --forceExit"
   },
   "author": "John Watson, Mark Harrop, Matthew Collins, David Bingham",
-  "license": "ISC",
+  "license": "OGL-UK-3.0",
   "dependencies": {
-    "@hapi/boom": "^7.4.2",
-    "@hapi/hapi": "^18.3.1",
-    "@hapi/joi": "^15.1.0",
-    "pg": "^7.9.0",
-    "pg-hstore": "^2.3.2",
-    "rhea": "^1.0.8",
+    "@hapi/hapi": "^18.4.0",
+    "@hapi/joi": "^16.1.4",
+    "pg": "^7.12.1",
     "rhea-promise": "^1.0.0",
-    "sequelize": "^6.0.0"
+    "sequelize": "^5.19.0"
   },
   "devDependencies": {
-    "blipp": "^3.1.1",
-    "code": "^5.2.3",
-    "codeclimate-test-reporter": "0.5.1",
-    "good": "^8.1.1",
-    "good-console": "^7.1.0",
-    "good-file": "^6.0.1",
-    "good-squeeze": "^5.1.0",
-    "jest": "^24.8.0",
-    "jest-junit": "^7.0.0",
-    "nodemon": "^1.19.1",
-    "proxyquire": "^2.1.1",
-    "sequelize-cli": "^5.5.0",
+    "@hapi/good": "^8.2.3",
+    "@hapi/good-console": "^8.1.2",
+    "@hapi/good-squeeze": "^5.2.1",
+    "blipp": "^4.0.1",
+    "jest": "^24.9.0",
+    "jest-junit": "^8.0.0",
+    "nodemon": "^1.19.2",
+    "sequelize-cli": "^5.5.1",
     "sequelize-mock": "^0.10.2",
-    "sinon": "^7.3.2",
-    "standard": "^12.0.1"
+    "standard": "^14.3.1"
   },
   "standard": {
     "globals": [

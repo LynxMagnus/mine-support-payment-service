@@ -46,10 +46,14 @@ The following environment variables are required by the application container. V
 
 # How to run tests
 
-A convenience script is provided to run automated tests in a containerised environment:
+A convenience script is provided to run automated tests in a containerised environment. The first time this is run, container images required for testing will be automatically built. An optional `--build` (or `-b`) flag may be used to rebuild these images in future (for example, to apply dependency updates).
 
 ```
+# Run tests
 scripts/test
+
+# Rebuild images and run tests
+scripts/test --build
 ```
 
 This runs tests via a `docker-compose run` command. If tests complete successfully, all containers, networks and volumes are cleaned up before the script exits. If there is an error or any tests fail, the associated Docker resources will be left available for inspection.
@@ -57,55 +61,77 @@ This runs tests via a `docker-compose run` command. If tests complete successful
 Alternatively, the same tests may be run locally via npm:
 
 ```
+# Run tests without Docker
 npm run test
 ```
 
 # Running the application
 
-The application is designed to run in containerised environments: Docker Compose for development; Kubernetes for production.
+The application is designed to run in containerised environments, using Docker Compose in development and Kubernetes in production.
 
-A Helm chart is provided for deployment to Kubernetes and scripts are provided for local development and testing.
+- Scripts are provided to aid local development and testing using Docker Compose.
+- A Helm chart is provided for production deployments to Kubernetes.
 
 ## Build container image
 
-Container images are built using Docker Compose and the same image may be run in either Docker Compose or Kubernetes.
+Container images are built using Docker Compose, with the same images used to run the service with either Docker Compose or Kubernetes.
 
-The [`build`](./scripts/build) script is essentially a shortcut and will pass any arguments through to the `docker-compose build` command.
-
-```
-# Build images using default Docker behaviour
-scripts/build
-
-# Build images without using the Docker cache
-scripts/build --no-cache
-```
-
-## Run as an isolated service
-
-To test this service in isolation, use the provided scripts to start and stop a local instance. This relies on Docker Compose and will run direct dependencies, such as message queues and databases, as additional containers. Arguments given to the [`start`](./scripts/start) script will be passed through to the `docker-compose up` command.
+By default, the start script will build (or rebuild) images so there will rarely be a need to build images manually. However, this can be achieved through the Docker Compose [build](https://docs.docker.com/compose/reference/build/) command:
 
 ```
-# Start the service and attach to running containers (press `ctrl + c` to quit)
-scripts/start
-
-# Start the service without attaching to containers
-scripts/start --detach
-
-# Stop the service and remove Docker volumes and networks created by the start script
-scripts/stop
+# Build container images
+docker-compose build
 ```
 
-## Connect to sibling services
+## Start and stop the service
 
-To test this service in combination with other parts of the FFC demo application, it is necessary to connect each service to an external Docker network and shared dependencies, such as message queues. Start the shared dependencies from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository and then use the `connected-` [`scripts`](./scripts/) to start this service. Follow instructions in other repositories to connect each service to the shared dependencies and network.
+Use the provided [`start`](./scripts/start) and [`stop`](./scripts/stop) scripts to run the service locally via Docker Compose. Both scripts accept a number of flags to customise their behaviour. For full instructions on the flags available to each script, use the `--help` or `-h` flag:
 
 ```
-# Start the service
-script/connected-start
+# View instructions for the start script
+scripts/start --help
 
-# Stop the service
-script/connected-stop
+# View instructions for the stop script
+scripts/stop --help
 ```
+
+By default, the start script will build new container images before starting the service on an isolated Docker network along with any direct dependencies, such as message queues and databases. It will not automatically replace existing containers or volumes, but will warn if there is a conflict and abort the request. Use the `--clean` or `--quick` flags to instruct the script to replace or keep existing resources, respectively.
+
+The underlying `docker-compose up/down` commands can be customised by appending `-- [DOCKER_COMPOSE_ARGS]` after any other arguments to the `start/stop` scripts. For example:
+
+```
+# Start the service without attaching to logs
+scripts/start -- --detach
+```
+
+## Test the service
+
+This service reacts to messages retrieved from an AMQP 1.0 message broker.
+
+The [start](./scripts/start) script runs [ActiveMQ Artemis](https://activemq.apache.org/components/artemis) alongside the application to provide the required message bus and broker.
+
+Test messages can be sent via the Artemis console UI hosted at http://localhost:8161/console/login (username: artemis, password: artemis). Messages should match the format of the sample JSON below.
+
+Sample valid JSON for each message queue is:
+
+```
+# Sample payment queue message
+{
+  "claimId": "MINE123",
+  "value": 190.96
+}
+
+# Sample schedule queue message
+{
+  "claimId": "MINE123"
+}
+```
+
+## Link to sibling services
+
+To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as message queues. The most convenient approach for this is to start the entire application stack from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository.
+
+It is also possible to run a limited subset of the application stack, using the [`start`](./scripts/start) script's `--link` flag to join each service to the shared Docker network. See the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) Readme for instructions.
 
 ## Deploy to Kubernetes
 
@@ -121,6 +147,19 @@ scripts/helm/install
 scripts/helm/delete
 ```
 
+### Accessing the pod
+
+By default, the service is not exposed via an endpoint within Kubernetes.
+
+Access may be granted by forwarding a local port to the deployed pod:
+
+```
+# Forward local port to the Kubernetes deployment
+kubectl port-forward --namespace=ffc-demo deployment/ffc-demo-payment-service 3004:3004
+```
+
+Once the port is forwarded, the service can be accessed and tested in the same way as described in the "Test the service" section above.
+
 ### Probes
 
 The service has both an Http readiness probe and an Http liveness probe configured to receive at the below end points.
@@ -132,29 +171,24 @@ The readiness probe will test for both the availability of a PostgreSQL database
 
 Sequelize's `authenticate` function is used to test database connectivity.  This function tries to run a basic query within the database.
 
-# Manual testing
+# Dependency management
 
-This service reacts to messages retrieved from an AMQP 1.0 message broker.
+Dependencies should be managed within a container using the development image for the app. This will ensure that any packages with environment-specific variants are installed with the correct variant for the contained environment, rather than the host system which may differ between development and production.
 
-The [start](./scripts/start) script runs [ActiveMQ Artemis](https://activemq.apache.org/components/artemis) alongside the application to provide the required message bus and broker.
+The [`exec`](./scripts/exec) script is provided to run arbitrary commands, such as npm, in a running service container. If the service is not running when this script is called, it will be started for the duration of the command and then removed.
 
-Test messages can be sent via the Artemis console UI hosted at http://localhost:8161/console/login (username: artemis, password: artemis). Messages should match the format of the sample JSON below.
+Since dependencies are installed into the container image, a full build should always be run immediately after any dependency change.
 
-__Sample payment queue message__
+In development, the `node_modules` folder is mounted to a named volume. This volume must be removed in order for dependency changes to propagate from the rebuilt image into future instances of the app container. The [`start`](./scripts/start) script has a `--clean` (or `-c`) option  which will achieve this.
 
-```
-{
-  "claimId": "MINE123",
-  "value": 190.96
-}
-```
-
-__Sample schedule queue message__
+The following example will update all npm dependencies, rebuild the container image and replace running containers and volumes:
 
 ```
-{
-  "claimId": "MINE123"
-}
+# Run the NPM update
+scripts/exec npm update
+
+# Rebuild and restart the service
+scripts/start --clean
 ```
 
 # Build pipeline

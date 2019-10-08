@@ -2,7 +2,7 @@ environment: development
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
 postgresDatabase: mine_payments
-postgresHost: ffc-demo-postgres-payments
+postgresHost: ffc-demo-payments-postgres
 postgresExternalName: host.docker.internal
 postgresPort: 5432
 name: ffc-demo-payment-service
@@ -16,10 +16,10 @@ container:
   registry:
   tag: latest
   imagePullPolicy: IfNotPresent
-  requestMemory: 30Mi
-  requestCpu: 10m
-  limitMemory: 60Mi
-  limitCpu: 40m
+  requestMemory: 60Mi
+  requestCpu: 40m
+  limitMemory: 120Mi
+  limitCpu: 80m
   runAsNonRoot: true
   runAsUser: 1000
   readOnlyRootFilesystem: true
@@ -36,7 +36,7 @@ container:
   paymentQueueUser: artemis
   paymentQueuePassword: artemis
   command: ["/bin/sh","-c"]
-  args: ["npm --no-update-notifier run migrate; node index"]  
+  args: ["npm --no-update-notifier run migrate; node index"]
 replicaCount: 1
 minReadySeconds: 10
 maxSurge: 1

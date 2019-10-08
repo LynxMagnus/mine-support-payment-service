@@ -1,5 +1,5 @@
 describe('Schedule service tests', () => {
-  let mockScheduleRespository = require('../repository/schedule-repository.mock')
+  const mockScheduleRespository = require('../repository/schedule-repository.mock')
   let scheduleService
 
   beforeEach(async () => {

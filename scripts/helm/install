@@ -1,0 +1,46 @@
+#!/bin/sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/../.." || return; pwd)"
+
+# Set Docker/Kubernetes resource names managed by this script
+containerName="ffc-demo-payment-service"
+dockerPrefix="ffc-demo-payment"
+kubernetesNamespace="ffc-demo"
+
+(
+  cd "${projectRoot}"
+
+  echo "Deploying payment message broker"
+  helm repo add activemq-artemis https://mailrucloudsolutions.github.io/activemq-artemis-helm/
+  helm upgrade \
+    --atomic \
+    --install \
+    --namespace ${kubernetesNamespace} \
+    --values helm/artemis-values.yaml \
+    ${dockerPrefix}-artemis \
+    activemq-artemis/activemq-artemis
+
+  echo "Deploying payment PostgreSQL"
+  helm upgrade \
+    --atomic \
+    --install \
+    --namespace ${kubernetesNamespace} \
+    --values helm/postgres-values.yaml \
+    --wait \
+    ${dockerPrefix}-postgres \
+    stable/postgresql
+
+  echo "Migrating database."
+  kubectl apply -f scripts/helm/dev-jobs/migrate.yaml
+
+  echo "Deploying Payment service"
+  helm upgrade \
+    --atomic \
+    --install \
+    --namespace ${kubernetesNamespace} \
+    --values helm/development-values.yaml \
+    --wait \
+    ${containerName} \
+    ./helm
+)
