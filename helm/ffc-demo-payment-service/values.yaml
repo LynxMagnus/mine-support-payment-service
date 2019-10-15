@@ -28,6 +28,7 @@ container:
   restartPolicy: Always
   messageQueueHost: amq
   messageQueuePort: "5672"
+  messageQueueReconnectLimit: 10
   messageQueueTransport: tcp
   scheduleQueueAddress: schedule
   scheduleQueueUser: artemis
