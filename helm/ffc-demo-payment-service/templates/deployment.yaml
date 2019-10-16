@@ -55,8 +55,10 @@ spec:
           value: {{ .Values.postgresPort | quote }}
         - name: MESSAGE_QUEUE_HOST
           value: {{ .Values.container.messageQueueHost }}
+        - name: MESSAGE_QUEUE_RECONNECT_LIMIT
+          value: {{ .Values.container.messageQueueReconnectLimit | quote }}
         - name: MESSAGE_QUEUE_PORT
-          value: {{ .Values.container.messageQueuePort | quote}}
+          value: {{ .Values.container.messageQueuePort | quote }}
         - name: MESSAGE_QUEUE_TRANSPORT
           value: {{ .Values.container.messageQueueTransport }}
         - name: SCHEDULE_QUEUE_ADDRESS

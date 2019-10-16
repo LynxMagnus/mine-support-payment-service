@@ -17,7 +17,7 @@ kubernetesNamespace="ffc-demo"
     --atomic \
     --install \
     --namespace ${kubernetesNamespace} \
-    --values helm/artemis-values.yaml \
+    --values helm/ffc-demo-payment-service/artemis-values.yaml \
     --wait \
     ${dockerPrefix}-artemis \
     activemq-artemis/activemq-artemis
@@ -27,7 +27,7 @@ kubernetesNamespace="ffc-demo"
     --atomic \
     --install \
     --namespace ${kubernetesNamespace} \
-    --values helm/postgres-values.yaml \
+    --values helm/ffc-demo-payment-service/postgres-values.yaml \
     --wait \
     ${dockerPrefix}-postgres \
     stable/postgresql
@@ -40,8 +40,8 @@ kubernetesNamespace="ffc-demo"
     --atomic \
     --install \
     --namespace ${kubernetesNamespace} \
-    --values helm/development-values.yaml \
+    --values helm/ffc-demo-payment-service/development-values.yaml \
     --wait \
     ${containerName} \
-    ./helm
+    ./helm/ffc-demo-payment-service
 )
