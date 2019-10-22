@@ -114,9 +114,16 @@ node {
   }
   if (pr != '') {
     stage('Helm install') {
-      def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-$containerTag,container.messageQueueHost=${params.messageQueueHost},container.scheduleQueueUser=${params.scheduleQueueUser},container.scheduleQueuePassword=${params.scheduleQueuePassword},container.paymentQueueUser=${params.paymentQueueUser},container.paymentQueuePassword=${params.paymentQueuePassword},postgresExternalName=${params.postgresExternalName},postgresPassword=${params.postgresPassword}"
-      deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
-      echo "Build available for review"
+      withCredentials([
+          // TODO: replace credentials with payemnt credentials
+          string(credentialsId: 'albTags', variable: 'albTags'),
+          string(credentialsId: 'albSecurityGroups', variable: 'albSecurityGroups'),
+          string(credentialsId: 'albArn', variable: 'albArn')
+        ]) {
+        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-$containerTag,container.messageQueueHost=${params.messageQueueHost},container.scheduleQueueUser=${params.scheduleQueueUser},container.scheduleQueuePassword=${params.scheduleQueuePassword},container.paymentQueueUser=${params.paymentQueueUser},container.paymentQueuePassword=${params.paymentQueuePassword},postgresExternalName=${params.postgresExternalName},postgresPassword=${params.postgresPassword}"
+        deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
+        echo "Build available for review"
+      }
     }
   }
   if (pr == '') {
