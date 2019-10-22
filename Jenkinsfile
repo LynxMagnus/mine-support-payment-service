@@ -10,15 +10,15 @@ def mergedPrNo = ''
 def containerTag = ''
 
 def getMergedPrNo() {
-    def mergedPrNo = sh(returnStdout: true, script: "git log --pretty=oneline --abbrev-commit -1 | sed -n 's/.*(#\\([0-9]\\+\\)).*/\\1/p'").trim()
-    return mergedPrNo ?: ''
+    def mergedPrNo = sh(returnStdout: true, script: "git log --pretty=oneline --abbrev-commit -1 | sed -n 's/.*(#\\([0-9]\\+\\)).*/\\1/p'").trim()    
+    return mergedPrNo ? "pr$mergedPrNo" : ''
 }
 
 def getVariables(repoName) {
     // jenkins checks out a commit, rather than a branch
     // use the git cli to get branch info for the commit
-    def branch = sh(returnStdout: true, script: 'git ls-remote --heads origin | grep $(git rev-parse HEAD) | cut -d / -f 3').trim()
-    // and the github API to get the current open PR for the branch. 
+    def branch = BRANCH_NAME
+    // use the git API to get the open PR for a branch
     // Note: This will cause issues if one branch has two open PRs
     def pr = sh(returnStdout: true, script: "curl https://api.github.com/repos/DEFRA/$repoName/pulls?state=open | jq '.[] | select(.head.ref == \"$branch\") | .number'").trim()
     def rawTag = pr == '' ? branch : "pr$pr"
