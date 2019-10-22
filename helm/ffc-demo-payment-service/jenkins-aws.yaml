@@ -1,0 +1,5 @@
+name: aws-ffc-demo
+imagePullSecret: myregistrykey
+container:
+  allowPrivilegeEscalation: true
+  imagePullPolicy: Always
