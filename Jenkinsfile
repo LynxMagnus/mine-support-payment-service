@@ -107,7 +107,7 @@ node {
   }
   if (pr != '') {
     stage('Helm install') {
-      def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-$containerTag,container.messageQueueHost=${params.messageQueueHost},container.messageQueuePort=${params.messageQueuePort},container.messageQueueTransport=${params.messageQueueTransport},container.scheduleQueueAddress=${params.scheduleQueueAddress},container.scheduleQueueUser=${params.scheduleQueueUser},container.scheduleQueuePassword=${params.scheduleQueuePassword},container.paymentQueueAddress=${params.paymentQueueAddress},container.paymentQueueUser=${params.paymentQueueUser},container.paymentQueuePassword=${params.paymentQueuePassword},postgresExternalName=${params.postgresExternalName},postgresPassword=${params.postgresPassword}"
+      def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-$containerTag,container.messageQueueHost=${params.messageQueueHost},container.scheduleQueueUser=${params.scheduleQueueUser},container.scheduleQueuePassword=${params.scheduleQueuePassword},container.paymentQueueUser=${params.paymentQueueUser},container.paymentQueuePassword=${params.paymentQueuePassword},postgresExternalName=${params.postgresExternalName},postgresPassword=${params.postgresPassword}"
       deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
       echo "Build available for review"
     }
