@@ -27,7 +27,6 @@ def getVariables(repoName) {
 }
 
 def buildTestImage(name, suffix) {
-  sh 'docker image prune -f'
   // NOTE: the docker-compose file currently makes use of global $BUILD_NUMBER env vars fo image names
   sh "docker-compose -p $name-$suffix -f docker-compose.yaml -f docker-compose.test.yaml build --no-cache $name"
 }
@@ -41,8 +40,8 @@ def runTests(name, suffix) {
   } finally {
     sh "docker-compose -p $name-$suffix -f docker-compose.yaml -f docker-compose.test.yaml down -v"
     junit 'test-output/junit.xml'
-    // clean up files created by node/ubuntu user that cannot be deleted by jenkins. Note: uses global environment variable
-    sh "docker run --rm -u node --mount type=bind,source=$WORKSPACE/test-output,target=/usr/src/app/test-output $name rm -rf test-output/*"
+    // clean up files created by node/ubuntu user that cannot be deleted by jenkins. Note: uses global environment variable    
+    sh "docker run --rm -u node --mount type=bind,source='$WORKSPACE/test-output',target=/usr/src/app/test-output $name rm -rf test-output/*"
   }
 }
 
@@ -66,7 +65,7 @@ def undeployPR(credentialsId, imageName, tag) {
   withKubeConfig([credentialsId: credentialsId]) {
     def deploymentName = "$imageName-$tag"
     sh "helm delete --purge $deploymentName || echo error removing deployment $deploymentName"
-    sh "kubectl delete $deploymentName"
+    sh "kubectl delete namespaces $deploymentName || echo error removing namespace $deploymentName"
   }
 }
 
@@ -93,6 +92,14 @@ node {
   checkout scm
   stage('Set branch, PR, and containerTag variables') {
     (branch, pr, containerTag, mergedPrNo) = getVariables(repoName)
+    if (pr ) {
+      sh "echo Building $pr"
+    } else if (branch == "master") {
+      sh "echo Building master branch"
+    } else {
+      currentBuild.result = 'ABORTED'
+      error('Build aborted - not a PR or a master branch')
+    }
   }
   stage('Build test image') {
     buildTestImage(imageName, BUILD_NUMBER)
