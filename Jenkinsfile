@@ -115,7 +115,7 @@ node {
   if (pr != '') {
     stage('Helm install') {
       withCredentials([
-          // TODO: replace credentials with payemnt credentials
+          // TODO: replace credentials with payment credentials
           string(credentialsId: 'albTags', variable: 'albTags'),
           string(credentialsId: 'albSecurityGroups', variable: 'albSecurityGroups'),
           string(credentialsId: 'albArn', variable: 'albArn')
