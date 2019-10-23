@@ -116,9 +116,11 @@ node {
     stage('Helm install') {
       withCredentials([
           // TODO: replace credentials with payment credentials
-          string(credentialsId: 'albTags', variable: 'albTags'),
-          string(credentialsId: 'albSecurityGroups', variable: 'albSecurityGroups'),
-          string(credentialsId: 'albArn', variable: 'albArn')
+          string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
+          string(credentialsId: 'scheduleListenPR', variable: 'scheduleQueueCredentials'),
+          string(credentialsId: 'paymentListenPR', variable: 'paymentQueueCredentials'),
+          string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
+          string(credentialsId: 'postgresPaymentsPR', variable: 'postgresCredentials'),
         ]) {
         def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-$containerTag,container.messageQueueHost=${params.messageQueueHost},container.scheduleQueueUser=${params.scheduleQueueUser},container.scheduleQueuePassword=${params.scheduleQueuePassword},container.paymentQueueUser=${params.paymentQueueUser},container.paymentQueuePassword=${params.paymentQueuePassword},postgresExternalName=${params.postgresExternalName},postgresPassword=${params.postgresPassword}"
         deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
