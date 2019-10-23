@@ -14,14 +14,6 @@ def getMergedPrNo() {
     return mergedPrNo ? "pr$mergedPrNo" : ''
 }
 
-def getRepoURL() {
-  return sh(returnStdout: true, script: "git config --get remote.origin.url").trim()
-}
- 
-def getCommitSha() {
-  return sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-}
-
 def getVariables(repoName) {
     def branch = BRANCH_NAME
     // use the git API to get the open PR for a branch
