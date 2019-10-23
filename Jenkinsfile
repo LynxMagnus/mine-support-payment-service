@@ -88,54 +88,80 @@ def publishChart(imageName) {
   }
 }
 
+def getRepoURL() {
+  return sh(returnStdout: true, script: "git config --get remote.origin.url").trim()
+}
+ 
+def getCommitSha() {
+  return sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+}
+ 
+def updateGithubCommitStatus(message, state) {
+  repoUrl = getRepoURL()
+  commitSha = getCommitSha()
+  step([
+    $class: 'GitHubCommitStatusSetter',
+    reposSource: [$class: "ManuallyEnteredRepositorySource", url: repoUrl],
+    commitShaSource: [$class: "ManuallyEnteredShaSource", sha: commitSha],
+    errorHandlers: [[$class: 'ShallowAnyErrorHandler']],
+    statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ])
+}
+
 node {
-  checkout scm
-  stage('Set branch, PR, and containerTag variables') {
-    (branch, pr, containerTag, mergedPrNo) = getVariables(repoName)
-    if (pr ) {
-      sh "echo Building $pr"
-    } else if (branch == "master") {
-      sh "echo Building master branch"
-    } else {
-      currentBuild.result = 'ABORTED'
-      error('Build aborted - not a PR or a master branch')
+  try{
+    checkout scm
+    stage('Set branch, PR, and containerTag variables') {
+      (branch, pr, containerTag, mergedPrNo) = getVariables(repoName)
+      if (pr) {
+        sh "echo Building $pr"
+      } else if (branch == "master") {
+        sh "echo Building master branch"
+      } else {
+        currentBuild.result = 'ABORTED'
+        error('Build aborted - not a PR or a master branch')
+      }
+      updateGithubCommitStatus('Build started','PENDING')
     }
-  }
-  stage('Build test image') {
-    buildTestImage(imageName, BUILD_NUMBER)
-  }
-  stage('Run tests') {
-    runTests(imageName, BUILD_NUMBER)
-  }
-  // note: there should be a `build production image` step here,
-  // but the docker file is currently not set up to create a production only image
-  stage('Push container image') {
-    pushContainerImage(registry, regCredsId, imageName, containerTag)
-  }
-  if (pr != '') {
-    stage('Helm install') {
-      withCredentials([
-          string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
-          usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
-          usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
-          string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
-          usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
-        ]) {
-        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-payment-service-$containerTag,container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
-        deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
-        echo "Build available for review"
+    stage('Build test image') {
+      buildTestImage(imageName, BUILD_NUMBER)
+    }
+    stage('Run tests') {
+      runTests(imageName, BUILD_NUMBER)
+    }
+    // note: there should be a `build production image` step here,
+    // but the docker file is currently not set up to create a production only image
+    stage('Push container image') {
+      pushContainerImage(registry, regCredsId, imageName, containerTag)
+    }
+    if (pr != '') {
+      stage('Helm install') {
+        withCredentials([
+            string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
+            usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
+            usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
+            string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
+            usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+          ]) {
+          def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-payment-service-$containerTag,container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
+          deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
+          echo "Build available for review"
+        }
       }
     }
-  }
-  if (pr == '') {
-    stage('Publish chart') {
-      publishChart(imageName)
+    if (pr == '') {
+      stage('Publish chart') {
+        publishChart(imageName)
+      }
     }
-  }
-  if (mergedPrNo != '') {
-    stage('Remove merged PR') {
-      sh "echo removing deployment for PR $mergedPrNo"
-      undeployPR(kubeCredsId, imageName, mergedPrNo)
+    if (mergedPrNo != '') {
+      stage('Remove merged PR') {
+        sh "echo removing deployment for PR $mergedPrNo"
+        undeployPR(kubeCredsId, imageName, mergedPrNo)
+      }
     }
+  } catch(e) {
+    updateGithubCommitStatus(e.message, 'FAILURE', repoUrl, commitSha)
+    throw e
   }
 }
