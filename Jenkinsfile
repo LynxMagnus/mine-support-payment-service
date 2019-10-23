@@ -115,15 +115,15 @@ node {
   if (pr != '') {
     stage('Helm install') {
       environment {
-        scheduleQueueCredentials = credentials('scheduleListenPR')
-        paymentQueueCredentials = credentials('paymentListenPR')
-        postgresCredentials =  credentials('posgresPaymentsPR')
+        SCHEDULE_QUEUE_CREDENTIALS = credentials('scheduleListenPR')
+        PAYMENT_QUEUE_CREDENTIALS = credentials('paymentListenPR')
+        POSTGRES_CREDENTIALS =  credentials('posgresPaymentsPR')
       }
       withCredentials([
           string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
           string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName')
         ]) {
-        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-$containerTag,container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueCredentials_USR\",container.scheduleQueuePassword=\"$scheduleQueueCredentials_PSW\",container.paymentQueueUser=\"$paymentQueueCredentials_USR\",container.paymentQueuePassword=\"$paymentQueueCredentials_PSW\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresCredentials_USR\",postgresPassword=\"$postgresCredentials_PSW\""
+        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-$containerTag,container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$SCHEDULE_QUEUE_CREDENTIALS_USR\",container.scheduleQueuePassword=\"$SCHEDULE_QUEUE_CREDENTIALS_PSW\",container.paymentQueueUser=\"$PAYMENT_QUEUE_CREDENTIALS_USR\",container.paymentQueuePassword=\"$PAYMENT_QUEUE_CREDENTIALS_PSW\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$POSTGRES_CREDENTIALS_USR\",postgresPassword=\"$POSTGRES_CREDENTIALS_PSW\""
         deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
         echo "Build available for review"
       }
