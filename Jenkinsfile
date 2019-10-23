@@ -109,8 +109,8 @@ def updateGithubCommitStatus(message, state) {
 }
 
 node {
-  try{
-    checkout scm
+  checkout scm
+  try {
     stage('Set branch, PR, and containerTag variables') {
       (branch, pr, containerTag, mergedPrNo) = getVariables(repoName)
       if (pr) {
@@ -122,42 +122,42 @@ node {
         error('Build aborted - not a PR or a master branch')
       }
       updateGithubCommitStatus('Build started','PENDING')
+    }    
+    stage('Build test image') {
+      buildTestImage(imageName, BUILD_NUMBER)
     }
-  }
-  stage('Build test image') {
-    buildTestImage(imageName, BUILD_NUMBER)
-  }
-  stage('Run tests') {
-    runTests(imageName, BUILD_NUMBER)
-  }
-  // note: there should be a `build production image` step here,
-  // but the docker file is currently not set up to create a production only image
-  stage('Push container image') {
-    pushContainerImage(registry, regCredsId, imageName, containerTag)
-  }
-  if (pr != '') {
-    stage('Helm install') {
-      withCredentials([
-          string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
-          usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
-          usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
-          string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
-          usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
-        ]) {
-        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
-        deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
-        echo "Build available for review"
+    stage('Run tests') {
+      runTests(imageName, BUILD_NUMBER)
+    }
+    // note: there should be a `build production image` step here,
+    // but the docker file is currently not set up to create a production only image
+    stage('Push container image') {
+      pushContainerImage(registry, regCredsId, imageName, containerTag)
+    }
+    if (pr != '') {
+      stage('Helm install') {
+        withCredentials([
+            string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
+            usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
+            usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
+            string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
+            usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+          ]) {
+          def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
+          deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
+          echo "Build available for review"
+        }
       }
-    }
-    if (pr == '') {
-      stage('Publish chart') {
-        publishChart(imageName)
+      if (pr == '') {
+        stage('Publish chart') {
+          publishChart(imageName)
+        }
       }
-    }
-    if (mergedPrNo != '') {
-      stage('Remove merged PR') {
-        sh "echo removing deployment for PR $mergedPrNo"
-        undeployPR(kubeCredsId, imageName, mergedPrNo)
+      if (mergedPrNo != '') {
+        stage('Remove merged PR') {
+          sh "echo removing deployment for PR $mergedPrNo"
+          undeployPR(kubeCredsId, imageName, mergedPrNo)
+        }
       }
     }
   } catch(e) {
