@@ -1,4 +1,4 @@
-name: aws-ffc-demo
+name: aws-ffc-demo-payment-service
 imagePullSecret: myregistrykey
 container:
   allowPrivilegeEscalation: true
