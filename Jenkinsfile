@@ -123,30 +123,30 @@ node {
       }
       updateGithubCommitStatus('Build started','PENDING')
     }
-    stage('Build test image') {
-      buildTestImage(imageName, BUILD_NUMBER)
-    }
-    stage('Run tests') {
-      runTests(imageName, BUILD_NUMBER)
-    }
-    // note: there should be a `build production image` step here,
-    // but the docker file is currently not set up to create a production only image
-    stage('Push container image') {
-      pushContainerImage(registry, regCredsId, imageName, containerTag)
-    }
-    if (pr != '') {
-      stage('Helm install') {
-        withCredentials([
-            string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
-            usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
-            usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
-            string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
-            usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
-          ]) {
-          def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-payment-service-$containerTag,container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
-          deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
-          echo "Build available for review"
-        }
+  }
+  stage('Build test image') {
+    buildTestImage(imageName, BUILD_NUMBER)
+  }
+  stage('Run tests') {
+    runTests(imageName, BUILD_NUMBER)
+  }
+  // note: there should be a `build production image` step here,
+  // but the docker file is currently not set up to create a production only image
+  stage('Push container image') {
+    pushContainerImage(registry, regCredsId, imageName, containerTag)
+  }
+  if (pr != '') {
+    stage('Helm install') {
+      withCredentials([
+          string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
+          usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
+          usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
+          string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
+          usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+        ]) {
+        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
+        deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
+        echo "Build available for review"
       }
     }
     if (pr == '') {
