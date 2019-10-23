@@ -127,7 +127,7 @@ node {
         currentBuild.result = 'ABORTED'
         error('Build aborted - not a PR or a master branch')
       }
-      updateGithubCommitStatus('Build started','PENDING')
+      updateGithubCommitStatus('Build started', 'PENDING', repoUrl, commitSha)
     }    
     stage('Build test image') {
       buildTestImage(imageName, BUILD_NUMBER)
