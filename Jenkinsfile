@@ -114,19 +114,17 @@ node {
   }
   if (pr != '') {
     stage('Helm install') {
-      environment {
-        SCHEDULE_QUEUE_CREDENTIALS = credentials('scheduleListenPR')
-        PAYMENT_QUEUE_CREDENTIALS = credentials('paymentListenPR')
-        POSTGRES_CREDENTIALS =  credentials('posgresPaymentsPR')
-      }
-      // withCredentials([
-      //     string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
-      //     string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName')
-      //   ]) {
-        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-$containerTag,container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$SCHEDULE_QUEUE_CREDENTIALS_USR\",container.scheduleQueuePassword=\"$SCHEDULE_QUEUE_CREDENTIALS_PSW\",container.paymentQueueUser=\"$PAYMENT_QUEUE_CREDENTIALS_USR\",container.paymentQueuePassword=\"$PAYMENT_QUEUE_CREDENTIALS_PSW\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$POSTGRES_CREDENTIALS_USR\",postgresPassword=\"$POSTGRES_CREDENTIALS_PSW\""
+      withCredentials([
+          string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
+          usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
+          usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
+          string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
+          usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+        ]) {
+        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-$containerTag,container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
         deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
         echo "Build available for review"
-      // }
+      }
     }
   }
   if (pr == '') {
