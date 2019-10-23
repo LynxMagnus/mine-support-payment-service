@@ -121,7 +121,7 @@ node {
           string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
           usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
         ]) {
-        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-$containerTag,container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
+        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set name=ffc-demo-payment-service-$containerTag,container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
         deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
         echo "Build available for review"
       }
