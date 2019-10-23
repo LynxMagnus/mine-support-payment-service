@@ -14,16 +14,22 @@ def getMergedPrNo() {
     return mergedPrNo ? "pr$mergedPrNo" : ''
 }
 
+def getRepoURL() {
+  return sh(returnStdout: true, script: "git config --get remote.origin.url").trim()
+}
+ 
+def getCommitSha() {
+  return sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+}
+
 def getVariables(repoName) {
-    // jenkins checks out a commit, rather than a branch
-    // use the git cli to get branch info for the commit
     def branch = BRANCH_NAME
     // use the git API to get the open PR for a branch
     // Note: This will cause issues if one branch has two open PRs
     def pr = sh(returnStdout: true, script: "curl https://api.github.com/repos/DEFRA/$repoName/pulls?state=open | jq '.[] | select(.head.ref == \"$branch\") | .number'").trim()
     def rawTag = pr == '' ? branch : "pr$pr"
     def containerTag = rawTag.replaceAll(/[^a-zA-Z0-9]/, '-').toLowerCase()
-    return [branch, pr, containerTag,  getMergedPrNo()]
+    return [branch, pr, containerTag,  getMergedPrNo(), getRepoURL(), getCommitSha()]
 }
 
 def buildTestImage(name, suffix) {
