@@ -96,9 +96,7 @@ def getCommitSha() {
   return sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 }
  
-def updateGithubCommitStatus(message, state) {
-  repoUrl = getRepoURL()
-  commitSha = getCommitSha()
+def updateGithubCommitStatus(message, state, repoUrl, commitSha) {
   step([
     $class: 'GitHubCommitStatusSetter',
     reposSource: [$class: "ManuallyEnteredRepositorySource", url: repoUrl],
