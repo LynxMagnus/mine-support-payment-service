@@ -8,6 +8,8 @@ def branch = ''
 def pr = ''
 def mergedPrNo = ''
 def containerTag = ''
+def repoUrl = ''
+def commitSha = ''
 
 def getMergedPrNo() {
     def mergedPrNo = sh(returnStdout: true, script: "git log --pretty=oneline --abbrev-commit -1 | sed -n 's/.*(#\\([0-9]\\+\\)).*/\\1/p'").trim()    
@@ -110,7 +112,7 @@ node {
   checkout scm
   try {
     stage('Set branch, PR, and containerTag variables') {
-      (branch, pr, containerTag, mergedPrNo) = getVariables(repoName)
+      (branch, pr, containerTag, mergedPrNo, repoUrl, commitSha) = getVariables(repoName)
       if (pr) {
         sh "echo Building $pr"
       } else if (branch == "master") {
