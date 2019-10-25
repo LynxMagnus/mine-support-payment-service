@@ -8,6 +8,8 @@ def branch = ''
 def pr = ''
 def mergedPrNo = ''
 def containerTag = ''
+def repoUrl = ''
+def commitSha = ''
 
 def getMergedPrNo() {
     def mergedPrNo = sh(returnStdout: true, script: "git log --pretty=oneline --abbrev-commit -1 | sed -n 's/.*(#\\([0-9]\\+\\)).*/\\1/p'").trim()    
@@ -15,15 +17,13 @@ def getMergedPrNo() {
 }
 
 def getVariables(repoName) {
-    // jenkins checks out a commit, rather than a branch
-    // use the git cli to get branch info for the commit
     def branch = BRANCH_NAME
     // use the git API to get the open PR for a branch
     // Note: This will cause issues if one branch has two open PRs
     def pr = sh(returnStdout: true, script: "curl https://api.github.com/repos/DEFRA/$repoName/pulls?state=open | jq '.[] | select(.head.ref == \"$branch\") | .number'").trim()
     def rawTag = pr == '' ? branch : "pr$pr"
     def containerTag = rawTag.replaceAll(/[^a-zA-Z0-9]/, '-').toLowerCase()
-    return [branch, pr, containerTag,  getMergedPrNo()]
+    return [branch, pr, containerTag,  getMergedPrNo(), getRepoURL(), getCommitSha()]
 }
 
 def buildTestImage(name, suffix) {
@@ -88,54 +88,79 @@ def publishChart(imageName) {
   }
 }
 
+def getRepoURL() {
+  return sh(returnStdout: true, script: "git config --get remote.origin.url").trim()
+}
+ 
+def getCommitSha() {
+  return sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+}
+ 
+def updateGithubCommitStatus(message, state, repoUrl, commitSha) {
+  step([
+    $class: 'GitHubCommitStatusSetter',
+    reposSource: [$class: "ManuallyEnteredRepositorySource", url: repoUrl],
+    commitShaSource: [$class: "ManuallyEnteredShaSource", sha: commitSha],
+    errorHandlers: [[$class: 'ShallowAnyErrorHandler']],
+    statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ])
+}
+
 node {
   checkout scm
-  stage('Set branch, PR, and containerTag variables') {
-    (branch, pr, containerTag, mergedPrNo) = getVariables(repoName)
-    if (pr ) {
-      sh "echo Building $pr"
-    } else if (branch == "master") {
-      sh "echo Building master branch"
-    } else {
-      currentBuild.result = 'ABORTED'
-      error('Build aborted - not a PR or a master branch')
-    }
-  }
-  stage('Build test image') {
-    buildTestImage(imageName, BUILD_NUMBER)
-  }
-  stage('Run tests') {
-    runTests(imageName, BUILD_NUMBER)
-  }
-  // note: there should be a `build production image` step here,
-  // but the docker file is currently not set up to create a production only image
-  stage('Push container image') {
-    pushContainerImage(registry, regCredsId, imageName, containerTag)
-  }
-  if (pr != '') {
-    stage('Helm install') {
-      withCredentials([
-          string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
-          usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
-          usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
-          string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
-          usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
-        ]) {
-        def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
-        deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
-        echo "Build available for review"
+  try {
+    stage('Set branch, PR, and containerTag variables') {
+      (branch, pr, containerTag, mergedPrNo, repoUrl, commitSha) = getVariables(repoName)
+      if (pr) {
+        sh "echo Building $pr"
+      } else if (branch == "master") {
+        sh "echo Building master branch"
+      } else {
+        currentBuild.result = 'ABORTED'
+        error('Build aborted - not a PR or a master branch')
       }
+      updateGithubCommitStatus('Build started', 'PENDING', repoUrl, commitSha)
+    }    
+    stage('Build test image') {
+      buildTestImage(imageName, BUILD_NUMBER)
     }
-  }
-  if (pr == '') {
-    stage('Publish chart') {
-      publishChart(imageName)
+    stage('Run tests') {
+      runTests(imageName, BUILD_NUMBER)
     }
-  }
-  if (mergedPrNo != '') {
-    stage('Remove merged PR') {
-      sh "echo removing deployment for PR $mergedPrNo"
-      undeployPR(kubeCredsId, imageName, mergedPrNo)
+    // note: there should be a `build production image` step here,
+    // but the docker file is currently not set up to create a production only image
+    stage('Push container image') {
+      pushContainerImage(registry, regCredsId, imageName, containerTag)
     }
+    if (pr != '') {
+      stage('Helm install') {
+        withCredentials([
+            string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
+            usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
+            usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
+            string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
+            usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+          ]) {
+          def extraCommands = "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
+          deployPR(kubeCredsId, registry, imageName, containerTag, extraCommands)
+          echo "Build available for review"
+        }
+      }
+      if (pr == '') {
+        stage('Publish chart') {
+          publishChart(imageName)
+        }
+      }
+      if (mergedPrNo != '') {
+        stage('Remove merged PR') {
+          sh "echo removing deployment for PR $mergedPrNo"
+          undeployPR(kubeCredsId, imageName, mergedPrNo)
+        }
+      }
+      updateGithubCommitStatus('Build successful', 'SUCCESS', repoUrl, commitSha)
+    }    
+  } catch(e) {
+    updateGithubCommitStatus(e.message, 'FAILURE', repoUrl, commitSha)
+    throw e
   }
 }
