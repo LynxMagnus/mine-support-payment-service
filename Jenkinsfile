@@ -146,19 +146,19 @@ node {
           echo "Build available for review"
         }
       }
-      if (pr == '') {
-        stage('Publish chart') {
-          publishChart(imageName)
-        }
+    }
+    if (pr == '') {
+      stage('Publish chart') {
+        publishChart(imageName)
       }
-      if (mergedPrNo != '') {
-        stage('Remove merged PR') {
-          sh "echo removing deployment for PR $mergedPrNo"
-          undeployPR(kubeCredsId, imageName, mergedPrNo)
-        }
+    }
+    if (mergedPrNo != '') {
+      stage('Remove merged PR') {
+        sh "echo removing deployment for PR $mergedPrNo"
+        undeployPR(kubeCredsId, imageName, mergedPrNo)
       }
-      updateGithubCommitStatus('Build successful', 'SUCCESS', repoUrl, commitSha)
-    }    
+    }
+    updateGithubCommitStatus('Build successful', 'SUCCESS', repoUrl, commitSha)        
   } catch(e) {
     updateGithubCommitStatus(e.message, 'FAILURE', repoUrl, commitSha)
     throw e
