@@ -53,6 +53,7 @@ node {
         ]) {
           defraUtils.triggerDeploy(jenkinsDeployUrl, 'ffc-demo-payment-service-deploy', jenkinsToken, ['chartVersion':'1.0.0'])
         }
+      }
     }
     if (mergedPrNo != '') {
       stage('Remove merged PR') {
