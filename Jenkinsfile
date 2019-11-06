@@ -6,6 +6,7 @@ def registry = '562955126301.dkr.ecr.eu-west-2.amazonaws.com'
 def regCredsId = 'ecr:eu-west-2:ecr-user'
 def kubeCredsId = 'awskubeconfig002'
 def imageName = 'ffc-demo-payment-service'
+def jenkinsDeployJob = 'ffc-demo-payment-service-deploy'
 def repoName = 'ffc-demo-payment-service'
 def pr = ''
 def mergedPrNo = ''
@@ -51,7 +52,7 @@ node {
           string(credentialsId: 'JenkinsDeployUrl', variable: 'jenkinsDeployUrl'),
           string(credentialsId: 'ffc-demo-payment-service-deploy-token', variable: 'jenkinsToken')
         ]) {
-          defraUtils.triggerDeploy(jenkinsDeployUrl, 'ffc-demo-payment-service-deploy', jenkinsToken, ['chartVersion':'1.0.0'])
+          defraUtils.triggerDeploy(jenkinsDeployUrl, jenkinsDeployJob, jenkinsToken, ['chartVersion':'1.0.0'])
         }
       }
     }
