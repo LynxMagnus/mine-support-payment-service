@@ -11,12 +11,27 @@ def repoName = 'ffc-demo-payment-service'
 def pr = ''
 def mergedPrNo = ''
 def containerTag = ''
+def extraCommandsx = ''
+
+def getExtraCommands() {
+    withCredentials([
+        string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
+        usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
+        usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
+        string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
+        usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+      ]) {
+     return "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
+    }
+}
 
 node {
   checkout scm
   try {
     stage('Set branch, PR, and containerTag variables') {
       (pr, containerTag, mergedPrNo) = defraUtils.getVariables(repoName)
+      extraCommandsx = getExtraCommands()
+      echo "extraCommands $extraCommandsx"
       defraUtils.setGithubStatusPending()
     }
     stage('Build test image') {
