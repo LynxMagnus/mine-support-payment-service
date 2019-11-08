@@ -44,9 +44,8 @@ node {
     }
     if (pr != '') {
       stage('Helm install') {
-          defraUtils.deployChart(kubeCredsId, registry, imageName, containerTag, extraCommands)
-          echo "Build available for review"
-        }
+        defraUtils.deployChart(kubeCredsId, registry, imageName, containerTag, extraCommands)
+        echo "Build available for review"
       }
     }
     if (pr == '') {
