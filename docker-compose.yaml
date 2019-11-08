@@ -3,7 +3,6 @@ services:
   ffc-demo-payment-service:
     build: .
     image: ffc-demo-payment-service
-    container_name: ffc-demo-payment-service
     depends_on:
       - ffc-demo-payment-postgres
     environment:
@@ -21,28 +20,18 @@ services:
       PAYMENT_QUEUE_ADDRESS: payment
       PAYMENT_QUEUE_USER: artemis
       PAYMENT_QUEUE_PASSWORD: artemis
-    networks:
-      - ffc-demo-payment
-    ports:
-      - "3004:3004"
     volumes:
       - node_modules:/usr/src/app/node_modules/
       - .:/usr/src/app
 
   ffc-demo-payment-postgres:
-    container_name: ffc-demo-payment-postgres
     image: postgres:11.4-alpine
     environment:
       POSTGRES_DB: ffc_demo_payments
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
-    networks:
-      - ffc-demo-payment
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
-networks:
-  ffc-demo-payment: {}
 
 volumes:
   node_modules: {}
