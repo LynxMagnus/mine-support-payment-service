@@ -7,24 +7,22 @@ services:
   ffc-demo-payment-service:
     build: .
     image: ffc-demo-payment-service
-    container_name: ffc-demo-payment-service
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-payment-postgres:5432 --
         scripts/wait-for/wait-for ffc-demo-payment-message-queue:5672 --
         npm run migrate &&
         npm run start:watch"
+    ports:
+      - "3004:3004"
     depends_on:
       - ffc-demo-payment-message-queue
 
   ffc-demo-payment-message-queue:
-    container_name: ffc-demo-payment-message-queue
     image: vromero/activemq-artemis:2.9.0-alpine
     environment:
       ARTEMIS_USERNAME: artemis
       ARTEMIS_PASSWORD: artemis
-    networks:
-      - ffc-demo-payment
     ports:
       - "8161:8161"
       - "5672:5672"
@@ -34,9 +32,6 @@ services:
       - message-queue-etc:/var/lib/artemis/etc
       - message-queue-etc-override:/var/lib/artemis/etc-override
       - message-queue-lock:/var/lib/artemis/lock
-
-networks:
-  ffc-demo-payment: {}
 
 volumes:
   message-queue-data: {}
