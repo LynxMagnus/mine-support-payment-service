@@ -13,21 +13,21 @@ def mergedPrNo = ''
 def containerTag = ''
 def extraCommands = ''
 
-def getExtraCommands() {
-    withCredentials([
-        string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
-        usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
-        usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
-        string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
-        usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
-      ]) {
-     return "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
-    }
+def getExtraHelmCommands() {
+  withCredentials([
+      string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
+      usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
+      usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
+      string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
+      usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+    ]) {
+    return "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
+  }
 }
 
 node {
   checkout scm
-  extraCommands = getExtraCommands()
+  extraCommands = getExtraHelmCommands()
   try {
     stage('Set branch, PR, and containerTag variables') {
       (pr, containerTag, mergedPrNo) = defraUtils.getVariables(repoName)
@@ -42,12 +42,6 @@ node {
     stage('Push container image') {
       defraUtils.buildAndPushContainerImage(regCredsId, registry, imageName, containerTag)
     }
-    if (pr != '') {
-      stage('Helm install') {
-        defraUtils.deployChart(kubeCredsId, registry, imageName, containerTag, extraCommands)
-        echo "Build available for review"
-      }
-    }
     if (pr == '') {
       stage('Publish chart') {
         defraUtils.publishChart(registry, imageName, containerTag)
@@ -59,6 +53,11 @@ node {
         ]) {
           defraUtils.triggerDeploy(jenkinsDeployUrl, jenkinsDeployJob, jenkinsToken, ['chartVersion':'1.0.0'])
         }
+      }
+    } else {
+      stage('Helm install') {
+        defraUtils.deployChart(kubeCredsId, registry, imageName, containerTag, extraCommands)
+        echo "Build available for review"
       }
     }
     if (mergedPrNo != '') {
