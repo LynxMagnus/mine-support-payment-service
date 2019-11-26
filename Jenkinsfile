@@ -11,23 +11,9 @@ def repoName = 'ffc-demo-payment-service'
 def pr = ''
 def mergedPrNo = ''
 def containerTag = ''
-def extraCommands = ''
-
-def getExtraHelmCommands() {
-  withCredentials([
-      string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
-      usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
-      usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
-      string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
-      usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
-    ]) {
-    return "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml --set container.messageQueueHost=\"$messageQueueHost\",container.scheduleQueueUser=\"$scheduleQueueUsername\",container.scheduleQueuePassword=\"$scheduleQueuePassword\",container.paymentQueueUser=\"$paymentQueueUsername\",container.paymentQueuePassword=\"$paymentQueuePassword\",postgresExternalName=\"$postgresExternalName\",postgresUsername=\"$postgresUsername\",postgresPassword=\"$postgresPassword\""
-  }
-}
 
 node {
   checkout scm
-  extraCommands = getExtraHelmCommands()
   try {
     stage('Set branch, PR, and containerTag variables') {
       (pr, containerTag, mergedPrNo) = defraUtils.getVariables(repoName)
@@ -56,8 +42,33 @@ node {
       }
     } else {
       stage('Helm install') {
-        defraUtils.deployChart(kubeCredsId, registry, imageName, containerTag, extraCommands)
-        echo "Build available for review"
+        withCredentials([
+          string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
+          usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
+          usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
+          string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
+          usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+        ]) {
+          def helmValues = [
+            /container.messageQueueHost=\"$messageQueueHost\"/,
+            /container.paymentQueuePassword=\"$paymentQueuePassword\"/,
+            /container.paymentQueueUser=\"$paymentQueueUsername\"/,
+            /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
+            /container.scheduleQueuePassword=\"$scheduleQueuePassword\"/,
+            /container.scheduleQueueUser=\"$scheduleQueueUsername\"/,
+            /postgresExternalName=\"$postgresExternalName\"/,
+            /postgresPassword=\"$postgresPassword\"/,
+            /postgresUsername=\"$postgresUsername\"/
+          ].join(',')
+
+          def extraCommands = [
+            "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml",
+            "--set $helmValues"
+          ].join(' ')
+
+          defraUtils.deployChart(kubeCredsId, registry, imageName, containerTag, extraCommands)
+          echo "Build available for review"
+        }
       }
     }
     if (mergedPrNo != '') {
