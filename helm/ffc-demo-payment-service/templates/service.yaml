@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ quote .Values.postgresHost }}
+  name: {{ .Values.postgresHost }}
   labels:
     environment: {{ quote .Values.environment }}
 spec:
@@ -10,7 +10,7 @@ spec:
   externalName: {{ quote .Values.postgresExternalName }}
   ports:
     - name: port
-      port: {{ quote .Values.postgresPort }}
+      port: {{ .Values.postgresPort }}
 {{- end }}
 ---
 apiVersion: v1
@@ -22,7 +22,7 @@ metadata:
     environment: {{ quote .Values.environment }}
 spec:
   ports:
-  - port: {{ quote .Values.service.port }}
+  - port: {{ .Values.service.port }}
     targetPort: http
     protocol: TCP
     name: http

@@ -6,8 +6,8 @@ metadata:
     app: {{ quote .Values.name }}
     environment: {{ quote .Values.environment }}
 spec:
-  replicas: {{ quote .Values.replicaCount }}
-  minReadySeconds: {{ quote .Values.minReadySeconds }}
+  replicas: {{ .Values.replicaCount }}
+  minReadySeconds: {{ .Values.minReadySeconds }}
   template:
     metadata:
       labels:
@@ -17,29 +17,29 @@ spec:
         redeployOnChange: {{ quote .Values.container.redeployOnChange }}
     spec:
       restartPolicy: {{ quote .Values.container.restartPolicy }}
-      {{- if quote .Values.imagePullSecret }}
+      {{- if .Values.imagePullSecret }}
       imagePullSecrets:
       - name: {{ quote .Values.imagePullSecret }}
       {{- end }}
       containers:
       - name: {{ quote .Values.name }}
         image: {{ quote .Values.image }}
-        {{- if quote .Values.container.command }}
-        {{- with quote .Values.container.command }}
+        {{- if .Values.container.command }}
+        {{- with .Values.container.command }}
         command:
           {{- toYaml . | nindent 12 }}
         {{- end }}
-        {{- with quote .Values.container.args }}
+        {{- with .Values.container.args }}
         args:
           {{- toYaml . | nindent 12 }}
         {{- end }}
         {{- end }}
         imagePullPolicy: {{ quote .Values.container.imagePullPolicy }}
         securityContext:
-          runAsUser: {{ quote .Values.container.runAsUser }}
-          runAsNonRoot: {{ quote .Values.container.runAsNonRoot }}
-          readOnlyRootFilesystem: {{ quote .Values.container.readOnlyRootFilesystem }}
-          allowPrivilegeEscalation: {{ quote .Values.container.allowPrivilegeEscalation }}
+          runAsUser: {{ .Values.container.runAsUser }}
+          runAsNonRoot: {{ .Values.container.runAsNonRoot }}
+          readOnlyRootFilesystem: {{ .Values.container.readOnlyRootFilesystem }}
+          allowPrivilegeEscalation: {{ .Values.container.allowPrivilegeEscalation }}
         env:
         - name: NODE_ENV
           value: {{ quote .Values.environment }}
@@ -52,11 +52,11 @@ spec:
         - name: POSTGRES_HOST
           value: {{ quote .Values.postgresExternalName }}
         - name: POSTGRES_PORT
-          value: {{ quote .Values.postgresPort }}
+          value: {{ .Values.postgresPort }}
         - name: MESSAGE_QUEUE_HOST
           value: {{ quote .Values.container.messageQueueHost }}
         - name: MESSAGE_QUEUE_RECONNECT_LIMIT
-          value: {{ quote .Values.container.messageQueueReconnectLimit }}
+          value: {{ .Values.container.messageQueueReconnectLimit }}
         - name: MESSAGE_QUEUE_PORT
           value: {{ quote .Values.container.messageQueuePort }}
         - name: MESSAGE_QUEUE_TRANSPORT
@@ -76,7 +76,7 @@ spec:
         - name: PORT
           value: "3004"
         ports:
-        - containerPort: {{ quote .Values.container.port }}
+        - containerPort: {{ .Values.container.port }}
         resources:
           requests:
             memory: {{ quote .Values.container.requestMemory }}
@@ -87,14 +87,14 @@ spec:
         livenessProbe:
           httpGet:
             path: {{ quote .Values.livenessProbe.path }}
-            port: {{ quote .Values.livenessProbe.port }}
-          initialDelaySeconds: {{ quote .Values.livenessProbe.initialDelaySeconds }}
-          periodSeconds: {{ quote .Values.livenessProbe.periodSeconds }}
-          failureThreshold: {{ quote .Values.livenessProbe.failureThreshold }}
+            port: {{ .Values.livenessProbe.port }}
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
         readinessProbe:
           httpGet:
             path: {{ quote .Values.readinessProbe.path }}
-            port: {{ quote .Values.readinessProbe.port }}
-          initialDelaySeconds: {{ quote .Values.readinessProbe.initialDelaySeconds }}
-          periodSeconds: {{ quote .Values.readinessProbe.periodSeconds }}
-          failureThreshold: {{ quote .Values.readinessProbe.failureThreshold }}
+            port: {{ .Values.readinessProbe.port }}
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
