@@ -1,4 +1,4 @@
-{{- if quote .Values.postgresExternalName }}
+{{- if .Values.postgresExternalName }}
 kind: Service
 apiVersion: v1
 metadata:
