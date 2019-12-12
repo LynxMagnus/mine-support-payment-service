@@ -7,7 +7,7 @@ metadata:
     environment: {{ quote .Values.environment }}
 spec:
   type: ExternalName
-  externalName: {{ quote .Values.postgresExternalName }}
+  externalName: {{ .Values.postgresExternalName }}
   ports:
     - name: port
       port: {{ .Values.postgresPort }}
