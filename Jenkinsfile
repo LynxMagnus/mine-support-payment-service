@@ -81,7 +81,7 @@ node {
     }
     defraUtils.setGithubStatusSuccess()
   } catch(e) {
-    defraUtils.setGithubStatusSuccess(e.message)
+    defraUtils.setGithubStatusFailure(e.message)
     throw e
   }
 }
