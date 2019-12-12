@@ -4,10 +4,10 @@ apiVersion: v1
 metadata:
   name: {{ .Values.postgresHost }}
   labels:
-    environment: {{ .Values.environment }}
+    environment: {{ quote .Values.environment }}
 spec:
   type: ExternalName
-  externalName: {{ .Values.postgresExternalName }}
+  externalName: {{ quote .Values.postgresExternalName }}
   ports:
     - name: port
       port: {{ .Values.postgresPort }}
@@ -16,10 +16,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.name }}
+  name: {{ quote .Values.name }}
   labels:
-    app: {{ .Values.name }}
-    environment: {{ .Values.environment }}
+    app: {{ quote .Values.name }}
+    environment: {{ quote .Values.environment }}
 spec:
   ports:
   - port: {{ .Values.service.port }}
@@ -27,5 +27,5 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: {{ .Values.name }}
-  type: {{ .Values.service.type }}
+    app: {{ quote .Values.name }}
+  type: {{ quote .Values.service.type }}
