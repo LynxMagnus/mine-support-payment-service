@@ -53,15 +53,15 @@ node {
           usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
         ]) {
           def helmValues = [
-            /container.messageQueueHost=\"$messageQueueHost\"/,
-            /container.paymentQueuePassword=\"$paymentQueuePassword\"/,
-            /container.paymentQueueUser=\"$paymentQueueUsername\"/,
+            /container.messageQueueHost="$messageQueueHost"/,
+            /container.paymentQueuePassword="$paymentQueuePassword"/,
+            /container.paymentQueueUser="$paymentQueueUsername"/,
             /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
-            /container.scheduleQueuePassword=\"$scheduleQueuePassword\"/,
-            /container.scheduleQueueUser=\"$scheduleQueueUsername\"/,
-            /postgresExternalName=\"$postgresExternalName\"/,
-            /postgresPassword=\"$postgresPassword\"/,
-            /postgresUsername=\"$postgresUsername\"/
+            /container.scheduleQueuePassword="$scheduleQueuePassword"/,
+            /container.scheduleQueueUser="$scheduleQueueUsername"/,
+            /postgresExternalName="$postgresExternalName"/,
+            /postgresPassword="$postgresPassword"/,
+            /postgresUsername="$postgresUsername"/
           ].join(',')
 
           def extraCommands = [
