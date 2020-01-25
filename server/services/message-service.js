@@ -27,6 +27,10 @@ function registerPaymentConsumer () {
   paymentConsumer.start()
 }
 
+function isConnected () {
+  return true
+}
+
 process.on('SIGTERM', async function () {
   await closeConnections()
   process.exit(0)
@@ -44,5 +48,6 @@ async function closeConnections () {
 
 module.exports = {
   registerService,
-  closeConnections
+  closeConnections,
+  isConnected
 }

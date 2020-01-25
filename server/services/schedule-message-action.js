@@ -1,6 +1,6 @@
 const scheduleService = require('./schedule-service')
 
-async function messageAction (message) {
+async function scheduleMessageAction (message) {
   try {
     console.log('message received - schedule ', message.Body)
     const claim = JSON.parse(message.Body)
@@ -10,4 +10,4 @@ async function messageAction (message) {
   }
 }
 
-module.exports = { messageAction }
+module.exports = { scheduleMessageAction }

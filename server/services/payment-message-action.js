@@ -1,6 +1,6 @@
 const paymentService = require('./payment-service')
 
-async function messageAction (message) {
+async function paymentMessageAction (message) {
   try {
     console.log('message received - payment ', message.Body)
     const payment = JSON.parse(message.Body)
@@ -10,4 +10,4 @@ async function messageAction (message) {
   }
 }
 
-module.exports = { messageAction }
+module.exports = { paymentMessageAction }
