@@ -11,15 +11,14 @@ services:
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: ffc-demo-payment-postgres
       POSTGRES_PORT: 5432
-      MESSAGE_QUEUE_HOST: host.docker.internal
-      MESSAGE_QUEUE_PORT: 5672
-      MESSAGE_QUEUE_RECONNECT_LIMIT: 10
-      SCHEDULE_QUEUE_ADDRESS: schedule
-      SCHEDULE_QUEUE_USER: artemis
-      SCHEDULE_QUEUE_PASSWORD: artemis
-      PAYMENT_QUEUE_ADDRESS: payment
-      PAYMENT_QUEUE_USER: artemis
-      PAYMENT_QUEUE_PASSWORD: artemis
+      SCHEDULE_ENDPOINT: http://ffc-demo-payment-message-queue:9324
+      SCHEDULE_QUEUE_URL: http://ffc-demo-payment-message-queue:9324/queue/schedule
+      SCHEDULE_QUEUE_ACCESS_KEY_ID: elasticmq
+      SCHEDULE_QUEUE_ACCESS_KEY: elasticmq
+      PAYMENT_ENDPOINT: http://ffc-demo-payment-message-queue:9324
+      PAYMENT_QUEUE_URL: http://ffc-demo-payment-message-queue:9324/queue/payment
+      PAYMENT_QUEUE_ACCESS_KEY_ID: elasticmq
+      PAYMENT_QUEUE_ACCESS_KEY: elasticmq
     volumes:
       - ./server/:/usr/src/app/server/
       - ./scripts/:/usr/src/app/scripts/
@@ -36,5 +35,4 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  node_modules: {}
   postgres_data: {}
