@@ -27,8 +27,8 @@ function registerPaymentConsumer () {
   paymentConsumer.start()
 }
 
-function isConnected () {
-  return true
+function isRunning () {
+  return scheduleConsumer.isRunning() && paymentConsumer.isRunning()
 }
 
 process.on('SIGTERM', async function () {
@@ -49,5 +49,5 @@ async function closeConnections () {
 module.exports = {
   registerService,
   closeConnections,
-  isConnected
+  isRunning
 }
