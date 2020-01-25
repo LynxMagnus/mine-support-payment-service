@@ -3,12 +3,12 @@ describe('Payment service tests', () => {
   let paymentService
 
   beforeEach(async () => {
-    jest.mock('../../../server/repository/payment-repository', () => mockPaymentRepository)
-    paymentService = require('../../../server/services/payment-service')
+    jest.mock('../../../../server/repository/payment-repository', () => mockPaymentRepository)
+    paymentService = require('../../../../server/services/payment-service')
   })
 
   afterEach(async () => {
-    jest.unmock('../../../server/repository/payment-repository')
+    jest.unmock('../../../../server/repository/payment-repository')
   })
 
   test('updateValue creates payment', async (done) => {

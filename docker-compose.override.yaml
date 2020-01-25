@@ -17,8 +17,3 @@ services:
       - "3004:3004"
     depends_on:
       - ffc-demo-payment-message-queue
-
-  ffc-demo-payment-message-queue:
-    image: softwaremill/elasticmq
-    ports:
-      - "9324:9324"
