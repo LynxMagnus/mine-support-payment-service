@@ -32,7 +32,7 @@ describe('Server tests', () => {
   })
 
   test('createServer returns server in development', async (done) => {
-    jest.mock('../../server/config', () => {
+    jest.mock('../../../server/config', () => {
       return {
         port: 3004,
         isDev: true

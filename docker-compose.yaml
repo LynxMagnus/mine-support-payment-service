@@ -4,7 +4,7 @@ services:
     build: .
     image: ffc-demo-payment-service
     depends_on:
-      - ffc-demo-payment-postgres
+      - ffc-demo-payment-postgres      
     environment:
       POSTGRES_DB: ffc_demo_payments
       POSTGRES_PASSWORD: ppp
