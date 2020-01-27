@@ -69,8 +69,8 @@ node {
           string(credentialsId: 'scheduleQueueAccessKeyIdListen', variable: 'scheduleQueueAccessKeyId'),
           string(credentialsId: 'scheduleQueueSecretAccessKeyListen', variable: 'scheduleQueueSecretAccessKey'),
           string(credentialsId: 'paymentQueueUrlPR', variable: 'paymentQueueUrl'),
-          string(credentialsId: 'paymentQueueAccessKeyIdSend', variable: 'paymentQueueAccessKeyId'),
-          string(credentialsId: 'paymentQueueSecretAccessKeySend', variable: 'paymentQueueSecretAccessKey'),
+          string(credentialsId: 'paymentQueueAccessKeyIdListen', variable: 'paymentQueueAccessKeyId'),
+          string(credentialsId: 'paymentQueueSecretAccessKeyListen', variable: 'paymentQueueSecretAccessKey'),
           string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
           usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
         ]) {
