@@ -1,4 +1,4 @@
-environment: production
+environment: development
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
 postgresDatabase: mine_payments
