@@ -34,12 +34,12 @@ node {
     // stage('Run tests') {
     //   defraUtils.runTests(imageName, BUILD_NUMBER)
     // }
-    stage('Create Test Report JUnit'){
-      defraUtils.createTestReportJUnit()
-    }
-    stage('Fix absolute paths in lcov file') {
-      defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
-    }
+    // stage('Create Test Report JUnit'){
+    //   defraUtils.createTestReportJUnit()
+    // }
+    // stage('Fix absolute paths in lcov file') {
+    //   defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
+    // }
     stage('SonarQube analysis') {
       defraUtils.analyseCode(sonarQubeEnv, sonarScanner, ['sonar.projectKey' : repoName, 'sonar.sources' : '.'])
     }
