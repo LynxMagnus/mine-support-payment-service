@@ -87,7 +87,8 @@ node {
             /container.paymentCreateQueue="false"/,
             /postgresExternalName="$postgresExternalName"/,
             /postgresPassword="$postgresPassword"/,
-            /postgresUsername="$postgresUsername"/
+            /postgresUsername="$postgresUsername"/,
+            /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
           ].join(',')
 
           def extraCommands = [
