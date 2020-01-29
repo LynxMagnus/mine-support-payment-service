@@ -64,22 +64,31 @@ node {
     } else {
       stage('Helm install') {
         withCredentials([
-          string(credentialsId: 'messageQueueHostPR', variable: 'messageQueueHost'),
-          usernamePassword(credentialsId: 'scheduleListenPR', usernameVariable: 'scheduleQueueUsername', passwordVariable: 'scheduleQueuePassword'),
-          usernamePassword(credentialsId: 'paymentListenPR', usernameVariable: 'paymentQueueUsername', passwordVariable: 'paymentQueuePassword'),
+          string(credentialsId: 'sqsQueueEndpoint', variable: 'sqsQueueEndpoint'),
+          string(credentialsId: 'scheduleQueueUrlPR', variable: 'scheduleQueueUrl'),
+          string(credentialsId: 'scheduleQueueAccessKeyIdListen', variable: 'scheduleQueueAccessKeyId'),
+          string(credentialsId: 'scheduleQueueSecretAccessKeyListen', variable: 'scheduleQueueSecretAccessKey'),
+          string(credentialsId: 'paymentQueueUrlPR', variable: 'paymentQueueUrl'),
+          string(credentialsId: 'paymentQueueAccessKeyIdListen', variable: 'paymentQueueAccessKeyId'),
+          string(credentialsId: 'paymentQueueSecretAccessKeyListen', variable: 'paymentQueueSecretAccessKey'),
           string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
           usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
         ]) {
           def helmValues = [
-            /container.messageQueueHost="$messageQueueHost"/,
-            /container.paymentQueuePassword="$paymentQueuePassword"/,
-            /container.paymentQueueUser="$paymentQueueUsername"/,
-            /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
-            /container.scheduleQueuePassword="$scheduleQueuePassword"/,
-            /container.scheduleQueueUser="$scheduleQueueUsername"/,
+            /container.scheduleQueueEndpoint="$sqsQueueEndpoint"/,
+            /container.scheduleQueueUrl="$scheduleQueueUrl"/,
+            /container.scheduleQueueAccessKeyId="$scheduleQueueAccessKeyId"/,
+            /container.scheduleQueueSecretAccessKey="$scheduleQueueSecretAccessKey"/,
+            /container.scheduleCreateQueue="false"/,
+            /container.paymentQueueEndpoint="$sqsQueueEndPoint"/,
+            /container.paymentQueueUrl="$paymentQueueUrl"/,
+            /container.paymentQueueAccessKeyId="$paymentQueueAccessKeyId"/,
+            /container.paymentQueueSecretAccessKey="$paymentQueueSecretAccessKey"/,
+            /container.paymentCreateQueue="false"/,
             /postgresExternalName="$postgresExternalName"/,
             /postgresPassword="$postgresPassword"/,
-            /postgresUsername="$postgresUsername"/
+            /postgresUsername="$postgresUsername"/,
+            /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
           ].join(',')
 
           def extraCommands = [

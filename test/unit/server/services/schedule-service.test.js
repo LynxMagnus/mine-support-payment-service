@@ -3,12 +3,12 @@ describe('Schedule service tests', () => {
   let scheduleService
 
   beforeEach(async () => {
-    jest.mock('../../../server/repository/schedule-repository', () => mockScheduleRespository)
-    scheduleService = require('../../../server/services/schedule-service')
+    jest.mock('../../../../server/repository/schedule-repository', () => mockScheduleRespository)
+    scheduleService = require('../../../../server/services/schedule-service')
   })
 
   afterEach(async () => {
-    jest.unmock('../../../server/repository/schedule-repository')
+    jest.unmock('../../../../server/repository/schedule-repository')
   })
 
   test('create creates all payment schedules', async (done) => {
