@@ -160,24 +160,6 @@ The readiness probe will test for both the availability of a PostgreSQL database
 
 Sequelize's `authenticate` function is used to test database connectivity.  This function tries to run a basic query within the database.
 
-## Dependency management
-
-Dependencies should be managed within a container using the development image for the app. This will ensure that any packages with environment-specific variants are installed with the correct variant for the contained environment, rather than the host system which may differ between development and production.
-
-The [`exec`](./scripts/exec) script is provided to run arbitrary commands, such as npm, in a running service container. If the service is not running when this script is called, it will be started for the duration of the command and then removed.
-
-Since dependencies are installed into the container image, a full build should always be run immediately after any dependency change.
-
-The following example will update all npm dependencies, rebuild the container image and replace running containers and volumes:
-
-```
-# Run the NPM update
-scripts/exec npm update
-
-# Rebuild and restart the service
-scripts/start --clean
-```
-
 ## Build pipeline
 
 Builds are managed by Jenkins.
