@@ -23,8 +23,11 @@ async function createServer () {
     await server.register(require('blipp'))
     await server.register(require('./plugins/logging'))
   }
-
-  await messageService.registerService()
+  try {
+    await messageService.registerService()
+  } catch (err) {
+    console.log(err)
+  }
 
   return server
 }
