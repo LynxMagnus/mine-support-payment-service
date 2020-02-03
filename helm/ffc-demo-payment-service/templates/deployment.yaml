@@ -108,9 +108,9 @@ spec:
           initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
           failureThreshold: {{ .Values.readinessProbe.failureThreshold }}        
-      volumes:
-      - name: token-vol
-        projected:
-          sources:
-          - serviceAccountToken:
-              path: token
+        volumes:
+        - name: token-vol
+          projected:
+            sources:
+            - serviceAccountToken:
+                path: token
