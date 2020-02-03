@@ -6,8 +6,8 @@ const mqSchema = joi.object({
     endpoint: joi.string().default('http://localhost:9324'),
     queueUrl: joi.string().default('http://localhost:9324/queue/schedule'),
     region: joi.string().default('eu-west-2'),
-    accessKeyId: joi.string(),
-    secretAccessKey: joi.string(),
+    // accessKeyId: joi.string(),
+    // secretAccessKey: joi.string(),
     createQueue: joi.bool().default(true)
   },
   paymentQueue: {
@@ -15,8 +15,8 @@ const mqSchema = joi.object({
     endpoint: joi.string().default('http://localhost:9324'),
     queueUrl: joi.string().default('http://localhost:9324/queue/payment'),
     region: joi.string().default('eu-west-2'),
-    accessKeyId: joi.string(),
-    secretAccessKey: joi.string(),
+    // accessKeyId: joi.string(),
+    // secretAccessKey: joi.string(),
     createQueue: joi.bool().default(true)
   }
 })
@@ -27,8 +27,8 @@ const mqConfig = {
     endpoint: process.env.SCHEDULE_ENDPOINT,
     queueUrl: process.env.SCHEDULE_QUEUE_URL,
     region: process.env.SCHEDULE_QUEUE_REGION,
-    accessKeyId: process.env.SCHEDULE_QUEUE_ACCESS_KEY_ID,
-    secretAccessKey: process.env.SCHEDULE_QUEUE_ACCESS_KEY,
+    // accessKeyId: process.env.SCHEDULE_QUEUE_ACCESS_KEY_ID,
+    // secretAccessKey: process.env.SCHEDULE_QUEUE_ACCESS_KEY,
     createQueue: process.env.CREATE_SCHEDULE_QUEUE
   },
   paymentQueue: {
@@ -36,8 +36,8 @@ const mqConfig = {
     endpoint: process.env.PAYMENT_ENDPOINT,
     queueUrl: process.env.PAYMENT_QUEUE_URL,
     region: process.env.PAYMENT_QUEUE_REGION,
-    accessKeyId: process.env.PAYMENT_QUEUE_ACCESS_KEY_ID,
-    secretAccessKey: process.env.PAYMENT_QUEUE_ACCESS_KEY,
+    // accessKeyId: process.env.PAYMENT_QUEUE_ACCESS_KEY_ID,
+    // secretAccessKey: process.env.PAYMENT_QUEUE_ACCESS_KEY,
     createQueue: process.env.CREATE_PAYMENT_QUEUE
   }
 }

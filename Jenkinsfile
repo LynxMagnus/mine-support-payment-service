@@ -28,24 +28,24 @@ node {
     stage('Helm lint') {
       defraUtils.lintHelm(imageName)
     }
-    stage('Build test image') {
-      defraUtils.buildTestImage(imageName, BUILD_NUMBER)
-    }
-    stage('Run tests') {
-      defraUtils.runTests(imageName, BUILD_NUMBER)
-    }
-    stage('Create Test Report JUnit'){
-      defraUtils.createTestReportJUnit()
-    }
-    stage('Fix absolute paths in lcov file') {
-      defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
-    }
-    stage('SonarQube analysis') {
-      defraUtils.analyseCode(sonarQubeEnv, sonarScanner, ['sonar.projectKey' : repoName, 'sonar.sources' : '.'])
-    }
-    stage("Code quality gate") {
-      defraUtils.waitForQualityGateResult(timeoutInMinutes)
-    }
+    // stage('Build test image') {
+    //   defraUtils.buildTestImage(imageName, BUILD_NUMBER)
+    // }
+    // stage('Run tests') {
+    //   defraUtils.runTests(imageName, BUILD_NUMBER)
+    // }
+    // stage('Create Test Report JUnit'){
+    //   defraUtils.createTestReportJUnit()
+    // }
+    // stage('Fix absolute paths in lcov file') {
+    //   defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
+    // }
+    // stage('SonarQube analysis') {
+    //   defraUtils.analyseCode(sonarQubeEnv, sonarScanner, ['sonar.projectKey' : repoName, 'sonar.sources' : '.'])
+    // }
+    // stage("Code quality gate") {
+    //   defraUtils.waitForQualityGateResult(timeoutInMinutes)
+    // }
     stage('Push container image') {
       defraUtils.buildAndPushContainerImage(regCredsId, registry, imageName, containerTag)
     }
