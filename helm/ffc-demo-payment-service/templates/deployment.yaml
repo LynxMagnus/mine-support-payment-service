@@ -107,3 +107,11 @@ spec:
           initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
           failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+        securityContext:
+        fsGroup: 65534
+      volumes:
+      - name: token-vol
+        projected:
+          sources:
+          - serviceAccountToken:
+              path: token
