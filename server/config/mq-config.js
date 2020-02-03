@@ -24,7 +24,7 @@ const mqSchema = joi.object({
 const mqConfig = {
   scheduleQueue: {
     name: process.env.SCHEDULE_QUEUE_NAME,
-    endpoint: process.env.SCHEDULE_ENDPOINT,
+    endpoint: 'https://sqs.eu-west-2.amazonaws.com/562955126301/npdffc-schedule-test',
     queueUrl: process.env.SCHEDULE_QUEUE_URL,
     region: process.env.SCHEDULE_QUEUE_REGION,
     // accessKeyId: process.env.SCHEDULE_QUEUE_ACCESS_KEY_ID,
@@ -33,7 +33,7 @@ const mqConfig = {
   },
   paymentQueue: {
     name: process.env.PAYMENT_QUEUE_NAME,
-    endpoint: process.env.PAYMENT_ENDPOINT,
+    endpoint: 'https://sqs.eu-west-2.amazonaws.com/562955126301/npdffc-payment-test',
     queueUrl: process.env.PAYMENT_QUEUE_URL,
     region: process.env.PAYMENT_QUEUE_REGION,
     // accessKeyId: process.env.PAYMENT_QUEUE_ACCESS_KEY_ID,
