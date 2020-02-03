@@ -108,7 +108,7 @@ spec:
           periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
           failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
         securityContext:
-        fsGroup: 65534
+        fsGroup: 1000
       volumes:
       - name: token-vol
         projected:
