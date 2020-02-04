@@ -13,6 +13,8 @@ class MessageConsumer {
       credentials: AWS.config.credentials = new AWS.TokenFileWebIdentityCredentials()
     })
 
+    AWS.STS.assumeRoleWithWebIdentity()
+
     this.app = Consumer.create({
       queueUrl,
       handleMessage: messageAction,
