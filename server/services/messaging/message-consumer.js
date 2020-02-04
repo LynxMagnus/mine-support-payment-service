@@ -13,6 +13,7 @@ class MessageConsumer {
       handleMessage: messageAction,
       sqs: new AWS.SQS(queueConfig)
     })
+    console.log(this.app.sqs)
   }
 
   registerErrorEvents () {
