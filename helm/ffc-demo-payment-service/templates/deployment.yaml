@@ -37,7 +37,7 @@ spec:
         {{- end }}
         imagePullPolicy: {{ quote .Values.container.imagePullPolicy }}
         securityContext:
-          fsGroup: 1000
+          fsGroup: 65534
           runAsUser: {{ .Values.container.runAsUser }}
           runAsNonRoot: {{ .Values.container.runAsNonRoot }}
           readOnlyRootFilesystem: {{ .Values.container.readOnlyRootFilesystem }}
@@ -108,9 +108,9 @@ spec:
           initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
           failureThreshold: {{ .Values.readinessProbe.failureThreshold }}        
-        # volumes:
-        # - name: token-vol
-        #   projected:
-        #     sources:
-        #     - serviceAccountToken:
-        #         path: token
+        volumes:
+        - name: token-vol
+          projected:
+            sources:
+            - serviceAccountToken:
+                path: token
