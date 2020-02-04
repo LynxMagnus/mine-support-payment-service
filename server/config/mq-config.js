@@ -33,7 +33,7 @@ const mqConfig = {
   },
   paymentQueue: {
     name: process.env.PAYMENT_QUEUE_NAME,
-    endpoint: 'https://sqs.eu-west-2.amazonaws.com/562955126301/npdffc-payment-test',
+    endpoint: process.env.PAYMENT_ENDPOINT,
     queueUrl: process.env.PAYMENT_QUEUE_URL,
     region: process.env.PAYMENT_QUEUE_REGION,
     // accessKeyId: process.env.PAYMENT_QUEUE_ACCESS_KEY_ID,
