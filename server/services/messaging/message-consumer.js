@@ -14,7 +14,7 @@ class MessageConsumer {
     AWS.config.update({ region: queueConfig.region })
 
     // Create an SQS service object
-    var sqs = new AWS.SQS({ endpoint: queueConfig.endpoint })
+    var sqs = new AWS.SQS({ endpoint: queueUrl })
 
     var queueURL = queueUrl
 
