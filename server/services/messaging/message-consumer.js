@@ -8,10 +8,15 @@ class MessageConsumer {
   }
 
   createConsumer (queueConfig, queueUrl, messageAction) {
+    AWS.config.update({
+      region: queueConfig.region,
+      credentials: AWS.config.credentials = new AWS.TokenFileWebIdentityCredentials()
+    })
+
     this.app = Consumer.create({
       queueUrl,
       handleMessage: messageAction,
-      sqs: new AWS.SQS(queueConfig)
+      sqs: new AWS.SQS()
     })
     console.log(this.app.sqs)
   }
