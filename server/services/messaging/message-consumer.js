@@ -12,8 +12,8 @@ class MessageConsumer {
       region: queueConfig.region,
       credentials: AWS.config.credentials = new AWS.TokenFileWebIdentityCredentials()
     })
-
-    AWS.STS.assumeRoleWithWebIdentity()
+    const sts = new AWS.STS()
+    sts.assumeRoleWithWebIdentity()
 
     this.app = Consumer.create({
       queueUrl,
