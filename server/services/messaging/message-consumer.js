@@ -8,11 +8,9 @@ class MessageConsumer {
   }
 
   createConsumer (queueConfig, queueUrl, messageAction) {
-    const sts = new AWS.STS()
-    
     AWS.config.update({
       region: queueConfig.region,
-      credentials: AWS.config.credentials = sts.assumeRoleWithWebIdentity()
+      credentials: new AWS.TokenFileWebIdentityCredentials()
     })
 
     this.app = Consumer.create({
