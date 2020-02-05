@@ -63,10 +63,10 @@ spec:
           value: {{ quote .Values.container.scheduleQueueUrl }}
         - name: SCHEDULE_QUEUE_REGION
           value: {{ quote .Values.container.scheduleQueueRegion }}
-        # - name: SCHEDULE_QUEUE_ACCESS_KEY_ID
-        #   value: {{ quote .Values.container.scheduleQueueAccessKeyId }}
-        # - name: SCHEDULE_QUEUE_ACCESS_KEY
-        #   value: {{ quote .Values.container.scheduleQueueSecretAccessKey }}
+        - name: SCHEDULE_QUEUE_ACCESS_KEY_ID
+          value: {{ quote .Values.container.scheduleQueueAccessKeyId }}
+        - name: SCHEDULE_QUEUE_ACCESS_KEY
+          value: {{ quote .Values.container.scheduleQueueSecretAccessKey }}
         - name: CREATE_SCHEDULE_QUEUE
           value: {{ quote .Values.container.scheduleCreateQueue }}
         - name: PAYMENT_QUEUE_NAME
@@ -77,10 +77,10 @@ spec:
           value: {{ quote .Values.container.paymentQueueUrl }}
         - name: PAYMENT_QUEUE_REGION
           value: {{ quote .Values.container.paymentQueueRegion }}
-        # - name: PAYMENT_QUEUE_ACCESS_KEY_ID
-        #   value: {{ quote .Values.container.paymentQueueAccessKeyId }}
-        # - name: PAYMENT_QUEUE_ACCESS_KEY
-        #   value: {{ quote .Values.container.paymentQueueSecretAccessKey }}
+        - name: PAYMENT_QUEUE_ACCESS_KEY_ID
+          value: {{ quote .Values.container.paymentQueueAccessKeyId }}
+        - name: PAYMENT_QUEUE_ACCESS_KEY
+          value: {{ quote .Values.container.paymentQueueSecretAccessKey }}
         - name: CREATE_PAYMENT_QUEUE
           value: {{ quote .Values.container.paymentCreateQueue }}
         - name: PORT
