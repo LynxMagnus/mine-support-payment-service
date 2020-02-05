@@ -18,7 +18,7 @@ class MessageConsumer {
     })
 
     // Create an SQS service object
-    var sqs = new AWS.SQS({ endpoint: queueConfig.endpoint })
+    var sqs = new AWS.SQS()
 
     var queueURL = queueUrl
 
