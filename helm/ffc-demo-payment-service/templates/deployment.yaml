@@ -85,6 +85,8 @@ spec:
           value: {{ quote .Values.container.paymentCreateQueue }}
         - name: PORT
           value: {{ quote .Values.container.port }}
+        - name: AWS_REGION
+          value: {{ quote .Values.container.paymentQueueRegion }}
         ports:
         - containerPort: {{ .Values.container.port }}
         resources:
