@@ -17,14 +17,12 @@ class MessageConsumer {
     //   // secretAccessKey: queueConfig.secretAccessKey
     // })
 
-    var chain = new AWS.CredentialProviderChain()
-    chain.resolve()
 
     // Create an SQS service object
     var sqs = new AWS.SQS({
       // accessKeyId: queueConfig.accessKeyId,
       // secretAccessKey: queueConfig.secretAccessKey
-      credentialProvider: chain
+      credentialProvider: new AWS.CredentialProviderChain()
     })
 
     var queueURL = queueUrl
