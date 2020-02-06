@@ -1,14 +1,14 @@
-const { Consumer } = require('sqs-consumer')
+const {Consumer} = require('sqs-consumer')
 const AWS = require('aws-sdk')
 
 class MessageConsumer {
-  constructor (queueConfig, queueUrl, messageHandler) {
+  constructor(queueConfig, queueUrl, messageHandler) {
     // this.createConsumer(queueConfig, queueUrl, messageHandler)
     // this.registerErrorEvents()
     this.test(queueConfig, queueUrl)
   }
 
-  test (queueConfig, queueUrl) {
+  test(queueConfig, queueUrl) {
     var AWS = require('aws-sdk')
     // Set the region
     // AWS.config.update({
@@ -17,10 +17,14 @@ class MessageConsumer {
     //   // secretAccessKey: queueConfig.secretAccessKey
     // })
 
+    var chain = new AWS.CredentialProviderChain()
+    chain.resolve()
+
     // Create an SQS service object
     var sqs = new AWS.SQS({
-      accessKeyId: queueConfig.accessKeyId,
-      secretAccessKey: queueConfig.secretAccessKey
+      // accessKeyId: queueConfig.accessKeyId,
+      // secretAccessKey: queueConfig.secretAccessKey
+      credentialProvider: chain
     })
 
     var queueURL = queueUrl
@@ -57,7 +61,7 @@ class MessageConsumer {
     })
   }
 
-  createConsumer (queueConfig, queueUrl, messageAction) {
+  createConsumer(queueConfig, queueUrl, messageAction) {
     this.app = Consumer.create({
       queueUrl,
       handleMessage: messageAction,
@@ -68,7 +72,7 @@ class MessageConsumer {
     console.log(this.app.sqs)
   }
 
-  registerErrorEvents () {
+  registerErrorEvents() {
     const _this = this
     this.app.on('error', (err) => {
       _this.handleError(err)
@@ -83,16 +87,16 @@ class MessageConsumer {
     })
   }
 
-  handleError (err) {
+  handleError(err) {
     console.error(err.message)
   }
 
-  start () {
+  start() {
     this.app.start()
     console.log('message polling started')
   }
 
-  stop () {
+  stop() {
     this.app.stop()
   }
 }
