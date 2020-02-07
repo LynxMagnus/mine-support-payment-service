@@ -9,7 +9,7 @@ class MessageConsumer {
   }
 
   test (queueConfig, queueUrl) {
-    var AWS = require('aws-sdk')
+    // var AWS = require('aws-sdk')
     // Set the region
     // AWS.config.update({
     //   // region: queueConfig.region,
@@ -18,11 +18,7 @@ class MessageConsumer {
     // })
 
     // Create an SQS service object
-    var sqs = new AWS.SQS({
-      accessKeyId: queueConfig.accessKeyId,
-      secretAccessKey: queueConfig.secretAccessKey,
-      region: queueConfig.region
-    })
+    var sqs = new AWS.SQS()
 
     var queueURL = queueUrl
 
