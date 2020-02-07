@@ -19,7 +19,11 @@ class MessageConsumer {
     // const secretsManagerClient = new AWS.SecretsManager({ credentials: new AWS.TokenFileWebIdentityCredentials() })
 
     // Create an SQS service object
-    var sqs = new AWS.SQS()
+    var sqs = new AWS.SQS({
+      region: queueConfig.region,
+      accessKeyId: queueConfig.accessKeyId,
+      secretAccessKey: queueConfig.secretAccessKey
+    })
 
     var queueURL = queueUrl
 
