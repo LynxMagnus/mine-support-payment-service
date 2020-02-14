@@ -51,9 +51,6 @@ node {
       defraUtils.buildAndPushContainerImage(regCredsId, registry, repoName, containerTag)
     }
     if (pr == '') {
-       stage('Verify version incremented') {
-        defraUtils.verifyPackageJsonVersionIncremented()
-      }
       stage('Publish chart') {
         defraUtils.publishChart(registry, repoName, containerTag)
       }
@@ -72,6 +69,9 @@ node {
         }
       }
     } else {      
+       stage('Verify version incremented') {
+        defraUtils.verifyPackageJsonVersionIncremented()
+      }
       stage('Helm install') {
         withCredentials([
           string(credentialsId: 'sqsQueueEndpoint', variable: 'sqsQueueEndpoint'),
