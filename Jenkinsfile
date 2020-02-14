@@ -67,7 +67,7 @@ node {
           string(credentialsId: 'ffc-demo-payment-service-deploy-token', variable: 'jenkinsToken')
         ]) {
           defraUtils.triggerDeploy(jenkinsDeployUrl, jenkinsDeployJob, jenkinsToken, ['chartVersion': containerTag])
-        }      
+        }
       }
     } else {      
        stage('Verify version incremented') {
