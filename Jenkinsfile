@@ -68,6 +68,7 @@ node {
           defraUtils.triggerDeploy(jenkinsDeployUrl, jenkinsDeployJob, jenkinsToken, ['chartVersion': containerTag])
         }
       }
+      }
     } else {      
        stage('Verify version incremented') {
         defraUtils.verifyPackageJsonVersionIncremented()
