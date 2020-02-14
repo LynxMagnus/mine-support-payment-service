@@ -65,7 +65,7 @@ node {
           string(credentialsId: 'JenkinsDeployUrl', variable: 'jenkinsDeployUrl'),
           string(credentialsId: 'ffc-demo-payment-service-deploy-token', variable: 'jenkinsToken')
         ]) {
-          defraUtils.triggerDeploy(jenkinsDeployUrl, jenkinsDeployJob, jenkinsToken, ['chartVersion':'1.0.0'])
+          defraUtils.triggerDeploy(jenkinsDeployUrl, jenkinsDeployJob, jenkinsToken, ['chartVersion': containerTag])
         }
       }
     } else {      
@@ -120,7 +120,8 @@ node {
       defraUtils.setGithubStatusSuccess()
     }
   } catch(e) {
-    defraUtils.setGithubStatusFailure(e.message, "#generalbuildfailures")
+    defraUtils.setGithubStatusFailure(e.message)
+    defraUtils.notifySlackBuildFailure(e.message, "#generalbuildfailures")
     throw e
   } finally {
     defraUtils.deleteTestOutput(repoName)
