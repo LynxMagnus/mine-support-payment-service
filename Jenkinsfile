@@ -56,18 +56,18 @@ node {
       }
       stage('Trigger GitHub release') {
        withCredentials([
-      string(credentialsId: 'github_ffc_platform_repo', variable: 'gitToken') 
-      ]) {
-          defraUtils.triggerRelease(containerTag, repoName, containerTag, gitToken)
+        string(credentialsId: 'github_ffc_platform_repo', variable: 'gitToken') 
+        ]) {
+            defraUtils.triggerRelease(containerTag, repoName, containerTag, gitToken)
         }
+      }
       stage('Trigger Deployment') {
         withCredentials([
           string(credentialsId: 'JenkinsDeployUrl', variable: 'jenkinsDeployUrl'),
           string(credentialsId: 'ffc-demo-payment-service-deploy-token', variable: 'jenkinsToken')
         ]) {
           defraUtils.triggerDeploy(jenkinsDeployUrl, jenkinsDeployJob, jenkinsToken, ['chartVersion': containerTag])
-        }
-      }
+        }      
       }
     } else {      
        stage('Verify version incremented') {
