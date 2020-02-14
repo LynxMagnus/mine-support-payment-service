@@ -68,13 +68,7 @@ node {
           defraUtils.triggerDeploy(jenkinsDeployUrl, jenkinsDeployJob, jenkinsToken, ['chartVersion': containerTag])
         }
       }
-<<<<<<< HEAD
-    }
-    }
-     else {      
-=======
     } else {      
->>>>>>> origin/master
        stage('Verify version incremented') {
         defraUtils.verifyPackageJsonVersionIncremented()
       }
