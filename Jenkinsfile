@@ -71,10 +71,7 @@ node {
           defraUtils.triggerDeploy(jenkinsDeployUrl, jenkinsDeployJob, jenkinsToken, ['chartVersion':'1.0.0'])
         }
       }
-    } else {
-      stage('Verify version incremented') {
-        defraUtils.verifyPackageJsonVersionIncremented()
-      }
+    } else {      
       stage('Helm install') {
         withCredentials([
           string(credentialsId: 'sqsQueueEndpoint', variable: 'sqsQueueEndpoint'),
