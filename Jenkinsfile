@@ -122,7 +122,8 @@ node {
       defraUtils.setGithubStatusSuccess()
     }
   } catch(e) {
-    defraUtils.setGithubStatusFailure(e.message, "#generalbuildfailures")
+    defraUtils.setGithubStatusFailure(e.message)
+    defraUtils.notifySlackBuildFailure(e.message, "#generalbuildfailures")
     throw e
   } finally {
     defraUtils.deleteTestOutput(repoName)
