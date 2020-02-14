@@ -1,6 +1,10 @@
 {
   "name": "ffc-demo-payment-service",
+<<<<<<< HEAD
   "version": "1.0.1",
+=======
+  "version": "1.0.0",
+>>>>>>> origin/master
   "description": "",
   "main": "index.js",
   "scripts": {
