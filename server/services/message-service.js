@@ -28,7 +28,7 @@ function registerPaymentConsumer () {
 }
 
 function isRunning () {
-  return scheduleConsumer.isRunning() && paymentConsumer.isRunning()
+  return !scheduleConsumer.stopped && !paymentConsumer.stopped
 }
 
 process.on('SIGTERM', async function () {
