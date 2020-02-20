@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:watch": "nodemon --exec npm run build --ext scss --legacy-watch",
-    "migrate": "npx sequelize db:migrate",
+    "migrate": "sequelize db:migrate",
     "pretest": "npm run test:lint",
     "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
     "test": "npm run test:unit",
@@ -22,6 +22,7 @@
     "pg": "^7.12.1",
     "rhea-promise": "^1.0.0",
     "sequelize": "^5.19.0",
+    "sequelize-cli": "^5.5.1",
     "sqs-consumer": "^5.4.0"
   },
   "devDependencies": {
