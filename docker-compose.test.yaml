@@ -8,5 +8,12 @@ services:
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-payment-postgres:5432 --
+        scripts/wait-for/wait-for ffc-demo-payment-message-queue:9324 --
         npm run migrate &&
         npm run test"
+    volumes:
+      - ./test/:/usr/src/app/test/
+      - ./test-output/:/usr/src/app/test-output/
+      - ./jest.config.js:/usr/src/app/jest.config.js
+    depends_on: 
+      - ffc-demo-payment-message-queue

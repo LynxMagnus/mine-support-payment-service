@@ -1,7 +1,6 @@
 container:
   command: ["/bin/sh","-c"]
   args: ["node index"]
-  messageQueueHost: ffc-demo-payment-artemis-activemq-artemis
 postgresHost: ffc-demo-payment-postgres-postgresql
 service:
   port: 3004

@@ -53,28 +53,36 @@ spec:
           value: {{ quote .Values.postgresExternalName }}
         - name: POSTGRES_PORT
           value: {{ quote .Values.postgresPort }}
-        - name: MESSAGE_QUEUE_HOST
-          value: {{ quote .Values.container.messageQueueHost }}
-        - name: MESSAGE_QUEUE_RECONNECT_LIMIT
-          value: {{ quote .Values.container.messageQueueReconnectLimit }}
-        - name: MESSAGE_QUEUE_PORT
-          value: {{ quote .Values.container.messageQueuePort }}
-        - name: MESSAGE_QUEUE_TRANSPORT
-          value: {{ quote .Values.container.messageQueueTransport }}
-        - name: SCHEDULE_QUEUE_ADDRESS
-          value: {{ quote .Values.container.scheduleQueueAddress }}
-        - name: SCHEDULE_QUEUE_USER
-          value: {{ quote .Values.container.scheduleQueueUser }}
-        - name: SCHEDULE_QUEUE_PASSWORD
-          value: {{ quote .Values.container.scheduleQueuePassword }}
-        - name: PAYMENT_QUEUE_ADDRESS
-          value: {{ quote .Values.container.paymentQueueAddress }}
-        - name: PAYMENT_QUEUE_USER
-          value: {{ quote .Values.container.paymentQueueUser }}
-        - name: PAYMENT_QUEUE_PASSWORD
-          value: {{ quote .Values.container.paymentQueuePassword }}
+        - name: SCHEDULE_QUEUE_NAME
+          value: {{ quote .Values.container.scheduleQueueName }}
+        - name: SCHEDULE_ENDPOINT
+          value: {{ quote .Values.container.scheduleQueueEndpoint }}
+        - name: SCHEDULE_QUEUE_URL
+          value: {{ quote .Values.container.scheduleQueueUrl }}
+        - name: SCHEDULE_QUEUE_REGION
+          value: {{ quote .Values.container.scheduleQueueRegion }}
+        - name: SCHEDULE_QUEUE_ACCESS_KEY_ID
+          value: {{ quote .Values.container.scheduleQueueAccessKeyId }}
+        - name: SCHEDULE_QUEUE_ACCESS_KEY
+          value: {{ quote .Values.container.scheduleQueueSecretAccessKey }}
+        - name: CREATE_SCHEDULE_QUEUE
+          value: {{ quote .Values.container.scheduleCreateQueue }}
+        - name: PAYMENT_QUEUE_NAME
+          value: {{ quote .Values.container.paymentQueueName }}
+        - name: PAYMENT_ENDPOINT
+          value: {{ quote .Values.container.paymentQueueEndpoint }}
+        - name: PAYMENT_QUEUE_URL
+          value: {{ quote .Values.container.paymentQueueUrl }}
+        - name: PAYMENT_QUEUE_REGION
+          value: {{ quote .Values.container.paymentQueueRegion }}
+        - name: PAYMENT_QUEUE_ACCESS_KEY_ID
+          value: {{ quote .Values.container.paymentQueueAccessKeyId }}
+        - name: PAYMENT_QUEUE_ACCESS_KEY
+          value: {{ quote .Values.container.paymentQueueSecretAccessKey }}
+        - name: CREATE_PAYMENT_QUEUE
+          value: {{ quote .Values.container.paymentCreateQueue }}
         - name: PORT
-          value: "3004"
+          value: {{ quote .Values.container.port }}
         ports:
         - containerPort: {{ .Values.container.port }}
         resources:

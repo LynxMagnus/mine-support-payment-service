@@ -17,7 +17,7 @@ Or:
 Or:
 - Node 10
 - PostgreSQL database
-- AMQP 1.0 message queue
+- SQS compatible message queue
 
 ## Environment variables
 
@@ -27,21 +27,20 @@ The following environment variables are required by the application container. V
 |-------------------------------|-----------------------------------|:--------:|-------------|-----------------------------|-------|
 | NODE_ENV                      | Node environment                  | no       | development | development,test,production |       |
 | PORT                          | Port number                       | no       | 3004        |                             |       |
-| POSTGRES_HOST                 | Postgres host name                | yes      |             |                             |       |
-| POSTGRES_PORT                 | Postgres port                     | yes      |             |                             |       |
-| POSTGRES_DB                   | Postgres database name            | yes      |             |                             |       |
-| POSTGRES_USERNAME             | Postgres username                 | yes      |             |                             |       |
-| POSTGRES_PASSWORD             | Postgres password                 | yes      |             |                             |       |
-| MESSAGE_QUEUE_HOST            | Host address of message queue     | no       | localhost   |                             |       |
-| MESSAGE_QUEUE_PORT            | Message queue port                | no       | 5672        |                             |       |
-| MESSAGE_QUEUE_RECONNECT_LIMIT | Reconnection limit for message queues | no   | 10          |                             |       |
-| MESSAGE_QUEUE_TRANSPORT       | Message queue transport           | no       | tcp         |                             |       |
-| SCHEDULE_QUEUE_ADDRESS        | 'Schedule' message queue name     | no       | schedule    |                             |       |
-| SCHEDULE_QUEUE_USER           | 'Schedule' message queue username | yes      |             |                             |       |
-| SCHEDULE_QUEUE_PASSWORD       | 'Schedule' message queue password | yes      |             |                             |       |
-| PAYMENT_QUEUE_ADDRESS         | 'Payment' message queue name      | no       | payment     |                             |       |
-| PAYMENT_QUEUE_USER            | 'Payment' message queue username  | yes      |             |                             |       |
-| PAYMENT_QUEUE_PASSWORD        | 'Payment' message queue password  | yes      |             |                             |       |
+| SCHEDULE_QUEUE_NAME     | Message queue name          | no       | schedule |                                     |       |
+| SCHEDULE_ENDPOINT       | Message base url            | no       | http://localhost:9324 |                           |       |
+| SCHEDULE_QUEUE_URL      | Message queue url           | no       | http://localhost:9324/queue/schedule |         |or tcp |
+| SCHEDULE_QUEUE_REGION   | AWS region                  | no       | eu-west-2   |                                     |Ignored in local dev |
+| SCHEDULE_QUEUE_ACCESS_KEY_ID | Message access key Id  | no       |             |                                     |       |
+| SCHEDULE_QUEUE_ACCESS_KEY | Message access key        | no       |             |                                     |       |
+| CREATE_SCHEDULE_QUEUE   | Create queue before connection | no    | true        | For AWS deployments must be set to false|   |
+| PAYMENT_QUEUE_NAME         | Message queue name          | no       | payment     |                                     |       |
+| PAYMENT_ENDPOINT           | Message base url            | no       | http://localhost:9324 |                           |       |
+| PAYMENT_QUEUE_URL          | Message queue url           | no       | http://localhost:9324/queue/payment |         |or tcp |
+| PAYMENT_QUEUE_REGION       | AWS region                  | no       | eu-west-2   |                                     |Ignored in local dev |
+| PAYMENT_QUEUE_ACCESS_KEY_ID | Message access key Id      | no       |             |                                     |       |
+| PAYMENT_QUEUE_ACCESS_KEY   | Message access key          | no       |             |                                     |       |
+| CREATE_PAYMENT_QUEUE       | Create queue before connection | no    | true        | For AWS deployments must be set to false|   |
 
 ## How to run tests
 
@@ -121,7 +120,7 @@ Sample valid JSON for each message queue is:
 
 To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as message queues. The most convenient approach for this is to start the entire application stack from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository.
 
-It is also possible to run a limited subset of the application stack, using the [`start`](./scripts/start) script's `--link` flag to join each service to the shared Docker network. See the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) Readme for instructions.
+It is also possible to run a limited subset of the application stack. See the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) Readme for instructions.
 
 ### Deploy to Kubernetes
 
@@ -169,8 +168,6 @@ The [`exec`](./scripts/exec) script is provided to run arbitrary commands, such 
 
 Since dependencies are installed into the container image, a full build should always be run immediately after any dependency change.
 
-In development, the `node_modules` folder is mounted to a named volume. This volume must be removed in order for dependency changes to propagate from the rebuilt image into future instances of the app container. The [`start`](./scripts/start) script has a `--clean` (or `-c`) option  which will achieve this.
-
 The following example will update all npm dependencies, rebuild the container image and replace running containers and volumes:
 
 ```
@@ -183,11 +180,7 @@ scripts/start --clean
 
 ## Build pipeline
 
-The [azure-pipelines.yaml](azure-pipelines.yaml) performs the following tasks:
-- Runs unit tests
-- Publishes test result
-- Pushes containers to the registry tagged with the PR number or release version
-- Deletes PR deployments, containers, and namepace upon merge
+Builds are managed by Jenkins.
 
 Builds will be deployed into a namespace with the format `mine-support-payment-service-{identifier}` where `{identifier}` is either the release version, the PR number, or the branch name.
 

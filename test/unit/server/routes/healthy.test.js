@@ -2,14 +2,14 @@ describe('Healthy test', () => {
   let createServer
   let server
   let databaseService
-  let connectionService
+  let messageService
 
   beforeAll(async () => {
-    jest.mock('../../../server/services/database-service')
-    jest.mock('../../../server/services/connection-service')
-    databaseService = require('../../../server/services/database-service')
-    connectionService = require('../../../server/services/connection-service')
-    createServer = require('../../../server')
+    jest.mock('../../../../server/services/database-service')
+    databaseService = require('../../../../server/services/database-service')
+    jest.mock('../../../../server/services/message-service')
+    messageService = require('../../../../server/services/message-service')
+    createServer = require('../../../../server')
   })
 
   beforeEach(async () => {
@@ -24,7 +24,7 @@ describe('Healthy test', () => {
     }
 
     databaseService.isConnected = jest.fn(() => true)
-    connectionService.isConnected = jest.fn(() => true)
+    messageService.isRunning = jest.fn(() => true)
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
@@ -37,7 +37,7 @@ describe('Healthy test', () => {
     }
 
     databaseService.isConnected = jest.fn(() => false)
-    connectionService.isConnected = jest.fn(() => true)
+    messageService.isRunning = jest.fn(() => true)
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(500)
@@ -50,7 +50,7 @@ describe('Healthy test', () => {
     }
 
     databaseService.isConnected = jest.fn(() => true)
-    connectionService.isConnected = jest.fn(() => false)
+    messageService.isRunning = jest.fn(() => false)
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(500)
@@ -63,7 +63,7 @@ describe('Healthy test', () => {
     }
 
     databaseService.isConnected = jest.fn(() => false)
-    connectionService.isConnected = jest.fn(() => false)
+    messageService.isRunning = jest.fn(() => false)
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(500)
@@ -74,6 +74,6 @@ describe('Healthy test', () => {
   })
 
   afterAll(async () => {
-    jest.unmock('../../../server/models')
+    jest.unmock('../../../../server/models')
   })
 })
