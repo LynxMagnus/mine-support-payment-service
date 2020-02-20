@@ -1,4 +1,5 @@
 name: ffc-demo-payment-service
+environment: production
 imagePullSecret: myregistrykey
 container:
   allowPrivilegeEscalation: true

@@ -5,6 +5,9 @@ version: '3.7'
 
 services:
   ffc-demo-payment-service:
+    build:
+      context: .
+      target: development
     command: >
       sh -c "
         scripts/wait-for/wait-for ffc-demo-payment-postgres:5432 --
