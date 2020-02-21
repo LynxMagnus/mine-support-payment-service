@@ -24,7 +24,7 @@ function registerScheduleConsumer () {
 
 function registerPaymentConsumer () {
   paymentConsumer = new MessageConsumer(config.paymentQueueConfig, config.paymentQueueConfig.queueUrl, paymentMessageAction)
-  paymentConsumer.start()
+  // paymentConsumer.start()
 }
 
 function isRunning () {
