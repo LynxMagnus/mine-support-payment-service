@@ -9,13 +9,13 @@ class MessageConsumer {
   }
 
   test (queueConfig, queueUrl) {
-    const sts = new AWS.STS({ region: 'eu-west-2' })
-    sts.getCallerIdentity({}, function (error, data) {
-      if (error) {
-        console.log(error)
-      }
-      console.log(data)
-    })
+    // const sts = new AWS.STS({ region: 'eu-west-2' })
+    // sts.getCallerIdentity({}, function (error, data) {
+    //   if (error) {
+    //     console.log(error)
+    //   }
+    //   console.log(data)
+    // })
 
     var sqs = new AWS.SQS({ region: 'eu-west-2' })
 
