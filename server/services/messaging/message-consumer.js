@@ -59,7 +59,6 @@ class MessageConsumer {
         region: queueConfig.region
       })
     })
-    console.log(this.app.sqs)
   }
 
   registerErrorEvents () {

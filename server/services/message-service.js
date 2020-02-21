@@ -19,12 +19,12 @@ async function registerService () {
 
 function registerScheduleConsumer () {
   scheduleConsumer = new MessageConsumer(config.scheduleQueueConfig, config.scheduleQueueConfig.queueUrl, scheduleMessageAction)
-  // scheduleConsumer.start()
+  scheduleConsumer.start()
 }
 
 function registerPaymentConsumer () {
   paymentConsumer = new MessageConsumer(config.paymentQueueConfig, config.paymentQueueConfig.queueUrl, paymentMessageAction)
-  // paymentConsumer.start()
+  paymentConsumer.start()
 }
 
 function isRunning () {
