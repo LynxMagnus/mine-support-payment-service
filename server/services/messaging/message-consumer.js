@@ -3,9 +3,9 @@ const AWS = require('aws-sdk')
 
 class MessageConsumer {
   constructor (queueConfig, queueUrl, messageHandler) {
-    // this.createConsumer(queueConfig, queueUrl, messageHandler)
-    // this.registerErrorEvents()
-    this.test(queueConfig, queueUrl)
+    this.createConsumer(queueConfig, queueUrl, messageHandler)
+    this.registerErrorEvents()
+    // this.test(queueConfig, queueUrl)
   }
 
   test (queueConfig, queueUrl) {
