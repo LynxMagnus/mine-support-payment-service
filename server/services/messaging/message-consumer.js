@@ -9,23 +9,15 @@ class MessageConsumer {
   }
 
   test (queueConfig, queueUrl) {
-    // var AWS = require('aws-sdk')
-    // Set the region
-    // AWS.config.update({
-    //   // region: queueConfig.region,
-    //   // accessKeyId: queueConfig.accessKeyId,
-    //   // secretAccessKey: queueConfig.secretAccessKey
-    // })
-    // const secretsManagerClient = new AWS.SecretsManager({ credentials: new AWS.TokenFileWebIdentityCredentials() })
-
-    // Create an SQS service object
-    var sqs = new AWS.SQS({
-      region: queueConfig.region,
-      accessKeyId: queueConfig.accessKeyId,
-      secretAccessKey: queueConfig.secretAccessKey
+    const sts = new AWS.STS({ region: 'eu-west-2' })
+    sts.getCallerIdentity({}, function (error, data) {
+      if (error) {
+        console.log(error)
+      }
+      console.log(data)
     })
 
-    var queueURL = queueUrl
+    var sqs = new AWS.SQS({ region: 'eu-west-2' })
 
     var params = {
       AttributeNames: [
@@ -35,7 +27,7 @@ class MessageConsumer {
       MessageAttributeNames: [
         'All'
       ],
-      QueueUrl: queueURL,
+      QueueUrl: queueUrl,
       VisibilityTimeout: 20,
       WaitTimeSeconds: 0
     }
@@ -45,7 +37,7 @@ class MessageConsumer {
         console.log('Receive Error', err)
       } else if (data.Messages) {
         var deleteParams = {
-          QueueUrl: queueURL,
+          QueueUrl: queueUrl,
           ReceiptHandle: data.Messages[0].ReceiptHandle
         }
         sqs.deleteMessage(deleteParams, function (err, data) {
