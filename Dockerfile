@@ -1,5 +1,5 @@
 ARG PORT=3004
-ARG PARENT_VERSION=1.0.0-node12.16.0
+ARG PARENT_VERSION=1.0.0-node12.16.0-pr5
 ARG REGISTRY=171014905211.dkr.ecr.eu-west-2.amazonaws.com
 
 # Development

@@ -3,7 +3,7 @@ import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
 def registry = '171014905211.dkr.ecr.eu-west-2.amazonaws.com'
-def regCredsId = 'ecr:eu-west-2:ecr-user'
+def regCredsId = 'ecr:eu-west-2:devffc-user'
 def kubeCredsId = 'FFCLDNEKSAWSS001_KUBECONFIG'
 def jenkinsDeployJob = 'ffc-demo-payment-service-deploy'
 def repoName = 'ffc-demo-payment-service'
