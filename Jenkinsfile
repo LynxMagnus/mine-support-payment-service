@@ -2,9 +2,6 @@
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
-def registry = '562955126301.dkr.ecr.eu-west-2.amazonaws.com'
-def regCredsId = 'ecr:eu-west-2:ecr-user'
-def kubeCredsId = 'FFCLDNEKSAWSS001_KUBECONFIG'
 def jenkinsDeployJob = 'ffc-demo-payment-service-deploy'
 def repoName = 'ffc-demo-payment-service'
 def pr = ''
@@ -48,11 +45,11 @@ node {
       defraUtils.waitForQualityGateResult(timeoutInMinutes)
     }
     stage('Push container image') {
-      defraUtils.buildAndPushContainerImage(regCredsId, registry, repoName, containerTag)
+      defraUtils.buildAndPushContainerImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, repoName, containerTag)
     }
     if (pr == '') {
       stage('Publish chart') {
-        defraUtils.publishChart(registry, repoName, containerTag)
+        defraUtils.publishChart(DOCKER_REGISTRY, repoName, containerTag)
       }
       stage('Trigger GitHub release') {
        withCredentials([
@@ -107,14 +104,14 @@ node {
             "--set $helmValues"
           ].join(' ')
 
-          defraUtils.deployChart(kubeCredsId, registry, repoName, containerTag, extraCommands)
+          defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, repoName, containerTag, extraCommands)
           echo "Build available for review"
         }
       }
     }
     if (mergedPrNo != '') {
       stage('Remove merged PR') {
-        defraUtils.undeployChart(kubeCredsId, repoName, mergedPrNo)
+        defraUtils.undeployChart(KUBE_CREDENTIALS_ID, repoName, mergedPrNo)
       }
     }
     stage('Set GitHub status as success'){
