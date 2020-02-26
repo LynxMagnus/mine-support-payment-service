@@ -1,4 +1,4 @@
-@Library('defra-library@1.0.0')
+@Library('defra-library@2.0.0')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -30,7 +30,7 @@ node {
       defraUtils.lintHelm(repoName)
     }
     stage('Build test image') {
-      defraUtils.buildTestImage(repoName,repoName, BUILD_NUMBER)
+      defraUtils.buildTestImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, repoName, BUILD_NUMBER)
     }
     stage('Run tests') {
       defraUtils.runTests(repoName, repoName, BUILD_NUMBER)
