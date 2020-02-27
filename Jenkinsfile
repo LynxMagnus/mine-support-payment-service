@@ -26,11 +26,7 @@ node {
       defraUtils.lintHelm(serviceName)
     }
     stage('Build test image') {
-<<<<<<< HEAD
-      defraUtils.buildTestImage(repoName,repoName, BUILD_NUMBER)
-=======
       defraUtils.buildTestImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, BUILD_NUMBER)
->>>>>>> origin/master
     }
     stage('Run tests') {
       defraUtils.runTests(serviceName, serviceName, BUILD_NUMBER)
