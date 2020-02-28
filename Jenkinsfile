@@ -24,10 +24,10 @@ node {
     }
     stage('Create database role and schema') {
       def credentialsId = 'postgres_ffc_demo_jenkins'
-      def host = 'postgresExternalNamePayments'
-      def username = 'test_db_user'
-      def dbname = 'test_db_name'
-      defraUtils.provisionPrRoleAndSchema(host, username, dbname, credentialsId, credentialsId, pr)
+      def host = 'postgres_ffc_demo_host'
+      def prCredId = 'postgresPaymentsPR'
+      def dbname = serviceName
+      defraUtils.provisionPrRoleAndSchema(host, dbname, credentialsId, prCredId, pr)
     }
     // stage('Helm lint') {
     //   defraUtils.lintHelm(serviceName)
