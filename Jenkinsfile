@@ -1,4 +1,4 @@
-@Library('defra-library@2.0.0')
+@Library('defra-library@psd-512-create-db')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -21,6 +21,13 @@ node {
     // }
     stage('Set branch, PR, and containerTag variables') {
       (pr, containerTag, mergedPrNo) = defraUtils.getVariables(serviceName, defraUtils.getPackageJsonVersion())
+    }
+    stage('Create database role and schema') {
+      def credentialsId = 'postgres_ffc_demo_jenkins'
+      def host = 'postgresExternalNamePayments'
+      def username = 'test_db_user'
+      def dbname = 'test_db_name'
+      defraUtils.provisionPrRoleAndSchema(host, username, dbname, credentialsId, credentialsId, pr)
     }
     // stage('Helm lint') {
     //   defraUtils.lintHelm(serviceName)
