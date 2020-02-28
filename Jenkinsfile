@@ -18,9 +18,9 @@ node {
   try {
      stage('Set GitHub status as pending'){
       defraUtils.setGithubStatusPending()
-    } 
+    }
     stage('Set branch, PR, and containerTag variables') {
-      (pr, containerTag, mergedPrNo) = defraUtils.getVariables(serviceName, defraUtils.getPackageJsonVersion())      
+      (pr, containerTag, mergedPrNo) = defraUtils.getVariables(serviceName, defraUtils.getPackageJsonVersion())
     }
     stage('Helm lint') {
       defraUtils.lintHelm(serviceName)
@@ -44,7 +44,7 @@ node {
       defraUtils.waitForQualityGateResult(timeoutInMinutes)
     }
     stage('Push container image') {
-      defraUtils.buildAndPushContainerImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag)
+      defraUtils.buildAndPushContainerImage("dummy", DOCKER_REGISTRY, serviceName, containerTag)
     }
     if (pr == '') {
       stage('Publish chart') {
@@ -52,7 +52,7 @@ node {
       }
       stage('Trigger GitHub release') {
        withCredentials([
-        string(credentialsId: 'github-auth-token', variable: 'gitToken') 
+        string(credentialsId: 'github-auth-token', variable: 'gitToken')
         ]) {
             defraUtils.triggerRelease(containerTag, serviceName, containerTag, gitToken)
         }
@@ -65,7 +65,7 @@ node {
           defraUtils.triggerDeploy(JENKINS_DEPLOY_SITE_ROOT, deployJobName, jenkinsToken, ['chartVersion': containerTag])
         }
       }
-    } else {      
+    } else {
        stage('Verify version incremented') {
         defraUtils.verifyPackageJsonVersionIncremented()
       }
