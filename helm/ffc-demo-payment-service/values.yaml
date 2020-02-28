@@ -10,6 +10,7 @@ postgresHost: ffc-demo-payments-postgres
 postgresExternalName:
 postgresPort: 5432
 name: ffc-demo-payment-service
+namespace: ffc-demo
 image: ffc-demo-payment-service
 imagePullSecret:
 service:
