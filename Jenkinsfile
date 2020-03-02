@@ -28,7 +28,7 @@ node {
       def prCredId = 'postgresPaymentsPR'
       def dbname = serviceName.replaceAll('-', '_')
       // defraUtils.provisionPrRoleAndSchema(host, dbname, credentialsId, prCredId, pr, false)
-      defraUtils.destroyPrRoleAndSchema(host, dbname, credentialsId, pr, false)
+      defraUtils.destroyPrRoleAndSchema(host, dbname, credentialsId, pr, true)
     }
     // stage('Helm lint') {
     //   defraUtils.lintHelm(serviceName)
