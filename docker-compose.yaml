@@ -11,6 +11,7 @@ services:
       - ffc-demo-payment-postgres
     environment:
       POSTGRES_DB: ffc_demo_payment_service
+      POSTGRES_SCHEMA: pr53
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: ffc-demo-payment-postgres
@@ -35,6 +36,7 @@ services:
       POSTGRES_DB: ffc_demo_payment_service
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
+      POSTGRES_SCHEMA: pr53
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

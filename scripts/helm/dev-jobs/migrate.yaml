@@ -22,6 +22,8 @@ spec:
             value: changeme
           - name: POSTGRES_DB
             value: mine_payments
+          - name: POSTGRES_SCHEMA
+            value: pr53
           - name: POSTGRES_HOST
             value: ffc-demo-payment-postgres-postgresql
           - name: POSTGRES_PORT
