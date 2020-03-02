@@ -49,6 +49,8 @@ spec:
           value: {{ quote .Values.postgresPassword }}
         - name: POSTGRES_DB
           value: {{ quote .Values.postgresDatabase }}
+        - name: POSTGRES_SCHEMA
+          value: {{ quote .Values.postgresSchema }}
         - name: POSTGRES_HOST
           value: {{ quote .Values.postgresExternalName }}
         - name: POSTGRES_PORT

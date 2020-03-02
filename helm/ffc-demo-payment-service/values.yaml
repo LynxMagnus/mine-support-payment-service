@@ -1,6 +1,7 @@
 environment: production
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
+postgresSchema: changeme
 postgresDatabase: ffc_demo_payment_service
 # postgresHost is the host name of the PostgreSQL service
 postgresHost: ffc-demo-payments-postgres

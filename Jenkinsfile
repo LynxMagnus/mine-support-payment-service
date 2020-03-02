@@ -89,9 +89,6 @@ node {
           string(credentialsId: 'postgres_ffc_demo_host', variable: 'postgresExternalName'),
           usernamePassword(credentialsId: 'payment-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
         ]) {
-          sh "echo $postgresExternalName | base64"
-          sh "echo $postgresPassword | base64"
-          sh "echo $prUser | base64"
           def helmValues = [
             /container.scheduleQueueEndpoint="$sqsQueueEndpoint"/,
             /container.scheduleQueueUrl="$scheduleQueueUrl"/,
@@ -106,6 +103,7 @@ node {
             /postgresExternalName="$postgresExternalName"/,
             /postgresPassword="$postgresPassword"/,
             /postgresUsername="$prUser"/,
+            /postgresSchema="$prSchema"/,
             /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
           ].join(',')
 
