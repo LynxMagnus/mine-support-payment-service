@@ -1,4 +1,4 @@
-@Library('defra-library@psd-512-create-db')
+@Library('defra-library@2.2.0')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
