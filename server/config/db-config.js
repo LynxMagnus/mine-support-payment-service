@@ -4,7 +4,8 @@ const dbConfig = {
   database: process.env.POSTGRES_DB || 'mine_payments',
   host: process.env.POSTGRES_HOST || 'ffc-demo-payment-postgres',
   port: process.env.POSTGRES_PORT || 5432,
-  dialect: 'postgres'
+  dialect: 'postgres',
+  schema: 'pr53'
 }
 
 const config = {
