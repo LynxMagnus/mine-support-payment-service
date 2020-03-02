@@ -27,8 +27,8 @@ node {
       def host = 'postgres_ffc_demo_host'
       def prCredId = 'postgresPaymentsPR'
       def dbname = serviceName.replaceAll('-', '_')
-      defraUtils.destroyPrRoleAndSchema(host, dbname, credentialsId, pr, true)
-      (prSchema, prUser) = defraUtils.provisionPrRoleAndSchema(host, dbname, credentialsId, prCredId, pr, false)
+      defraUtils.destroyPrDatabaseRoleAndSchema(host, dbname, credentialsId, pr, true)
+      (prSchema, prUser) = defraUtils.provisionPrDatabaseRoleAndSchema(host, dbname, credentialsId, prCredId, pr, false)
 
       echo "SCHEMA = $prSchema"
       echo "USER = $prUser"
