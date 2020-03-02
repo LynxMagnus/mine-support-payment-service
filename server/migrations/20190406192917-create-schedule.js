@@ -26,6 +26,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    }, {
+      schema: 'pr53'
     })
   },
   down: (queryInterface, Sequelize) => {
