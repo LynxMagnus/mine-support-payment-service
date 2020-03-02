@@ -28,7 +28,7 @@ node {
       def prCredId = 'postgresPaymentsPR'
       def dbname = serviceName.replaceAll('-', '_')
       defraUtils.destroyPrDatabaseRoleAndSchema(host, dbname, credentialsId, pr)
-      defraUtils.provisionPrDatabaseRoleAndSchema(host, dbname, credentialsId, prCredId, pr)
+      (prSchema, prUser) = defraUtils.provisionPrDatabaseRoleAndSchema(host, dbname, credentialsId, prCredId, pr)
     }
     stage('Helm lint') {
       defraUtils.lintHelm(serviceName)
@@ -86,9 +86,12 @@ node {
           string(credentialsId: 'payment-queue-url-pr', variable: 'paymentQueueUrl'),
           string(credentialsId: 'payment-queue-access-key-id-listen', variable: 'paymentQueueAccessKeyId'),
           string(credentialsId: 'payment-queue-secret-access-key-listen', variable: 'paymentQueueSecretAccessKey'),
-          string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
+          string(credentialsId: 'postgres_ffc_demo_host', variable: 'postgresExternalName'),
           usernamePassword(credentialsId: 'payment-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
         ]) {
+          sh "echo $postgresExternalName | base64"
+          sh "echo $postgresPassword | base64"
+          sh "echo $prUser | base64"
           def helmValues = [
             /container.scheduleQueueEndpoint="$sqsQueueEndpoint"/,
             /container.scheduleQueueUrl="$scheduleQueueUrl"/,
@@ -102,7 +105,7 @@ node {
             /container.paymentCreateQueue="false"/,
             /postgresExternalName="$postgresExternalName"/,
             /postgresPassword="$postgresPassword"/,
-            /postgresUsername="$postgresUsername"/,
+            /postgresUsername="$prUser"/,
             /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
           ].join(',')
 

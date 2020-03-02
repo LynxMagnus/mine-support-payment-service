@@ -8,9 +8,9 @@ services:
         REGISTRY: ${DOCKER_REGISTRY:-562955126301.dkr.ecr.eu-west-2.amazonaws.com}
     image: ffc-demo-payment-service
     depends_on:
-      - ffc-demo-payment-postgres      
+      - ffc-demo-payment-postgres
     environment:
-      POSTGRES_DB: ffc_demo_payments
+      POSTGRES_DB: ffc_demo_payment_service
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: ffc-demo-payment-postgres
@@ -32,7 +32,7 @@ services:
   ffc-demo-payment-postgres:
     image: postgres:11.4-alpine
     environment:
-      POSTGRES_DB: ffc_demo_payments
+      POSTGRES_DB: ffc_demo_payment_service
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
     volumes:
