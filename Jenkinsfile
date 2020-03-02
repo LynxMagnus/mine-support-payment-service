@@ -27,7 +27,7 @@ node {
       def host = 'postgres_ffc_demo_host'
       def prCredId = 'postgresPaymentsPR'
       def dbname = serviceName.replaceAll('-', '_')
-      defraUtils.provisionPrRoleAndSchema(host, dbname, credentialsId, prCredId, pr, false)
+      defraUtils.provisionPrRoleAndSchema(host, dbname, credentialsId, prCredId, pr, true)
       // defraUtils.destroyPrRoleAndSchema(host, dbname, credentialsId, pr, true)
     }
     // stage('Helm lint') {
