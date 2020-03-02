@@ -11,5 +11,6 @@ module.exports = (sequelize, DataTypes) => {
   Schedule.associate = function (models) {
     // associations can be defined here
   }
+  Schedule.schema('pr53')
   return Schedule
 }
