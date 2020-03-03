@@ -44,6 +44,7 @@ container:
   paymentQueueAccessKeyId: elasticmq
   paymentQueueSecretAccessKey: elasticmq
   paymentCreateQueue: true
+  serviceAccountName: ffc-demo-payment-service-account
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate; node index"]
 replicaCount: 1
@@ -64,3 +65,7 @@ livenessProbe:
   initialDelaySeconds: 70
   periodSeconds: 10
   failureThreshold: 3
+
+serviceAccount:
+  name: ffc-demo-payment-service-account
+  roleArn: arn:aws:iam::562955126301:role/ffc_demo_payment_service_role_001
