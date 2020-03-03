@@ -15,7 +15,7 @@ module.exports = {
         }))
         await queryInterface.bulkInsert('payments', transformed, { transaction })
       }
-      await queryInterface.removeColumn('pr53.schedules', 'value', { transaction })
+      await queryInterface.removeColumn('schedules', 'value', { transaction })
       await transaction.commit()
     } catch (err) {
       await transaction.rollback()
