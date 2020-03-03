@@ -2,7 +2,7 @@ const dbConfig = {
   username: process.env.POSTGRES_USERNAME,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB || 'mine_payments',
-  schema: 'pr53',
+  schema: process.env.POSTGRES_SCHEMA || 'pr53',
   host: process.env.POSTGRES_HOST || 'ffc-demo-payment-postgres',
   // username: 'test',
   // password: '',
