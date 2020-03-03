@@ -1,4 +1,5 @@
 name: ffc-demo-payment-service
+namespace: ffc-demo
 environment: production
 imagePullSecret: myregistrykey
 container:
