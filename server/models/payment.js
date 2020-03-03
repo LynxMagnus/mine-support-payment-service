@@ -7,6 +7,6 @@ module.exports = (sequelize, DataTypes) => {
   Payment.associate = function (models) {
     // associations can be defined here
   }
-  Payment.schema('pr53')
+  Payment.schema('pr53') // Table will end up in this schema
   return Payment
 }

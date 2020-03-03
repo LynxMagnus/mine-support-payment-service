@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction()
     try {
-      const [payments] = await queryInterface.sequelize.query('SELECT DISTINCT "claimId", value FROM public."schedules";')
+      const [payments] = await queryInterface.sequelize.query('SELECT DISTINCT "claimId", value FROM pr53."schedules";')
 
       if (payments.length) {
         const transformed = payments.map(({ claimId, value }) => ({
@@ -15,7 +15,7 @@ module.exports = {
         }))
         await queryInterface.bulkInsert('payments', transformed, { transaction })
       }
-      await queryInterface.removeColumn('schedules', 'value', { transaction })
+      await queryInterface.removeColumn('pr53.schedules', 'value', { transaction })
       await transaction.commit()
     } catch (err) {
       await transaction.rollback()
@@ -30,7 +30,7 @@ module.exports = {
       },
       { transaction })
 
-      const [payments] = await queryInterface.sequelize.query('SELECT DISTINCT "claimId", value FROM public."payments";')
+      const [payments] = await queryInterface.sequelize.query('SELECT DISTINCT "claimId", value FROM pr53."payments";')
 
       await Promise.all(
         payments.map(async (payment) =>
