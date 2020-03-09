@@ -1,4 +1,4 @@
-@Library('defra-library@3.0.0')
+@Library('defra-library@3.0.1')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -18,9 +18,9 @@ node {
   try {
      stage('Set GitHub status as pending'){
       defraUtils.setGithubStatusPending()
-    } 
+    }
     stage('Set branch, PR, and containerTag variables') {
-      (pr, containerTag, mergedPrNo) = defraUtils.getVariables(serviceName, defraUtils.getPackageJsonVersion())      
+      (pr, containerTag, mergedPrNo) = defraUtils.getVariables(serviceName, defraUtils.getPackageJsonVersion())
     }
     stage('Helm lint') {
       defraUtils.lintHelm(serviceName)
@@ -52,7 +52,7 @@ node {
       }
       stage('Trigger GitHub release') {
        withCredentials([
-        string(credentialsId: 'github-auth-token', variable: 'gitToken') 
+        string(credentialsId: 'github-auth-token', variable: 'gitToken')
         ]) {
             defraUtils.triggerRelease(containerTag, serviceName, containerTag, gitToken)
         }
@@ -65,7 +65,7 @@ node {
           defraUtils.triggerDeploy(JENKINS_DEPLOY_SITE_ROOT, deployJobName, jenkinsToken, ['chartVersion': containerTag])
         }
       }
-    } else {      
+    } else {
        stage('Verify version incremented') {
         defraUtils.verifyPackageJsonVersionIncremented()
       }
