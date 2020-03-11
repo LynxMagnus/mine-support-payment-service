@@ -7,31 +7,31 @@ const queueSchema = joi.object({
   region: joi.string().default('eu-west-2'),
   accessKeyId: joi.string().optional(),
   secretAccessKey: joi.string().optional(),
-  createQueue: joi.bool().default(true)
+  createQueue: joi.bool().default(false)
 })
 
 const mqSchema = joi.object({
-  scheduleQueue: queueSchema,
-  paymentQueue: queueSchema
+  scheduleQueueConfig: queueSchema,
+  paymentQueueConfig: queueSchema
 })
 
 const mqConfig = {
-  scheduleQueue: {
+  scheduleQueueConfig: {
     name: process.env.SCHEDULE_QUEUE_NAME,
     endpoint: process.env.SCHEDULE_ENDPOINT,
     queueUrl: process.env.SCHEDULE_QUEUE_URL || `${process.env.SCHEDULE_ENDPOINT}/${process.env.SCHEDULE_QUEUE_NAME}`,
     region: process.env.SCHEDULE_QUEUE_REGION,
-    accessKeyId: process.env.SCHEDULE_QUEUE_ACCESS_KEY_ID,
-    secretAccessKey: process.env.SCHEDULE_QUEUE_ACCESS_KEY,
+    accessKeyId: process.env.DEV_ACCESS_KEY_ID,
+    secretAccessKey: process.env.DEV_ACCESS_KEY,
     createQueue: process.env.CREATE_SCHEDULE_QUEUE
   },
-  paymentQueue: {
+  paymentQueueConfig: {
     name: process.env.PAYMENT_QUEUE_NAME,
     endpoint: process.env.PAYMENT_ENDPOINT,
     queueUrl: process.env.PAYMENT_QUEUE_URL || `${process.env.PAYMENT_ENDPOINT}/${process.env.PAYMENT_QUEUE_NAME}`,
     region: process.env.PAYMENT_QUEUE_REGION,
-    accessKeyId: process.env.PAYMENT_QUEUE_ACCESS_KEY_ID,
-    secretAccessKey: process.env.PAYMENT_QUEUE_ACCESS_KEY,
+    accessKeyId: process.env.DEV_ACCESS_KEY_ID,
+    secretAccessKey: process.env.DEV_ACCESS_KEY,
     createQueue: process.env.CREATE_PAYMENT_QUEUE
   }
 }
@@ -45,12 +45,4 @@ if (mqResult.error) {
   throw new Error(`The message queue config is invalid. ${mqResult.error.message}`)
 }
 
-const scheduleQueueConfig = mqResult.value.scheduleQueue
-const paymentQueueConfig = mqResult.value.paymentQueue
-console.log('**************', scheduleQueueConfig)
-console.log('**************', paymentQueueConfig)
-
-module.exports = {
-  paymentQueueConfig,
-  scheduleQueueConfig
-}
+module.exports = mqResult.value
