@@ -1,6 +1,6 @@
 {
   "name": "ffc-demo-payment-service",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "test:unit": "jest --forceExit",
     "test:unit-watch": "jest --coverage=false --onlyChanged --watch --forceExit"
   },
-  "author": "John Watson, Mark Harrop, Matthew Collins, David Bingham",
+  "author": "John Watson, Mark Harrop, Matthew Collins, David Bingham, Fay Toward",
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@hapi/hapi": "^18.4.0",

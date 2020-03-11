@@ -5,6 +5,13 @@ metadata:
   name: {{ .Values.postgresHost }}
   labels:
     environment: {{ quote .Values.environment }}
+    app: {{ quote .Values.name }}
+    app.kubernetes.io/name: {{ quote .Values.name }}
+    app.kubernetes.io/instance: {{ quote .Values.labels.instance }}
+    app.kubernetes.io/version: {{ quote .Values.labels.version }}
+    app.kubernetes.io/component: {{ quote .Values.labels.component }}
+    app.kubernetes.io/part-of: {{ quote .Values.namespace }}
+    app.kubernetes.io/managed-by: {{ quote .Values.labels.managedBy }}
 spec:
   type: ExternalName
   externalName: {{ quote .Values.postgresExternalName }}
