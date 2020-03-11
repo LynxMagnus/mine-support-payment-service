@@ -1,4 +1,4 @@
-environment: development
+environment: production
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
 postgresDatabase: mine_payments
@@ -10,6 +10,7 @@ postgresHost: ffc-demo-payments-postgres
 postgresExternalName:
 postgresPort: 5432
 name: ffc-demo-payment-service
+namespace: ffc-demo
 image: ffc-demo-payment-service
 imagePullSecret:
 labels:
@@ -24,6 +25,7 @@ container:
   port: 3004
   registry:
   tag: latest
+  priorityClassName: low
   imagePullPolicy: IfNotPresent
   requestMemory: 60Mi
   requestCpu: 40m

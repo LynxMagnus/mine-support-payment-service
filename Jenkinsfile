@@ -1,20 +1,16 @@
-@Library('defra-library@0.0.16')
+@Library('defra-library@3.0.1')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
-def registry = '562955126301.dkr.ecr.eu-west-2.amazonaws.com'
-def regCredsId = 'ecr:eu-west-2:ecr-user'
-def kubeCredsId = 'FFCLDNEKSAWSS001_KUBECONFIG'
-def jenkinsDeployJob = 'ffc-demo-payment-service-deploy'
-def repoName = 'ffc-demo-payment-service'
-def pr = ''
-def mergedPrNo = ''
+def containerSrcFolder = '\\/home\\/node'
 def containerTag = ''
+def lcovFile = './test-output/lcov.info'
+def localSrcFolder = '.'
+def mergedPrNo = ''
+def pr = ''
+def serviceName = 'ffc-demo-payment-service'
 def sonarQubeEnv = 'SonarQube'
 def sonarScanner = 'SonarScanner'
-def containerSrcFolder = '\\/usr\\/src\\/app'
-def localSrcFolder = '.'
-def lcovFile = './test-output/lcov.info'
 def timeoutInMinutes = 5
 
 node {
@@ -22,18 +18,18 @@ node {
   try {
      stage('Set GitHub status as pending'){
       defraUtils.setGithubStatusPending()
-    } 
+    }
     stage('Set branch, PR, and containerTag variables') {
-      (pr, containerTag, mergedPrNo) = defraUtils.getVariables(repoName, defraUtils.getPackageJsonVersion())      
+      (pr, containerTag, mergedPrNo) = defraUtils.getVariables(serviceName, defraUtils.getPackageJsonVersion())
     }
     stage('Helm lint') {
-      defraUtils.lintHelm(repoName)
+      defraUtils.lintHelm(serviceName)
     }
     stage('Build test image') {
-      defraUtils.buildTestImage(repoName, BUILD_NUMBER)
+      defraUtils.buildTestImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, BUILD_NUMBER)
     }
     stage('Run tests') {
-      defraUtils.runTests(repoName, BUILD_NUMBER)
+      defraUtils.runTests(serviceName, serviceName, BUILD_NUMBER)
     }
     stage('Create Test Report JUnit'){
       defraUtils.createTestReportJUnit()
@@ -42,48 +38,48 @@ node {
       defraUtils.replaceInFile(containerSrcFolder, localSrcFolder, lcovFile)
     }
     stage('SonarQube analysis') {
-      defraUtils.analyseCode(sonarQubeEnv, sonarScanner, ['sonar.projectKey' : repoName, 'sonar.sources' : '.'])
+      defraUtils.analyseCode(sonarQubeEnv, sonarScanner, ['sonar.projectKey' : serviceName, 'sonar.sources' : '.'])
     }
     stage("Code quality gate") {
       defraUtils.waitForQualityGateResult(timeoutInMinutes)
     }
     stage('Push container image') {
-      defraUtils.buildAndPushContainerImage(regCredsId, registry, repoName, containerTag)
+      defraUtils.buildAndPushContainerImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag)
     }
     if (pr == '') {
       stage('Publish chart') {
-        defraUtils.publishChart(registry, repoName, containerTag)
+        defraUtils.publishChart(DOCKER_REGISTRY, serviceName, containerTag)
       }
       stage('Trigger GitHub release') {
        withCredentials([
-        string(credentialsId: 'github_ffc_platform_repo', variable: 'gitToken') 
+        string(credentialsId: 'github-auth-token', variable: 'gitToken')
         ]) {
-            defraUtils.triggerRelease(containerTag, repoName, containerTag, gitToken)
+            defraUtils.triggerRelease(containerTag, serviceName, containerTag, gitToken)
         }
       }
       stage('Trigger Deployment') {
         withCredentials([
-          string(credentialsId: 'JenkinsDeployUrl', variable: 'jenkinsDeployUrl'),
-          string(credentialsId: 'ffc-demo-payment-service-deploy-token', variable: 'jenkinsToken')
+          string(credentialsId: 'payment-service-deploy-token', variable: 'jenkinsToken'),
+          string(credentialsId: 'payment-service-job-deploy-name', variable: 'deployJobName')
         ]) {
-          defraUtils.triggerDeploy(jenkinsDeployUrl, jenkinsDeployJob, jenkinsToken, ['chartVersion': containerTag])
+          defraUtils.triggerDeploy(JENKINS_DEPLOY_SITE_ROOT, deployJobName, jenkinsToken, ['chartVersion': containerTag])
         }
       }
-    } else {      
+    } else {
        stage('Verify version incremented') {
         defraUtils.verifyPackageJsonVersionIncremented()
       }
       stage('Helm install') {
         withCredentials([
-          string(credentialsId: 'sqsQueueEndpoint', variable: 'sqsQueueEndpoint'),
-          string(credentialsId: 'scheduleQueueUrlPR', variable: 'scheduleQueueUrl'),
-          string(credentialsId: 'scheduleQueueAccessKeyIdListen', variable: 'scheduleQueueAccessKeyId'),
-          string(credentialsId: 'scheduleQueueSecretAccessKeyListen', variable: 'scheduleQueueSecretAccessKey'),
-          string(credentialsId: 'paymentQueueUrlPR', variable: 'paymentQueueUrl'),
-          string(credentialsId: 'paymentQueueAccessKeyIdListen', variable: 'paymentQueueAccessKeyId'),
-          string(credentialsId: 'paymentQueueSecretAccessKeyListen', variable: 'paymentQueueSecretAccessKey'),
-          string(credentialsId: 'postgresExternalNamePaymentsPR', variable: 'postgresExternalName'),
-          usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+          string(credentialsId: 'sqs-queue-endpoint', variable: 'sqsQueueEndpoint'),
+          string(credentialsId: 'schedule-queue-url-pr', variable: 'scheduleQueueUrl'),
+          string(credentialsId: 'schedule-queue-access-key-id-listen', variable: 'scheduleQueueAccessKeyId'),
+          string(credentialsId: 'schedule-queue-secret-access-key-listen', variable: 'scheduleQueueSecretAccessKey'),
+          string(credentialsId: 'payment-queue-url-pr', variable: 'paymentQueueUrl'),
+          string(credentialsId: 'payment-queue-access-key-id-listen', variable: 'paymentQueueAccessKeyId'),
+          string(credentialsId: 'payment-queue-secret-access-key-listen', variable: 'paymentQueueSecretAccessKey'),
+          string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
+          usernamePassword(credentialsId: 'payment-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
         ]) {
           def helmValues = [
             /container.scheduleQueueEndpoint="$sqsQueueEndpoint"/,
@@ -108,14 +104,14 @@ node {
             "--set $helmValues"
           ].join(' ')
 
-          defraUtils.deployChart(kubeCredsId, registry, repoName, containerTag, extraCommands)
+          defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag, extraCommands)
           echo "Build available for review"
         }
       }
     }
     if (mergedPrNo != '') {
       stage('Remove merged PR') {
-        defraUtils.undeployChart(kubeCredsId, repoName, mergedPrNo)
+        defraUtils.undeployChart(KUBE_CREDENTIALS_ID, serviceName, mergedPrNo)
       }
     }
     stage('Set GitHub status as success'){
@@ -126,6 +122,6 @@ node {
     defraUtils.notifySlackBuildFailure(e.message, "#generalbuildfailures")
     throw e
   } finally {
-    defraUtils.deleteTestOutput(repoName)
+    defraUtils.deleteTestOutput(serviceName, containerSrcFolder)
   }
 }
