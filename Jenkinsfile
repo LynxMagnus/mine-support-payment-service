@@ -13,6 +13,33 @@ def sonarQubeEnv = 'SonarQube'
 def sonarScanner = 'SonarScanner'
 def timeoutInMinutes = 5
 
+def getExtraCommands(pr, containerTag) {
+  withCredentials([
+    string(credentialsId: 'sqs-queue-endpoint', variable: 'sqsQueueEndpoint'),
+    string(credentialsId: 'schedule-queue-name-pr', variable: 'scheduleQueueName'),
+    string(credentialsId: 'payment-queue-name-pr', variable: 'paymentQueueName'),
+    string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
+    usernamePassword(credentialsId: 'payment-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+  ]) {
+    def helmValues = [
+      /container.scheduleQueueEndpoint="$sqsQueueEndpoint"/,
+      /container.scheduleQueueName="$scheduleQueueName"/,
+      /container.paymentQueueEndpoint="$sqsQueueEndPoint"/,
+      /container.paymentQueueName="$paymentQueueName"/,
+      /postgresExternalName="$postgresExternalName"/,
+      /postgresPassword="$postgresPassword"/,
+      /postgresUsername="$postgresUsername"/,
+      /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
+            /labels.version="$containerTag"/
+    ].join(',')
+
+    return [
+      "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml",
+      "--set $helmValues"
+    ].join(' ')
+  }
+}
+
 node {
   checkout scm
   try {
@@ -70,33 +97,8 @@ node {
         defraUtils.verifyPackageJsonVersionIncremented()
       }
       stage('Helm install') {
-        withCredentials([
-          string(credentialsId: 'sqs-queue-endpoint', variable: 'sqsQueueEndpoint'),
-          string(credentialsId: 'schedule-queue-name-pr', variable: 'scheduleQueueName'),
-          string(credentialsId: 'payment-queue-name-pr', variable: 'paymentQueueName'),
-          string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
-          usernamePassword(credentialsId: 'payment-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
-        ]) {
-          def helmValues = [
-            /container.scheduleQueueEndpoint="$sqsQueueEndpoint"/,
-            /container.scheduleQueueName="$scheduleQueueName"/,
-            /container.paymentQueueEndpoint="$sqsQueueEndPoint"/,
-            /container.paymentQueueName="$paymentQueueName"/,
-            /postgresExternalName="$postgresExternalName"/,
-            /postgresPassword="$postgresPassword"/,
-            /postgresUsername="$postgresUsername"/,
-            /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
-            /labels.version="$containerTag"/
-          ].join(',')
-
-          def extraCommands = [
-            "--values ./helm/ffc-demo-payment-service/jenkins-aws.yaml",
-            "--set $helmValues"
-          ].join(' ')
-
-          defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag, extraCommands)
-          echo "Build available for review"
-        }
+        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag,  getExtraCommands(pr))
+        echo "Build available for review"
       }
     }
     if (mergedPrNo != '') {
