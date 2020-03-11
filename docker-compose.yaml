@@ -16,11 +16,15 @@ services:
       POSTGRES_HOST: ffc-demo-payment-postgres
       POSTGRES_PORT: 5432
       SCHEDULE_ENDPOINT: http://ffc-demo-payment-message-queue:9324
+      SCHEDULE_QUEUE_NAME: schedule
       SCHEDULE_QUEUE_URL: http://ffc-demo-payment-message-queue:9324/queue/schedule
+      CREATE_SCHEDULE_QUEUE: "true"
       SCHEDULE_QUEUE_ACCESS_KEY_ID: elasticmq
       SCHEDULE_QUEUE_ACCESS_KEY: elasticmq
       PAYMENT_ENDPOINT: http://ffc-demo-payment-message-queue:9324
+      PAYMENT_QUEUE_NAME: payment
       PAYMENT_QUEUE_URL: http://ffc-demo-payment-message-queue:9324/queue/payment
+      CREATE_PAYMENT_QUEUE: "true"      
       PAYMENT_QUEUE_ACCESS_KEY_ID: elasticmq
       PAYMENT_QUEUE_ACCESS_KEY: elasticmq
     volumes:
