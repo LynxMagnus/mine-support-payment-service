@@ -22,7 +22,7 @@ services:
       PAYMENT_ENDPOINT: http://ffc-demo-payment-message-queue:9324
       PAYMENT_QUEUE_NAME: payment
       PAYMENT_QUEUE_URL: http://ffc-demo-payment-message-queue:9324/queue/payment
-      CREATE_PAYMENT_QUEUE: "true"      
+      CREATE_PAYMENT_QUEUE: "true"
       DEV_ACCESS_KEY_ID: elasticmq
       DEV_ACCESS_KEY: elasticmq
     volumes:

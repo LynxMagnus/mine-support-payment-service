@@ -66,3 +66,6 @@ livenessProbe:
   initialDelaySeconds: 70
   periodSeconds: 10
   failureThreshold: 3
+serviceAccount:
+  name: ffc-demo-payment-service-account
+  roleArn:

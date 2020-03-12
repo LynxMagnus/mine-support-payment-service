@@ -19,6 +19,7 @@ def getExtraCommands(pr, containerTag) {
     string(credentialsId: 'schedule-queue-name-pr', variable: 'scheduleQueueName'),
     string(credentialsId: 'payment-queue-name-pr', variable: 'paymentQueueName'),
     string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
+    string(credentialsId: 'payment-service-account-role-arn', variable: 'serviceAccountRoleArn'),
     usernamePassword(credentialsId: 'payment-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
   ]) {
     def helmValues = [
@@ -30,7 +31,8 @@ def getExtraCommands(pr, containerTag) {
       /postgresPassword="$postgresPassword"/,
       /postgresUsername="$postgresUsername"/,
       /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
-            /labels.version="$containerTag"/
+      /serviceAccount.roleArn="$serviceAccountRoleArn"/,
+      /labels.version="$containerTag"/
     ].join(',')
 
     return [
@@ -97,7 +99,7 @@ node {
         defraUtils.verifyPackageJsonVersionIncremented()
       }
       stage('Helm install') {
-        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag,  getExtraCommands(pr))
+        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag,  getExtraCommands(pr, containerTag))
         echo "Build available for review"
       }
     }
