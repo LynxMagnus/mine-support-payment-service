@@ -4,6 +4,7 @@ apiVersion: v1
 metadata:
   name: {{ .Values.postgresHost }}
   labels: {{ include "ffc-demo.labels" . | trimSuffix "\n" | indent 2 }}
+  namespace: {{ .Values.namespace}}
 spec:
   type: ExternalName
   externalName: {{ quote .Values.postgresExternalName }}
