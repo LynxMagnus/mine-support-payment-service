@@ -96,6 +96,7 @@ node {
             /postgresPassword="$postgresPassword"/,
             /postgresUsername="$postgresUsername"/,
             /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
+            /labels.version="$containerTag"/
           ].join(',')
 
           def extraCommands = [

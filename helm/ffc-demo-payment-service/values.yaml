@@ -13,6 +13,11 @@ name: ffc-demo-payment-service
 namespace: ffc-demo
 image: ffc-demo-payment-service
 imagePullSecret:
+labels:
+  instance:
+  version: 1.0.0
+  component: service
+  managedBy: helm
 service:
   type: ClusterIP
   port: 80
