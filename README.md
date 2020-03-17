@@ -23,24 +23,22 @@ Or:
 
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
-| Name                          | Description                       | Required | Default     | Valid                       | Notes |
-|-------------------------------|-----------------------------------|:--------:|-------------|-----------------------------|-------|
-| NODE_ENV                      | Node environment                  | no       | development | development,test,production |       |
-| PORT                          | Port number                       | no       | 3004        |                             |       |
-| SCHEDULE_QUEUE_NAME     | Message queue name          | no       | schedule |                                     |       |
-| SCHEDULE_ENDPOINT       | Message base url            | no       | http://localhost:9324 |                           |       |
-| SCHEDULE_QUEUE_URL      | Message queue url           | no       | http://localhost:9324/queue/schedule |         |or tcp |
-| SCHEDULE_QUEUE_REGION   | AWS region                  | no       | eu-west-2   |                                     |Ignored in local dev |
-| SCHEDULE_QUEUE_ACCESS_KEY_ID | Message access key Id  | no       |             |                                     |       |
-| SCHEDULE_QUEUE_ACCESS_KEY | Message access key        | no       |             |                                     |       |
-| CREATE_SCHEDULE_QUEUE   | Create queue before connection | no    | true        | For AWS deployments must be set to false|   |
-| PAYMENT_QUEUE_NAME         | Message queue name          | no       | payment     |                                     |       |
-| PAYMENT_ENDPOINT           | Message base url            | no       | http://localhost:9324 |                           |       |
-| PAYMENT_QUEUE_URL          | Message queue url           | no       | http://localhost:9324/queue/payment |         |or tcp |
-| PAYMENT_QUEUE_REGION       | AWS region                  | no       | eu-west-2   |                                     |Ignored in local dev |
-| PAYMENT_QUEUE_ACCESS_KEY_ID | Message access key Id      | no       |             |                                     |       |
-| PAYMENT_QUEUE_ACCESS_KEY   | Message access key          | no       |             |                                     |       |
-| CREATE_PAYMENT_QUEUE       | Create queue before connection | no    | true        | For AWS deployments must be set to false|   |
+| Name                  | Description                    | Required | Default     | Valid                       | Notes                             |
+|-----------------------|--------------------------------|:--------:|-------------|-----------------------------|-----------------------------------|
+| NODE_ENV              | Node environment               | no       | development | development,test,production |                                   |
+| PORT                  | Port number                    | no       | 3004        |                             |                                   |
+| SCHEDULE_QUEUE_NAME   | Message queue name             | yes      |             |                             |                                   |
+| SCHEDULE_ENDPOINT     | Message base url               | yes      |             |                             |                                   |
+| SCHEDULE_QUEUE_URL    | Message queue url              | no       |             |                             |                                   |
+| SCHEDULE_QUEUE_REGION | AWS region                     | no       | eu-west-2   |                             | Ignored in local dev              |
+| DEV_ACCESS_KEY_ID     | Local dev only access key Id   | no       |             |                             |                                   |
+| DEV_ACCESS_KEY        | Local dev only access key      | no       |             |                             |                                   |
+| CREATE_SCHEDULE_QUEUE | Create queue before connection | no       | false       |                             | For local development set to true | 
+| PAYMENT_QUEUE_NAME    | Message queue name             | yes      |             |                             |                                   |
+| PAYMENT_ENDPOINT      | Message base url               | yes      |             |                             |                                   |
+| PAYMENT_QUEUE_URL     | Message queue url              | no       |             |                             |                                   |
+| PAYMENT_QUEUE_REGION  | AWS region                     | no       | eu-west-2   |                             | Ignored in local dev              |
+| CREATE_PAYMENT_QUEUE  | Create queue before connection | no       | false       |                             | For local development set to true |
 
 ## How to run tests
 

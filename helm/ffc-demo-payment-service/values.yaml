@@ -40,18 +40,12 @@ container:
   restartPolicy: Always
   scheduleQueueName: schedule
   scheduleQueueEndpoint: http://ffc-demo-payment-message-queue:9324
-  scheduleQueueUrl: http://ffc-demo-payment-message-queue:9324/queue/schedule
   scheduleQueueRegion: eu-west-2
-  scheduleQueueAccessKeyId: elasticmq
-  scheduleQueueSecretAccessKey: elasticmq
-  scheduleCreateQueue: true
+  scheduleCreateQueue: false
   paymentQueueName: payment
   paymentQueueEndpoint: http://ffc-demo-payment-message-queue:9324
-  paymentQueueUrl: http://ffc-demo-payment-message-queue:9324/queue/payment
   paymentQueueRegion: eu-west-2
-  paymentQueueAccessKeyId: elasticmq
-  paymentQueueSecretAccessKey: elasticmq
-  paymentCreateQueue: true
+  paymentCreateQueue: false
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate; node index"]
 replicaCount: 1
@@ -72,3 +66,6 @@ livenessProbe:
   initialDelaySeconds: 70
   periodSeconds: 10
   failureThreshold: 3
+serviceAccount:
+  name: ffc-demo-payment-service-account
+  roleArn:
