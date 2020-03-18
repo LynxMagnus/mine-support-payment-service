@@ -75,10 +75,14 @@ node {
     stage('Push container image') {
       defraUtils.buildAndPushContainerImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag)
     }
-    if (pr == '') {
-      stage('Publish chart') {
+    stage('Publish chart') {
         defraUtils.publishChart(DOCKER_REGISTRY, serviceName, containerTag)
+        }
+    stage('Remove merged PR') {
+        defraUtils.undeployChart(KUBE_CREDENTIALS_ID, serviceName, mergedPrNo)
       }
+    if (pr == '') {
+      
       stage('Trigger GitHub release') {
        withCredentials([
         string(credentialsId: 'github-auth-token', variable: 'gitToken')
@@ -103,11 +107,7 @@ node {
         echo "Build available for review"
       }
     }
-    if (mergedPrNo != '') {
-      stage('Remove merged PR') {
-        defraUtils.undeployChart(KUBE_CREDENTIALS_ID, serviceName, mergedPrNo)
-      }
-    }
+
     stage('Set GitHub status as success'){
       defraUtils.setGithubStatusSuccess()
     }
