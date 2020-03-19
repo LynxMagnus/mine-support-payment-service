@@ -105,12 +105,12 @@ node {
         echo "Build available for review"
       }
     }
-    stage('Publish chart') {
+    /*stage('Publish chart') {
         defraUtils.publishChart(DOCKER_REGISTRY, serviceName, containerTag)
         }
     stage('Remove merged PR') {
         defraUtils.undeployChart(KUBE_CREDENTIALS_ID, serviceName, mergedPrNo)
-      }
+      }*/
     stage('Set GitHub status as success'){
       defraUtils.setGithubStatusSuccess()
     }
