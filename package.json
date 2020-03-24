@@ -16,8 +16,8 @@
   "author": "John Watson, Mark Harrop, Matthew Collins, David Bingham, Fay Toward",
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "@hapi/hapi": "^18.4.1",
-    "@hapi/joi": "^16.1.4",
+    "@hapi/hapi": "^19.1.1",
+    "@hapi/joi": "^17.1.1",
     "aws-sdk": "^2.610.0",
     "pg": "^7.12.1",
     "rhea-promise": "^1.0.0",
