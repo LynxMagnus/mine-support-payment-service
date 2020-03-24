@@ -1,4 +1,4 @@
-[![Known Vulnerabilities](https://snyk.io//test/github/DEFRA/ffc-demo-payment-service/badge.svg?targetFile=package.json)](https://snyk.io//test/github/DEFRA/ffc-demo-payment-service?targetFile=package.json)
+[![Known Vulnerabilities](https://snyk.io/test/github/DEFRA/ffc-demo-payment-service/badge.svg?targetFile=package.json)](https://snyk.io/test/github/DEFRA/ffc-demo-payment-service?targetFile=package.json)
 
 # FFC Demo Payment Service
 
@@ -33,7 +33,7 @@ The following environment variables are required by the application container. V
 | SCHEDULE_QUEUE_REGION | AWS region                     | no       | eu-west-2   |                             | Ignored in local dev              |
 | DEV_ACCESS_KEY_ID     | Local dev only access key Id   | no       |             |                             |                                   |
 | DEV_ACCESS_KEY        | Local dev only access key      | no       |             |                             |                                   |
-| CREATE_SCHEDULE_QUEUE | Create queue before connection | no       | false       |                             | For local development set to true | 
+| CREATE_SCHEDULE_QUEUE | Create queue before connection | no       | false       |                             | For local development set to true |
 | PAYMENT_QUEUE_NAME    | Message queue name             | yes      |             |                             |                                   |
 | PAYMENT_ENDPOINT      | Message base url               | yes      |             |                             |                                   |
 | PAYMENT_QUEUE_URL     | Message queue url              | no       |             |                             |                                   |
@@ -92,7 +92,7 @@ docker-compose build
 
 ### Start and stop the service
 
-Use Docker Compose to run service locally. 
+Use Docker Compose to run service locally.
 
 `docker-compose up`
 
