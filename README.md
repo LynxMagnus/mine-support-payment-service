@@ -83,48 +83,60 @@ The application is designed to run in containerised environments, using Docker C
 
 Container images are built using Docker Compose, with the same images used to run the service with either Docker Compose or Kubernetes.
 
-By default, the start script will build (or rebuild) images so there will rarely be a need to build images manually. However, this can be achieved through the Docker Compose [build](https://docs.docker.com/compose/reference/build/) command:
-
-```
-# Build container images
-docker-compose build
-```
+### Build the service
+  * `docker-compose build`
 
 ### Start and stop the service
 
 Use Docker Compose to run service locally.
 
-`docker-compose up`
+* start
+  * `docker-compose up`
+* stop
+  * `docker-compose down` or CTRL-C
 
 Additional Docker Compose files are provided for scenarios such as linking to other running services.
 
-Link to other services:
-```
-docker-compose -f docker-compose.yaml -f docker-compose.link.yaml up
-```
+Link to other services and expose inspection SQS and Postgres ports:
+* `docker network create ffc-demo`
+* `docker-compose -f docker-compose.yaml -f docker-compose.link.yaml docker-compose.override.yaml up`
 
 ### Test the service
 
-This service reacts to messages retrieved from an AMQP 1.0 message broker.
+**Message Queues**
 
-The [start](./scripts/start) script runs [ActiveMQ Artemis](https://activemq.apache.org/components/artemis) alongside the application to provide the required message bus and broker.
+This service reacts to messages retrieved from two AWS SQS message queues (one for schedules and one for payments).
 
-Test messages can be sent via the Artemis console UI hosted at http://localhost:8161/console/login (username: artemis, password: artemis). Messages should match the format of the sample JSON below.
-
-Sample valid JSON for each message queue is:
+Test messages can be sent using REST by employing tools such as `curl` or `postman`
 
 ```
+# Sample schedule queue message
+{
+  "claimId": "MINE123"
+}
+# Adding an item to the schedule queue
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123"}' "http://localhost:9324/queue/schedule"
+
 # Sample payment queue message
 {
   "claimId": "MINE123",
   "value": 190.96
 }
-
-# Sample schedule queue message
-{
-  "claimId": "MINE123"
-}
+# Adding an item to the payment queue
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123","value":190.96}' "http://localhost:9324/queue/payment"
 ```
+
+See [here](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-making-api-requests.html) for background on AWS SQS Query API Requests
+
+**Database**
+
+The insertion of records into the postgres db can be checked using psql. For example
+
+```
+PGPASSWORD={password} psql -h localhost -p 5432 -d ffc_demo_payments -U postgres --command "select * from schedules"
+PGPASSWORD={password} psql -h localhost -p 5432 -d ffc_demo_payments -U postgres --command "select * from payments"
+```
+Note: the dev postgres password is defined in docker-compose.yaml
 
 ### Link to sibling services
 
@@ -169,24 +181,6 @@ Liveness: `/healthz`
 The readiness probe will test for both the availability of a PostgreSQL database and the two active message queue connections.
 
 Sequelize's `authenticate` function is used to test database connectivity.  This function tries to run a basic query within the database.
-
-## Dependency management
-
-Dependencies should be managed within a container using the development image for the app. This will ensure that any packages with environment-specific variants are installed with the correct variant for the contained environment, rather than the host system which may differ between development and production.
-
-The [`exec`](./scripts/exec) script is provided to run arbitrary commands, such as npm, in a running service container. If the service is not running when this script is called, it will be started for the duration of the command and then removed.
-
-Since dependencies are installed into the container image, a full build should always be run immediately after any dependency change.
-
-The following example will update all npm dependencies, rebuild the container image and replace running containers and volumes:
-
-```
-# Run the NPM update
-scripts/exec npm update
-
-# Rebuild and restart the service
-scripts/start --clean
-```
 
 ## Build pipeline
 
