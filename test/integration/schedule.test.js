@@ -1,8 +1,15 @@
+const db = require('../../server/models')
+
 describe('API', () => {
   let createServer
   let server
 
   beforeAll(async () => {
+    await db.schedule.bulkCreate([
+      { scheduleId: 1, claimId: 'MINE123', paymentDate: '2020-03-01 14:30' },
+      { scheduleId: 2, claimId: 'MINE123', paymentDate: '2020-04-01 14:30' },
+      { scheduleId: 3, claimId: 'MINE124', paymentDate: '2020-05-01 14:30' }
+    ])
     jest.mock('../../server/services/database-service')
     createServer = require('../../server/index')
   })
@@ -33,28 +40,17 @@ describe('API', () => {
     expect(response.statusCode).toBe(200)
     expect((response.headers['content-type'])).toEqual(expect.stringContaining('application/json'))
     const payload = JSON.parse(response.payload)
-    expect(payload).toEqual({})
+    const expectedPayload = {
+      MINE123: [
+        { paymentDate: '2020-03-01T14:30:00.000Z' },
+        { paymentDate: '2020-04-01T14:30:00.000Z' }
+      ],
+      MINE124: [
+        { paymentDate: '2020-05-01T14:30:00.000Z' }
+      ]
+    }
+    expect(payload).toEqual(expectedPayload)
   })
-
-  // test('POST /claim route works with valid content', async () => {
-  //   const restClient = require('../app/services/rest-client')
-  //   const options = {
-  //     method: 'POST',
-  //     url: '/claim',
-  //     payload: {
-  //       claimId: 'MINE123',
-  //       propertyType: 'business',
-  //       accessible: false,
-  //       dateOfSubsidence: new Date(),
-  //       mineType: ['gold', 'iron'],
-  //       email: 'nobody@example.com'
-  //     }
-  //   }
-
-  //   const response = await server.inject(options)
-  //   expect(response.statusCode).toBe(200)
-  //   expect(restClient.postJson).toHaveBeenCalledTimes(2)
-  // })
 
   afterEach(async () => {
     await server.stop()
@@ -62,5 +58,6 @@ describe('API', () => {
 
   afterAll(async () => {
     jest.unmock('../../server/services/database-service')
+    await db.schedule.destroy({ truncate: true })
   })
 })

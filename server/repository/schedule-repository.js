@@ -12,6 +12,14 @@ module.exports = {
       console.log(err)
     }
   },
+  getAll: async function () {
+    try {
+      return db.schedule.findAll()
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  },
   create: async function (schedule) {
     try {
       const scheduleRecord = await db.schedule.upsert({
