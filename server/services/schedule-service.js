@@ -6,10 +6,13 @@ module.exports = {
   getAll: async function () {
     const scheduleLines = await scheduleRepository.getAll()
     const schedules = scheduleLines.reduce((r, a) => {
-      r[a.claimId] = [...r[a.claimId] || [], { paymentDate: a.paymentDate }]
+      r[a.claimId] = [...r[a.claimId] || [], a.paymentDate]
       return r
     }, {})
-    return schedules
+
+    return Object
+      .entries(schedules)
+      .map((e) => { return { claimId: e[0], paymentDates: e[1] } })
   },
   create: async function (claim) {
     const existingSchedule = await scheduleRepository.getById(claim.claimId)

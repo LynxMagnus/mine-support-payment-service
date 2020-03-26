@@ -13,15 +13,16 @@ describe('Schedule service tests', () => {
   })
 
   test('retrieveAll retrieves all payment schedules', async () => {
-    const expectedSchedules = {
-      MINE001: [
-        { paymentDate: '2020-04-01 14:00' },
-        { paymentDate: '2020-05-01 14:00' }
-      ],
-      MINE002: [
-        { paymentDate: '2020-06-01 14:00' }
-      ]
-    }
+    const expectedSchedules = [
+      {
+        claimId: 'MINE001',
+        paymentDates: ['2020-04-01 14:00', '2020-05-01 14:00']
+      },
+      {
+        claimId: 'MINE002',
+        paymentDates: ['2020-06-01 14:00']
+      }
+    ]
     const repositoryResponse = [
       {
         scheduleId: 1,

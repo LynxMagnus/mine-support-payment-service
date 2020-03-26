@@ -40,15 +40,16 @@ describe('API', () => {
     expect(response.statusCode).toBe(200)
     expect((response.headers['content-type'])).toEqual(expect.stringContaining('application/json'))
     const payload = JSON.parse(response.payload)
-    const expectedPayload = {
-      MINE123: [
-        { paymentDate: '2020-03-01T14:30:00.000Z' },
-        { paymentDate: '2020-04-01T14:30:00.000Z' }
-      ],
-      MINE124: [
-        { paymentDate: '2020-05-01T14:30:00.000Z' }
-      ]
-    }
+    const expectedPayload = [
+      {
+        claimId: 'MINE123',
+        paymentDates: ['2020-03-01T14:30:00.000Z', '2020-04-01T14:30:00.000Z']
+      },
+      {
+        claimId: 'MINE124',
+        paymentDates: ['2020-05-01T14:30:00.000Z']
+      }
+    ]
     expect(payload).toEqual(expectedPayload)
   })
 
