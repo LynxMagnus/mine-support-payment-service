@@ -2,17 +2,21 @@ const scheduleRepository = require('../repository/schedule-repository')
 
 const BASE_PAYMENTS = 6
 
+function aggregateByClaimId (scheduleLines) {
+  const schedules = scheduleLines.reduce((r, a) => {
+    r[a.claimId] = [...r[a.claimId] || [], a.paymentDate]
+    return r
+  }, {})
+
+  return Object
+    .entries(schedules)
+    .map((e) => { return { claimId: e[0], paymentDates: e[1] } })
+}
+
 module.exports = {
   getAll: async function () {
     const scheduleLines = await scheduleRepository.getAll()
-    const schedules = scheduleLines.reduce((r, a) => {
-      r[a.claimId] = [...r[a.claimId] || [], a.paymentDate]
-      return r
-    }, {})
-
-    return Object
-      .entries(schedules)
-      .map((e) => { return { claimId: e[0], paymentDates: e[1] } })
+    return aggregateByClaimId(scheduleLines)
   },
   create: async function (claim) {
     const existingSchedule = await scheduleRepository.getById(claim.claimId)
