@@ -23,11 +23,7 @@ describe('Schedule test', () => {
       schedules: [
         {
           claimId: 'MINE123',
-          schedule: [
-            { paymentDate: '2020-04-01' },
-            { paymentDate: '2020-05-01' },
-            { paymentDate: '2020-05-01' }
-          ]
+          schedule: ['2020-04-01', '2020-05-01', '2020-05-01']
         }
       ]
     }
