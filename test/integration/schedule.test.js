@@ -10,7 +10,6 @@ describe('API', () => {
       { scheduleId: 2, claimId: 'MINE123', paymentDate: '2020-04-01 14:30' },
       { scheduleId: 3, claimId: 'MINE124', paymentDate: '2020-05-01 14:30' }
     ])
-    jest.mock('../../server/services/database-service')
     createServer = require('../../server/index')
   })
 
@@ -58,7 +57,6 @@ describe('API', () => {
   })
 
   afterAll(async () => {
-    jest.unmock('../../server/services/database-service')
     await db.schedule.destroy({ truncate: true })
   })
 })
