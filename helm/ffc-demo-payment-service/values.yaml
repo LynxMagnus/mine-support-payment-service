@@ -29,7 +29,6 @@ deployment:
   minReadySeconds: 5
   redeployOnChange: update this field to force a change
   imagePullSecret:
-  initialDelaySeconds: 30
 
 container:
   port: 3004
