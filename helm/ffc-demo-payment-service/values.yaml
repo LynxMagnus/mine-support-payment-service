@@ -18,10 +18,19 @@ labels:
   instance:
   version: 1.0.0
   component: service
-  managedBy: helm
-service:
-  type: ClusterIP
-  port: 80
+
+serviceAccount:
+  name: ffc-demo-payment-service-account
+  roleArn:
+
+deployment:
+  restartPolicy: Always
+  priorityClassName: low
+  replicas: 1
+  minReadySeconds: 5
+  redeployOnChange: update this field to force a change
+  imagePullSecret:
+
 container:
   port: 3004
   registry:
