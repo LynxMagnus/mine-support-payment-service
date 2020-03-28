@@ -14,6 +14,10 @@ namespace: ffc-demo
 workstream: ffc-demo
 image: ffc-demo-payment-service
 
+labels:
+  instance:
+  version: 1.0.0
+
 serviceAccount:
   name: ffc-demo-payment-service-account
   roleArn:
