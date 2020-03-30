@@ -12,6 +12,43 @@ describe('Schedule service tests', () => {
     jest.unmock('../../../../server/repository/schedule-repository')
   })
 
+  test('getAll handles missing payment', async () => {
+    const expectedSchedules = [
+      {
+        claimId: 'MINE001',
+        paymentDate: '2020-04-01 14:00'
+      },
+      {
+        claimId: 'MINE001',
+        paymentDate: '2020-05-01 14:00'
+      },
+      {
+        claimId: 'MINE002',
+        paymentDate: '2020-06-01 14:00'
+      }
+    ]
+    const repositoryResponse = [
+      {
+        claimId: 'MINE001',
+        paymentDate: '2020-04-01 14:00'
+      },
+      {
+        claimId: 'MINE001',
+        paymentDate: '2020-05-01 14:00'
+      },
+      {
+        claimId: 'MINE002',
+        paymentDate: '2020-06-01 14:00'
+      }
+    ]
+
+    scheduleRepository.getAll = jest.fn(() => repositoryResponse)
+
+    const retrieveSchedules = await scheduleService.getAll()
+
+    expect(retrieveSchedules).toEqual(expectedSchedules)
+  })
+
   test('retrieveAll retrieves all payment schedules', async () => {
     const expectedSchedules = [
       {

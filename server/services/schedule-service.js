@@ -6,11 +6,14 @@ module.exports = {
   getAll: async function () {
     const schedule = await scheduleRepository.getAll()
     return schedule.map((s) => {
-      return {
+      const payment = {
         claimId: s.claimId,
-        paymentAmount: s.payment ? Number.parseFloat(s.payment.value).toFixed(2) : null,
         paymentDate: s.paymentDate
       }
+      if (s.payment) {
+        payment.paymentAmount = Number.parseFloat(s.payment.value).toFixed(2)
+      }
+      return payment
     })
   },
   create: async function (claim) {
