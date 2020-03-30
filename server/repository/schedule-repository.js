@@ -14,7 +14,7 @@ module.exports = {
   },
   getAll: async function () {
     try {
-      return await db.schedule.findAll({ include: [db.payment] })
+      return await db.schedule.findAll({ include: [db.payment], order: [['paymentDate', 'DESC']] })
     } catch (err) {
       console.log(err)
       throw err
