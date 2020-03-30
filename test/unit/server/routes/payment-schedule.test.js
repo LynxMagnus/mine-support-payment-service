@@ -1,11 +1,11 @@
 describe('Schedule test', () => {
   let createServer
   let server
-  let scheduleService
+  let paymentService
 
   beforeAll(async () => {
-    jest.mock('../../../../server/services/schedule-service')
-    scheduleService = require('../../../../server/services/schedule-service')
+    jest.mock('../../../../server/services/payment-service')
+    paymentService = require('../../../../server/services/payment-service')
     createServer = require('../../../../server')
   })
 
@@ -22,20 +22,23 @@ describe('Schedule test', () => {
     const expectedPayload = {
       schedules: [
         {
-          claimId: 'MINE001',
-          paymentDate: '2020-04-01 14:00'
+          claimId: 'MINE123',
+          paymentAmount: '150.50',
+          schedule: [
+            '2020-03-01T14:30:00.000Z',
+            '2020-04-01T14:30:00.000Z'
+          ]
         },
         {
-          claimId: 'MINE001',
-          paymentDate: '2020-05-01 14:00'
-        },
-        {
-          claimId: 'MINE002',
-          paymentDate: '2020-06-01 14:00'
+          claimId: 'MINE124',
+          paymentAmount: '50.75',
+          schedule: [
+            '2020-05-01T14:30:00.000Z'
+          ]
         }
       ]
     }
-    scheduleService.getAll = jest.fn(() => expectedPayload)
+    paymentService.getAll = jest.fn(() => expectedPayload)
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)

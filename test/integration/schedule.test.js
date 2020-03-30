@@ -10,6 +10,10 @@ describe('API', () => {
       { scheduleId: 2, claimId: 'MINE123', paymentDate: '2020-04-01 14:30' },
       { scheduleId: 3, claimId: 'MINE124', paymentDate: '2020-05-01 14:30' }
     ])
+    await db.payment.bulkCreate([
+      { claimId: 'MINE123', value: 150.50 },
+      { claimId: 'MINE124', value: 50.75 }
+    ])
     createServer = require('../../server/index')
   })
 
@@ -42,15 +46,18 @@ describe('API', () => {
     const expectedPayload = [
       {
         claimId: 'MINE123',
-        paymentDate: '2020-03-01T14:30:00.000Z'
-      },
-      {
-        claimId: 'MINE123',
-        paymentDate: '2020-04-01T14:30:00.000Z'
+        paymentAmount: '150.50',
+        schedule: [
+          '2020-03-01T14:30:00.000Z',
+          '2020-04-01T14:30:00.000Z'
+        ]
       },
       {
         claimId: 'MINE124',
-        paymentDate: '2020-05-01T14:30:00.000Z'
+        paymentAmount: '50.75',
+        schedule: [
+          '2020-05-01T14:30:00.000Z'
+        ]
       }
     ]
     expect(payload).toEqual(expectedPayload)
