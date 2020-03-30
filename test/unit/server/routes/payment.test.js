@@ -14,10 +14,10 @@ describe('Schedule test', () => {
     await server.initialize()
   })
 
-  test('GET /payment-schedule route returns 200', async () => {
+  test('GET /payment route returns 200', async () => {
     const options = {
       method: 'GET',
-      url: '/payment-schedule'
+      url: '/payment'
     }
     const expectedPayload = {
       schedules: [

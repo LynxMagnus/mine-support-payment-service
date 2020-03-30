@@ -37,7 +37,7 @@ describe('API', () => {
   test('GET /payment-schedule route returns 200', async () => {
     const options = {
       method: 'GET',
-      url: '/payment-schedule'
+      url: '/payment'
     }
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
