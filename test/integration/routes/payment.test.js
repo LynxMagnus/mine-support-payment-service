@@ -1,7 +1,7 @@
-const db = require('../../server/models')
+const db = require('../../../server/models')
+const createServer = require('../../../server/index')
 
 describe('API', () => {
-  let createServer
   let server
 
   beforeAll(async () => {
@@ -14,7 +14,6 @@ describe('API', () => {
       { claimId: 'MINE123', value: 150.50 },
       { claimId: 'MINE124', value: 50.75 }
     ])
-    createServer = require('../../server/index')
   })
 
   beforeEach(async () => {
