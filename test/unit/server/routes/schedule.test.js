@@ -22,12 +22,19 @@ describe('Schedule test', () => {
     const expectedPayload = {
       schedules: [
         {
-          claimId: 'MINE123',
-          schedule: ['2020-04-01', '2020-05-01', '2020-05-01']
+          claimId: 'MINE001',
+          paymentDate: '2020-04-01 14:00'
+        },
+        {
+          claimId: 'MINE001',
+          paymentDate: '2020-05-01 14:00'
+        },
+        {
+          claimId: 'MINE002',
+          paymentDate: '2020-06-01 14:00'
         }
       ]
     }
-
     scheduleService.getAll = jest.fn(() => expectedPayload)
 
     const response = await server.inject(options)

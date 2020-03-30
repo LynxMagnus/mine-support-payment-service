@@ -16,11 +16,15 @@ describe('Schedule service tests', () => {
     const expectedSchedules = [
       {
         claimId: 'MINE001',
-        paymentDates: ['2020-04-01 14:00', '2020-05-01 14:00']
+        paymentDate: '2020-04-01 14:00'
+      },
+      {
+        claimId: 'MINE001',
+        paymentDate: '2020-05-01 14:00'
       },
       {
         claimId: 'MINE002',
-        paymentDates: ['2020-06-01 14:00']
+        paymentDate: '2020-06-01 14:00'
       }
     ]
     const repositoryResponse = [

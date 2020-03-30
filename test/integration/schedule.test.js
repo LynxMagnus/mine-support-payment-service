@@ -42,11 +42,15 @@ describe('API', () => {
     const expectedPayload = [
       {
         claimId: 'MINE123',
-        paymentDates: ['2020-03-01T14:30:00.000Z', '2020-04-01T14:30:00.000Z']
+        paymentDate: '2020-03-01T14:30:00.000Z'
+      },
+      {
+        claimId: 'MINE123',
+        paymentDate: '2020-04-01T14:30:00.000Z'
       },
       {
         claimId: 'MINE124',
-        paymentDates: ['2020-05-01T14:30:00.000Z']
+        paymentDate: '2020-05-01T14:30:00.000Z'
       }
     ]
     expect(payload).toEqual(expectedPayload)
