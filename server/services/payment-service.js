@@ -12,6 +12,13 @@ module.exports = {
   },
   getAll: async function () {
     const payments = await paymentRepository.getAll()
-    return payments
+    const returnValue = payments.map((p) => {
+      return {
+        claimId: p.claimId,
+        paymentAmount: Number.parseFloat(p.value).toFixed(2),
+        schedule: p.schedules.map((s) => s.paymentDate)
+      }
+    })
+    return returnValue
   }
 }
