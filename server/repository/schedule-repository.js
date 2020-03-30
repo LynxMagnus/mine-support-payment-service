@@ -14,7 +14,14 @@ module.exports = {
   },
   getAll: async function () {
     try {
-      return db.schedule.findAll()
+      const schedule = await db.schedule.findAll({ include: [db.payment] })
+      return schedule.map((s) => {
+        return {
+          claimId: s.claimId,
+          paymentAmount: s.payment ? Number.parseFloat(s.payment.value).toFixed(2) : null,
+          paymentDate: s.paymentDate
+        }
+      })
     } catch (err) {
       console.log(err)
       throw err

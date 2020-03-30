@@ -16,32 +16,35 @@ describe('Schedule service tests', () => {
     const expectedSchedules = [
       {
         claimId: 'MINE001',
-        paymentDate: '2020-04-01 14:00'
+        paymentDate: '2020-04-01 14:00',
+        paymentAmount: '150.00'
       },
       {
         claimId: 'MINE001',
-        paymentDate: '2020-05-01 14:00'
+        paymentDate: '2020-05-01 14:00',
+        paymentAmount: '150.00'
       },
       {
         claimId: 'MINE002',
-        paymentDate: '2020-06-01 14:00'
+        paymentDate: '2020-06-01 14:00',
+        paymentAmount: '55.00'
       }
     ]
     const repositoryResponse = [
       {
-        scheduleId: 1,
         claimId: 'MINE001',
-        paymentDate: '2020-04-01 14:00'
+        paymentDate: '2020-04-01 14:00',
+        paymentAmount: '150.00'
       },
       {
-        scheduleId: 2,
         claimId: 'MINE001',
-        paymentDate: '2020-05-01 14:00'
+        paymentDate: '2020-05-01 14:00',
+        paymentAmount: '150.00'
       },
       {
-        scheduleId: 3,
         claimId: 'MINE002',
-        paymentDate: '2020-06-01 14:00'
+        paymentDate: '2020-06-01 14:00',
+        paymentAmount: '55.00'
       }
     ]
 

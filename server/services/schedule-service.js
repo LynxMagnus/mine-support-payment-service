@@ -4,10 +4,7 @@ const BASE_PAYMENTS = 6
 
 module.exports = {
   getAll: async function () {
-    const scheduleLines = await scheduleRepository.getAll()
-    return scheduleLines.map((sl) => {
-      return { claimId: sl.claimId, paymentDate: sl.paymentDate }
-    })
+    return scheduleRepository.getAll()
   },
   create: async function (claim) {
     const existingSchedule = await scheduleRepository.getById(claim.claimId)

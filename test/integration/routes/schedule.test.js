@@ -22,21 +22,10 @@ describe('API', () => {
     jest.clearAllMocks()
   })
 
-  test('GET / route returns 404', async () => {
+  test('GET /schedule route returns 200', async () => {
     const options = {
       method: 'GET',
-      url: '/'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(404)
-    expect((response.headers['content-type'])).toEqual(expect.stringContaining('application/json'))
-  })
-
-  test('GET /payment route returns 200', async () => {
-    const options = {
-      method: 'GET',
-      url: '/payment'
+      url: '/schedule'
     }
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
@@ -46,17 +35,17 @@ describe('API', () => {
       {
         claimId: 'MINE123',
         paymentAmount: '150.50',
-        schedule: [
-          '2020-03-01T14:30:00.000Z',
-          '2020-04-01T14:30:00.000Z'
-        ]
+        paymentDate: '2020-03-01T14:30:00.000Z'
+      },
+      {
+        claimId: 'MINE123',
+        paymentAmount: '150.50',
+        paymentDate: '2020-04-01T14:30:00.000Z'
       },
       {
         claimId: 'MINE124',
         paymentAmount: '50.75',
-        schedule: [
-          '2020-05-01T14:30:00.000Z'
-        ]
+        paymentDate: '2020-05-01T14:30:00.000Z'
       }
     ]
     expect(payload).toEqual(expectedPayload)
