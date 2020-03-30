@@ -14,14 +14,7 @@ module.exports = {
   },
   getAll: async function () {
     try {
-      const schedule = await db.schedule.findAll({ include: [db.payment] })
-      return schedule.map((s) => {
-        return {
-          claimId: s.claimId,
-          paymentAmount: s.payment ? Number.parseFloat(s.payment.value).toFixed(2) : null,
-          paymentDate: s.paymentDate
-        }
-      })
+      return db.schedule.findAll({ include: [db.payment] })
     } catch (err) {
       console.log(err)
       throw err

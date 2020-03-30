@@ -4,7 +4,14 @@ const BASE_PAYMENTS = 6
 
 module.exports = {
   getAll: async function () {
-    return scheduleRepository.getAll()
+    const schedule = await scheduleRepository.getAll()
+    return schedule.map((s) => {
+      return {
+        claimId: s.claimId,
+        paymentAmount: s.payment ? Number.parseFloat(s.payment.value).toFixed(2) : null,
+        paymentDate: s.paymentDate
+      }
+    })
   },
   create: async function (claim) {
     const existingSchedule = await scheduleRepository.getById(claim.claimId)

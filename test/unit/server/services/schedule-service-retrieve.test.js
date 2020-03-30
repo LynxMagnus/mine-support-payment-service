@@ -34,17 +34,17 @@ describe('Schedule service tests', () => {
       {
         claimId: 'MINE001',
         paymentDate: '2020-04-01 14:00',
-        paymentAmount: '150.00'
+        payment: { value: '150.00' }
       },
       {
         claimId: 'MINE001',
         paymentDate: '2020-05-01 14:00',
-        paymentAmount: '150.00'
+        payment: { value: '150.00' }
       },
       {
         claimId: 'MINE002',
         paymentDate: '2020-06-01 14:00',
-        paymentAmount: '55.00'
+        payment: { value: '55.00' }
       }
     ]
 
