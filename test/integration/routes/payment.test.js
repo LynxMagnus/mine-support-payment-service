@@ -33,7 +33,7 @@ describe('API', () => {
     expect((response.headers['content-type'])).toEqual(expect.stringContaining('application/json'))
   })
 
-  test('GET /payment route returns 200', async () => {
+  test('GET /payment route returns expected results', async () => {
     const options = {
       method: 'GET',
       url: '/payment'

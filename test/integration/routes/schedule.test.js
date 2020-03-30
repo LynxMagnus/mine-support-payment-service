@@ -22,7 +22,7 @@ describe('API', () => {
     jest.clearAllMocks()
   })
 
-  test('GET /schedule route returns 200', async () => {
+  test('GET /schedule route returns results in descending date order', async () => {
     const options = {
       method: 'GET',
       url: '/schedule'
@@ -33,9 +33,9 @@ describe('API', () => {
     const payload = JSON.parse(response.payload)
     const expectedPayload = [
       {
-        claimId: 'MINE123',
-        paymentAmount: '150.50',
-        paymentDate: '2020-03-01T14:30:00.000Z'
+        claimId: 'MINE124',
+        paymentAmount: '50.75',
+        paymentDate: '2020-05-01T14:30:00.000Z'
       },
       {
         claimId: 'MINE123',
@@ -43,9 +43,9 @@ describe('API', () => {
         paymentDate: '2020-04-01T14:30:00.000Z'
       },
       {
-        claimId: 'MINE124',
-        paymentAmount: '50.75',
-        paymentDate: '2020-05-01T14:30:00.000Z'
+        claimId: 'MINE123',
+        paymentAmount: '150.50',
+        paymentDate: '2020-03-01T14:30:00.000Z'
       }
     ]
     expect(payload).toEqual(expectedPayload)
