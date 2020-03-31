@@ -6,7 +6,13 @@ module.exports = {
       return db.schedule.findAll({
         where: {
           claimId: claimId
-        }
+        },
+        include: [
+          db.payment
+        ],
+        order: [
+          ['paymentDate', 'DESC']
+        ]
       })
     } catch (err) {
       console.log(err)

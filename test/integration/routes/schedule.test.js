@@ -51,6 +51,30 @@ describe('API', () => {
     expect(payload).toEqual(expectedPayload)
   })
 
+  test('GET /schedule/MINE123 route returns claim results in descending date order', async () => {
+    const options = {
+      method: 'GET',
+      url: '/schedule/MINE123'
+    }
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect((response.headers['content-type'])).toEqual(expect.stringContaining('application/json'))
+    const payload = JSON.parse(response.payload)
+    const expectedPayload = [
+      {
+        claimId: 'MINE123',
+        paymentAmount: '150.50',
+        paymentDate: '2020-04-01T14:30:00.000Z'
+      },
+      {
+        claimId: 'MINE123',
+        paymentAmount: '150.50',
+        paymentDate: '2020-03-01T14:30:00.000Z'
+      }
+    ]
+    expect(payload).toEqual(expectedPayload)
+  })
+
   afterEach(async () => {
     await server.stop()
   })
