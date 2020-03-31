@@ -20,12 +20,10 @@ module.exports = {
   },
   getAll: async function () {
     const payments = await paymentRepository.getAll()
-    const returnValue = payments.map(paymentMapper)
-    return returnValue
+    return payments.map(paymentMapper)
   },
   getById: async function (claimId) {
     const payment = await paymentRepository.getById(claimId)
-    const returnValue = paymentMapper(payment)
-    return returnValue
+    return paymentMapper(payment)
   }
 }
