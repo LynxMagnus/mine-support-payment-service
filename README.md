@@ -124,6 +124,16 @@ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=Sen
 }
 # Adding an item to the payment queue
 curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123","value":190.96}' "http://localhost:9324/queue/payment"
+
+# Test the API
+
+After running the above two commands to insert data then the API can be queried using the following :
+
+curl "http://localhost:3004/payment"
+curl "http://localhost:3004/schedule"
+curl "http://localhost:3004/payment/MINE123"
+curl "http://localhost:3004/schedule/MINE123"
+
 ```
 
 See [here](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-making-api-requests.html) for background on AWS SQS Query API Requests
