@@ -1,6 +1,6 @@
 {
   "name": "ffc-demo-payment-service",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
     "test": "npm run test:unit",
     "test:lint": "standard",
-    "test:unit": "jest --forceExit",
+    "test:unit": "jest --forceExit --detectOpenHandles",
     "test:unit-watch": "jest --coverage=false --onlyChanged --watch --forceExit"
   },
   "author": "John Watson, Mark Harrop, Matthew Collins, David Bingham, Fay Toward",

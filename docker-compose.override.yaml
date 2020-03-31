@@ -17,6 +17,13 @@ services:
         npm run start:watch"
     ports:
       - "3004:3004"
-      - "9324:9324"
     depends_on:
       - ffc-demo-payment-message-queue
+
+  ffc-demo-payment-message-queue:
+    ports:
+      - "9324:9324"
+
+  ffc-demo-payment-postgres:
+    ports:
+      - "5432:5432"

@@ -6,10 +6,21 @@ module.exports = {
       return db.payment.findOne({
         where: {
           claimId: claimId
-        }
+        },
+        include: [
+          db.schedule
+        ]
       })
     } catch (err) {
       console.log(err)
+    }
+  },
+  getAll: async function () {
+    try {
+      return await db.payment.findAll({ include: [db.schedule] })
+    } catch (err) {
+      console.log(err)
+      throw err
     }
   },
   create: async function (calculation) {
