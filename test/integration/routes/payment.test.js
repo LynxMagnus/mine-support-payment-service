@@ -19,7 +19,6 @@ describe('API', () => {
   beforeEach(async () => {
     server = await createServer()
     await server.initialize()
-    jest.clearAllMocks()
   })
 
   test('GET / route returns 404', async () => {
