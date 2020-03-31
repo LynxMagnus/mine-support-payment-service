@@ -1,4 +1,4 @@
-@Library('defra-library@psd-620-helm-3-upgrade')
+@Library('defra-library@psd-527-remove-helm2-from-cluster')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -108,9 +108,9 @@ node {
     /* stage('Publish chart') {
       defraUtils.publishChart(DOCKER_REGISTRY, serviceName, containerTag)
     } */
-    stage('Remove merged PR') {
+    /*stage('Remove merged PR') {
       defraUtils.undeployChart(KUBE_CREDENTIALS_ID, serviceName, mergedPrNo)
-    }
+    }*/
     stage('Set GitHub status as success'){
       defraUtils.setGithubStatusSuccess()
     }
