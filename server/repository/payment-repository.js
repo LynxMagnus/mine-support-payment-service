@@ -6,7 +6,10 @@ module.exports = {
       return db.payment.findOne({
         where: {
           claimId: claimId
-        }
+        },
+        include: [
+          db.schedule
+        ]
       })
     } catch (err) {
       console.log(err)

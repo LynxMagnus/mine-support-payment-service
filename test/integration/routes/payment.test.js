@@ -62,6 +62,27 @@ describe('API', () => {
     expect(payload).toEqual(expectedPayload)
   })
 
+  test('GET /payment/{claimId} route returns expected results', async () => {
+    const options = {
+      method: 'GET',
+      url: '/payment/MINE123'
+    }
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect((response.headers['content-type'])).toEqual(expect.stringContaining('application/json'))
+    const payload = JSON.parse(response.payload)
+    const expectedPayload = {
+      claimId: 'MINE123',
+      paymentAmount: '150.50',
+      schedule: [
+        '2020-03-01T14:30:00.000Z',
+        '2020-04-01T14:30:00.000Z'
+      ]
+    }
+
+    expect(payload).toEqual(expectedPayload)
+  })
+
   afterEach(async () => {
     await server.stop()
   })
