@@ -1,6 +1,6 @@
 {
   "name": "ffc-demo-payment-service",
-  "version": "1.0.8",
+  "version": "2.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
