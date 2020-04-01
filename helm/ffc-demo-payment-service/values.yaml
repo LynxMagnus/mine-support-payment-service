@@ -1,7 +1,7 @@
 environment: production
 postgresUsername: postgres@mine-support2
 postgresPassword: changeme
-postgresDatabase: mine_payments
+postgresDatabase: ffc_demo_payment_service
 # postgresHost is the host name of the PostgreSQL service
 postgresHost: ffc-demo-payments-postgres
 # postgresExternalName is the external host name to which PostgreSQL

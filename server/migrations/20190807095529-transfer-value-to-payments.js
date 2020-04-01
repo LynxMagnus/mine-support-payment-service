@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction()
     try {
-      const [payments] = await queryInterface.sequelize.query('SELECT DISTINCT "claimId", value FROM public."schedules";')
+      const [payments] = await queryInterface.sequelize.query('SELECT DISTINCT "claimId", value FROM "schedules";')
 
       if (payments.length) {
         const transformed = payments.map(({ claimId, value }) => ({
@@ -30,7 +30,7 @@ module.exports = {
       },
       { transaction })
 
-      const [payments] = await queryInterface.sequelize.query('SELECT DISTINCT "claimId", value FROM public."payments";')
+      const [payments] = await queryInterface.sequelize.query('SELECT DISTINCT "claimId", value FROM "payments";')
 
       await Promise.all(
         payments.map(async (payment) =>

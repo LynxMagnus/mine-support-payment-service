@@ -1,4 +1,4 @@
-@Library('defra-library@4')
+@Library('defra-library@psd-685-set-pr-user-search-path')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
@@ -13,14 +13,14 @@ def sonarQubeEnv = 'SonarQube'
 def sonarScanner = 'SonarScanner'
 def timeoutInMinutes = 5
 
-def getExtraCommands(pr, containerTag) {
+def getExtraCommands(pr, containerTag, username) {
   withCredentials([
     string(credentialsId: 'sqs-queue-endpoint', variable: 'sqsQueueEndpoint'),
     string(credentialsId: 'schedule-queue-name-pr', variable: 'scheduleQueueName'),
     string(credentialsId: 'payment-queue-name-pr', variable: 'paymentQueueName'),
     string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
     string(credentialsId: 'payment-service-account-role-arn', variable: 'serviceAccountRoleArn'),
-    usernamePassword(credentialsId: 'payment-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+    usernamePassword(credentialsId: 'postgresPaymentsPR', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
   ]) {
     def helmValues = [
       /container.scheduleQueueEndpoint="$sqsQueueEndpoint"/,
@@ -29,7 +29,7 @@ def getExtraCommands(pr, containerTag) {
       /container.paymentQueueName="$paymentQueueName"/,
       /postgresExternalName="$postgresExternalName"/,
       /postgresPassword="$postgresPassword"/,
-      /postgresUsername="$postgresUsername"/,
+      /postgresUsername="$username"/,
       /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
       /serviceAccount.roleArn="$serviceAccountRoleArn"/,
       /labels.version="$containerTag"/
@@ -50,6 +50,14 @@ node {
     }
     stage('Set branch, PR, and containerTag variables') {
       (pr, containerTag, mergedPrNo) = defraUtils.getVariables(serviceName, defraUtils.getPackageJsonVersion())
+    }
+    stage('Create database role and schema') {
+      def credentialsId = 'postgres_ffc_demo_jenkins'
+      def host = 'postgres_ffc_demo_host'
+      def prCredId = 'postgresPaymentsPR'
+      def dbname = serviceName.replaceAll('-', '_')
+      defraUtils.destroyPrDatabaseRoleAndSchema(host, dbname, credentialsId, pr)
+      (prSchema, prUser) = defraUtils.provisionPrDatabaseRoleAndSchema(host, dbname, credentialsId, prCredId, pr)
     }
     stage('Helm lint') {
       defraUtils.lintHelm(serviceName)
@@ -99,7 +107,7 @@ node {
         defraUtils.verifyPackageJsonVersionIncremented()
       }
       stage('Helm install') {
-        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag,  getExtraCommands(pr, containerTag))
+        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag,  getExtraCommands(pr, containerTag, prUser))
         echo "Build available for review"
       }
     }
