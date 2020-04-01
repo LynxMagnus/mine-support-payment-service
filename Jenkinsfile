@@ -1,4 +1,4 @@
-@Library('defra-library@3.0.0')
+@Library('defra-library@psd-685-set-pr-user-search-path')
 import uk.gov.defra.ffc.DefraUtils
 def defraUtils = new DefraUtils()
 
