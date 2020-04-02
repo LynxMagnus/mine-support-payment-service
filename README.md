@@ -99,7 +99,7 @@ Additional Docker Compose files are provided for scenarios such as linking to ot
 
 Link to other services and expose inspection SQS and Postgres ports:
 * `docker network create ffc-demo`
-* `docker-compose -f docker-compose.yaml -f docker-compose.link.yaml docker-compose.override.yaml up`
+* `docker-compose -f docker-compose.yaml -f docker-compose.link.yaml -f docker-compose.override.yaml up`
 
 ### Test the service
 

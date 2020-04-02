@@ -78,7 +78,9 @@ spec:
         - name: PORT
           value: {{ quote .Values.container.port }}
         ports:
-        - containerPort: {{ .Values.container.port }}
+        - name: http
+          containerPort: {{ .Values.container.port }}
+          protocol: TCP
         resources:
           requests:
             memory: {{ quote .Values.container.requestMemory }}
