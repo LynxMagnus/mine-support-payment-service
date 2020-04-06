@@ -99,13 +99,13 @@ node {
         defraUtils.verifyPackageJsonVersionIncremented()
       }
       stage('Helm install') {
-        defraUtils.deployChart(KUBE_CREDENTIALS_ID, DOCKER_REGISTRY, serviceName, containerTag,  getExtraCommands(pr, containerTag))
+        defraUtils.deployChart(KUBE_CREDENTIALS_DEV, DOCKER_REGISTRY, serviceName, containerTag,  getExtraCommands(pr, containerTag))
         echo "Build available for review"
       }
     }
     if (mergedPrNo != '') {
       stage('Remove merged PR') {
-        defraUtils.undeployChart(KUBE_CREDENTIALS_ID, serviceName, mergedPrNo)
+        defraUtils.undeployChart(KUBE_CREDENTIALS_DEV, serviceName, mergedPrNo)
       }
     }
     stage('Set GitHub status as success'){
