@@ -8,6 +8,8 @@ class MessageConsumer {
   }
 
   createConsumer (queueConfig, queueUrl, messageAction) {
+    console.log('queueConfig: ', queueConfig)
+    console.log('queueUrl: ', queueConfig)
     this.app = Consumer.create({
       queueUrl,
       handleMessage: messageAction,
