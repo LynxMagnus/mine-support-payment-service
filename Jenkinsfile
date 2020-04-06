@@ -19,7 +19,7 @@ def getExtraCommands(pr, containerTag) {
     string(credentialsId: 'schedule-queue-name-pr', variable: 'scheduleQueueName'),
     string(credentialsId: 'payment-queue-name-pr', variable: 'paymentQueueName'),
     string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
-    string(credentialsId: 'payment-service-account-role-arn', variable: 'serviceAccountRoleArn'),
+    string(credentialsId: 'payment-service-account-role-arn-dev', variable: 'serviceAccountRoleArn'),
     usernamePassword(credentialsId: 'payment-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
   ]) {
     def helmValues = [
