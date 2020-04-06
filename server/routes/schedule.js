@@ -1,4 +1,5 @@
 const scheduleService = require('../services/schedule-service')
+const verifyAccessToken = require('../services/verify-access-token')
 
 module.exports = [
   {
@@ -16,6 +17,7 @@ module.exports = [
     path: '/schedule',
     options: {
       handler: async (request, h) => {
+        await verifyAccessToken(request.headers.authorization)
         const schedules = await scheduleService.getAll()
         return h.response(schedules).code(200)
       }

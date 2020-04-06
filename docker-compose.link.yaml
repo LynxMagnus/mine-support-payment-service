@@ -14,8 +14,6 @@ services:
         scripts/wait-for/wait-for ffc-demo-message-queue:9324 --
         npm run migrate &&
         npm run start:watch"
-    ports:
-      - "3004:3004"
     networks:
       - default
       - ffc-demo

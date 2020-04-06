@@ -14,6 +14,8 @@ services:
         scripts/wait-for/wait-for ffc-demo-payment-message-queue:9324 --
         npm run migrate &&
         npm run test"
+    environment: 
+      OKTA_ENABLED: "false"
     volumes:
       - ./test/:/home/node/test/
       - ./test-output/:/home/node/test-output/

@@ -25,6 +25,7 @@ services:
       CREATE_PAYMENT_QUEUE: "true"
       DEV_ACCESS_KEY_ID: elasticmq
       DEV_ACCESS_KEY: elasticmq
+      OKTA_ENABLED: "false"
     volumes:
       - ./server/:/home/node/server/
       - ./scripts/:/home/node/scripts/
