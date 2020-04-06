@@ -9,7 +9,7 @@ class MessageConsumer {
 
   createConsumer (queueConfig, queueUrl, messageAction) {
     console.log('queueConfig: ', queueConfig)
-    console.log('queueUrl: ', queueConfig)
+    console.log('queueUrl: ', queueUrl)
     this.app = Consumer.create({
       queueUrl,
       handleMessage: messageAction,
