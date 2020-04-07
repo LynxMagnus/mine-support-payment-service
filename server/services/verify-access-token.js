@@ -9,10 +9,10 @@ const oktaJwtVerifier = config.oktaEnabled && new OktaJwtVerifier({
   }
 })
 
-function verify (authHeader) {
+async function verify (authHeader) {
   if (config.oktaEnabled) {
     const token = authHeader && authHeader.split(' ')[1]
-    const jwt = oktaJwtVerifier.verifyAccessToken(token, `https://${config.okta.domain}`)
+    const jwt = await oktaJwtVerifier.verifyAccessToken(token, `https://${config.okta.domain}`)
     console.log('**jwt scopes**', jwt.claims.scp)
   } else {
     Promise.resolve(true)
