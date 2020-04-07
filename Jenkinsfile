@@ -100,6 +100,7 @@ node {
       }
       stage('Helm install') {
         defraUtils.deployChart(KUBE_CREDENTIALS_DEV, DOCKER_REGISTRY, serviceName, containerTag,  getExtraCommands(pr, containerTag))
+        sh "if kubectl get ingress $serviceName-$containerTag --ignore-not-found --namespace $serviceName-$containerTag; then echo 'Build available for review at https://$serviceName-$containerTag.$INGRESS_SERVER'; fi"
         echo "Build available for review"
       }
     }
