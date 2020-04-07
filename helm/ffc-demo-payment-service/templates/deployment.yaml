@@ -46,6 +46,7 @@ spec:
           runAsNonRoot: {{ .Values.container.runAsNonRoot }}
           readOnlyRootFilesystem: {{ .Values.container.readOnlyRootFilesystem }}
           allowPrivilegeEscalation: {{ .Values.container.allowPrivilegeEscalation }}
+          fsGroup: {{ .Values.container.runAsUser }}
         env:
         - name: NODE_ENV
           value: {{ quote .Values.environment }}
