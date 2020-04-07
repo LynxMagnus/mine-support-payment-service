@@ -53,6 +53,11 @@ minReadySeconds: 10
 maxSurge: 1
 maxUnavailable: 1
 
+okta:
+  domain:
+  cientId:
+  authorizationServerId:
+
 readinessProbe:
   path: /healthy
   port: 3004

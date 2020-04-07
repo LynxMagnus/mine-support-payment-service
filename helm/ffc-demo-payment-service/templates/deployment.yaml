@@ -75,6 +75,12 @@ spec:
           value: {{ quote .Values.container.paymentQueueRegion }}
         - name: CREATE_PAYMENT_QUEUE
           value: {{ quote .Values.container.paymentCreateQueue }}
+        - name: OKTA_DOMAIN
+          value: {{ quote .Values.okta.domain }}
+        - name: OKTA_CLIENT_ID
+          value: {{ quote .Values.okta.clientId }}
+        - name: OKTA_AUTH_SERVER_ID
+          value: {{ quote .Values.okta.authorizationServerId }}          
         - name: PORT
           value: {{ quote .Values.container.port }}
         ports:

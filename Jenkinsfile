@@ -21,6 +21,9 @@ def getExtraCommands(pr, containerTag) {
     string(credentialsId: 'postgres-external-name-pr', variable: 'postgresExternalName'),
     string(credentialsId: 'payment-service-account-role-arn', variable: 'serviceAccountRoleArn'),
     usernamePassword(credentialsId: 'payment-service-postgres-user-pr', usernameVariable: 'postgresUsername', passwordVariable: 'postgresPassword'),
+    string(credentialsId: 'payment-web-okta-domain', variable: 'oktaDomain'),
+    string(credentialsId: 'payment-web-okta-client-id', variable: 'oktaClientId'),
+    string(credentialsId: 'payment-web-okta-auth-server-id', variable: 'authorizationServerId'),
   ]) {
     def helmValues = [
       /container.scheduleQueueEndpoint="$sqsQueueEndpoint"/,
@@ -32,6 +35,9 @@ def getExtraCommands(pr, containerTag) {
       /postgresUsername="$postgresUsername"/,
       /container.redeployOnChange="$pr-$BUILD_NUMBER"/,
       /serviceAccount.roleArn="$serviceAccountRoleArn"/,
+      /okta.domain="$oktaDomain"/,
+      /okta.clientId="$oktaClientId"/,
+      /okta.authorizationServerId="$authorizationServerId"/,
       /labels.version="$containerTag"/
     ].join(',')
 
