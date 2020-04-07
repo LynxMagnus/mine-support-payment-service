@@ -22,14 +22,14 @@ module.exports = {
     const schedule = await scheduleRepository.getById(claimId)
     return schedule.map(scheduleMapper)
   },
-  create: async function (claim) {
+  create: async function (claim, startDate) {
     const existingSchedule = await scheduleRepository.getById(claim.claimId)
     if (existingSchedule.length) {
       console.log('payments already scheduled for claim')
       return
     }
 
-    const paymentDates = new Array(BASE_PAYMENTS).fill(new Date()).map(getDate)
+    const paymentDates = new Array(BASE_PAYMENTS).fill(startDate).map(getDate)
 
     for (let i = 0; i < paymentDates.length; i++) {
       console.log('creating schedule')
