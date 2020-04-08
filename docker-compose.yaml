@@ -25,7 +25,7 @@ services:
       CREATE_PAYMENT_QUEUE: "true"
       DEV_ACCESS_KEY_ID: elasticmq
       DEV_ACCESS_KEY: elasticmq
-      OKTA_ENABLED: "true"
+      OKTA_ENABLED: "false"
       OKTA_DOMAIN: ${OKTA_DOMAIN}
       OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
       OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
