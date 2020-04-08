@@ -1,6 +1,5 @@
 const scheduleRepository = require('../repository/schedule-repository')
-
-const BASE_PAYMENTS = 6
+const { getPaymentDates } = require('./scheduler')
 
 function scheduleMapper (schedule) {
   const payment = {
@@ -29,7 +28,7 @@ module.exports = {
       return
     }
 
-    const paymentDates = new Array(BASE_PAYMENTS).fill(startDate).map(getDate)
+    const paymentDates = getPaymentDates(startDate)
 
     for (let i = 0; i < paymentDates.length; i++) {
       console.log('creating schedule')
@@ -39,11 +38,4 @@ module.exports = {
       })
     }
   }
-}
-
-function getDate (dateIn, index) {
-  const date = new Date(dateIn)
-  date.setMonth(date.getMonth() + 1 + index)
-  date.setDate(1)
-  return date
 }
