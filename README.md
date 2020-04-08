@@ -25,20 +25,24 @@ The following environment variables are required by the application container. V
 
 | Name                  | Description                    | Required | Default     | Valid                       | Notes                             |
 |-----------------------|--------------------------------|:--------:|-------------|-----------------------------|-----------------------------------|
-| NODE_ENV              | Node environment               | no       | development | development,test,production |                                   |
-| PORT                  | Port number                    | no       | 3004        |                             |                                   |
-| SCHEDULE_QUEUE_NAME   | Message queue name             | yes      |             |                             |                                   |
-| SCHEDULE_ENDPOINT     | Message base url               | yes      |             |                             |                                   |
-| SCHEDULE_QUEUE_URL    | Message queue url              | no       |             |                             |                                   |
-| SCHEDULE_QUEUE_REGION | AWS region                     | no       | eu-west-2   |                             | Ignored in local dev              |
-| DEV_ACCESS_KEY_ID     | Local dev only access key Id   | no       |             |                             |                                   |
-| DEV_ACCESS_KEY        | Local dev only access key      | no       |             |                             |                                   |
-| CREATE_SCHEDULE_QUEUE | Create queue before connection | no       | false       |                             | For local development set to true |
-| PAYMENT_QUEUE_NAME    | Message queue name             | yes      |             |                             |                                   |
-| PAYMENT_ENDPOINT      | Message base url               | yes      |             |                             |                                   |
-| PAYMENT_QUEUE_URL     | Message queue url              | no       |             |                             |                                   |
-| PAYMENT_QUEUE_REGION  | AWS region                     | no       | eu-west-2   |                             | Ignored in local dev              |
-| CREATE_PAYMENT_QUEUE  | Create queue before connection | no       | false       |                             | For local development set to true |
+| NODE_ENV              | Node environment                          | no       | development | development,test,production |                                   |
+| PORT                  | Port number                               | no       | 3004        |                             |                                   |
+| SCHEDULE_QUEUE_NAME   | Message queue name                        | yes      |             |                             |                                   |
+| SCHEDULE_ENDPOINT     | Message base url                          | yes      |             |                             |                                   |
+| SCHEDULE_QUEUE_URL    | Message queue url                         | no       |             |                             |                                   |
+| SCHEDULE_QUEUE_REGION | AWS region                                | no       | eu-west-2   |                             | Ignored in local dev              |
+| DEV_ACCESS_KEY_ID     | Local dev only access key Id              | no       |             |                             |                                   |
+| DEV_ACCESS_KEY        | Local dev only access key                 | no       |             |                             |                                   |
+| CREATE_SCHEDULE_QUEUE | Create queue before connection            | no       | false       |                             | For local development set to true |
+| OKTA_ENABLED          | set to true to enable Okta authentication | no       | "true"      |                             |
+| OKTA_DOMAIN           | Okta domain, i.e. `mysite.okta.com`       | no       |             |                             |
+| OKTA_CLIENT_ID        | Client ID of Okta OpenID Connect app      | no       |             |                             |
+| OKTA_AUTH_SERVER_ID   | ID of Okta custom authorisation server    | no       |             |                             |
+| PAYMENT_QUEUE_NAME    | Message queue name                        | yes      |             |                             |                                   |
+| PAYMENT_ENDPOINT      | Message base url                          | yes      |             |                             |                                   |
+| PAYMENT_QUEUE_URL     | Message queue url                         | no       |             |                             |                                   |
+| PAYMENT_QUEUE_REGION  | AWS region                                | no       | eu-west-2   |                             | Ignored in local dev              |
+| CREATE_PAYMENT_QUEUE  | Create queue before connection            | no       | false       |                             | For local development set to true |
 
 ## Building the project locally
 
@@ -51,6 +55,14 @@ i.e.
 ```
 export DOCKER_REGISTRY=registryid.myprivatedockersite.com
 ```
+
+The API can be secured using JWT access tokens, verified against an [Okta](https://www.okta.com/) authentication server, or disabled for local development. 
+To use access token authentication set `OKTA_ENABLED` to `"true"`.
+
+Okta specific environment variables must be set if `OKTA_ENABLED` is set to `"true"`.
+A valid Okta OpenID Connect application is required, and the Okta domain, client ID, and Custom Authorisation
+Server ID must be set in the environment variables `OKTA_DOMAIN`, `OKTA_CLIENT_ID`, and `OKTA_AUTH_SERVER_ID` respectively.
+
 
 ## How to run tests
 
