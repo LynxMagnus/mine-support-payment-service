@@ -1,6 +1,5 @@
 const scheduleRepository = require('../repository/schedule-repository')
-
-const BASE_PAYMENTS = 6
+const { getPaymentDates } = require('./scheduler')
 
 function scheduleMapper (schedule) {
   const payment = {
@@ -22,14 +21,14 @@ module.exports = {
     const schedule = await scheduleRepository.getById(claimId)
     return schedule.map(scheduleMapper)
   },
-  create: async function (claim) {
+  create: async function (claim, startDate) {
     const existingSchedule = await scheduleRepository.getById(claim.claimId)
     if (existingSchedule.length) {
       console.log('payments already scheduled for claim')
       return
     }
 
-    const paymentDates = new Array(BASE_PAYMENTS).fill(new Date()).map(getDate)
+    const paymentDates = getPaymentDates(startDate)
 
     for (let i = 0; i < paymentDates.length; i++) {
       console.log('creating schedule')
@@ -39,11 +38,4 @@ module.exports = {
       })
     }
   }
-}
-
-function getDate (dateIn, index) {
-  const date = new Date(dateIn)
-  date.setMonth(date.getMonth() + 1 + index)
-  date.setDate(1)
-  return date
 }

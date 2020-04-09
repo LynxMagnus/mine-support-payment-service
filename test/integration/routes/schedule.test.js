@@ -1,5 +1,7 @@
-const db = require('../../../server/models')
+
 const createServer = require('../../../server/index')
+
+const db = require('../../../server/models')
 
 describe('API', () => {
   let server
@@ -16,15 +18,20 @@ describe('API', () => {
     ])
   })
 
-  beforeEach(async () => {
+  test('GET /schedule route returns results in descending date order for valid token', async () => {
+    const oktaJwtVerifier = require('../../../server/services/jwt/okta-jwt-verifier')
+    jest.mock('../../../server/services/jwt/okta-jwt-verifier')
+    oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { scp: ['test.scope'] } }))
+
     server = await createServer()
     await server.initialize()
-  })
 
-  test('GET /schedule route returns results in descending date order', async () => {
     const options = {
       method: 'GET',
-      url: '/schedule'
+      url: '/schedule',
+      headers: {
+        authorization: 'Bearer fakevalidtoken'
+      }
     }
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
@@ -50,7 +57,24 @@ describe('API', () => {
     expect(payload).toEqual(expectedPayload)
   })
 
+  test('GET /schedule route returns 401 error for missing token', async () => {
+    server = await createServer()
+    await server.initialize()
+
+    const options = {
+      method: 'GET',
+      url: '/schedule',
+      headers: {
+        authorization: undefined
+      }
+    }
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(401)
+  })
+
   test('GET /schedule/MINE123 route returns claim results in descending date order', async () => {
+    server = await createServer()
+    await server.initialize()
     const options = {
       method: 'GET',
       url: '/schedule/MINE123'
@@ -81,5 +105,6 @@ describe('API', () => {
   afterAll(async () => {
     await db.payment.destroy({ truncate: true })
     await db.schedule.destroy({ truncate: true })
+    jest.clearAllMocks()
   })
 })
