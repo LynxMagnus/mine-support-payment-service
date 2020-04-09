@@ -21,7 +21,7 @@ describe('API', () => {
   test('GET /schedule route returns results in descending date order for valid token', async () => {
     const oktaJwtVerifier = require('../../../server/services/jwt/okta-jwt-verifier')
     jest.mock('../../../server/services/jwt/okta-jwt-verifier')
-    oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { scp: ['test.scope'] } }))
+    oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { roles: ['payment-admin'] } }))
 
     server = await createServer()
     await server.initialize()

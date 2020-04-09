@@ -16,6 +16,7 @@ async function createServer () {
   })
 
   // Register the plugins
+  await server.register(require('./plugins/auth-okta'))
   await server.register(require('./plugins/router'))
   await server.register(require('./plugins/error-pages'))
 
