@@ -1,6 +1,0 @@
-name: ffc-demo-payment-service
-namespace: ffc-demo
-environment: production
-container:
-  allowPrivilegeEscalation: true
-  imagePullPolicy: Always
