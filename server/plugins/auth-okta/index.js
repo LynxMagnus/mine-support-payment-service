@@ -1,4 +1,4 @@
-const getCredentialsFromAccessToken = require('../services/jwt/get-credentials-from-access-token')
+const getCredentialsFromAccessToken = require('./get-credentials-from-access-token')
 
 const pluginName = 'auth-okta'
 
