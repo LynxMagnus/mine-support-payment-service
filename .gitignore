@@ -7,3 +7,5 @@ npm-debug.log
 server/public/build
 lcov.info
 test-output/
+*.tgz
+helm/**/*.lock
