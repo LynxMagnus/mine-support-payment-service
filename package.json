@@ -20,6 +20,7 @@
     "@hapi/joi": "^17.1.1",
     "@okta/jwt-verifier": "^1.0.0",
     "aws-sdk": "^2.610.0",
+    "pact": "^4.3.2",
     "pg": "^7.12.1",
     "rhea-promise": "^1.0.0",
     "sequelize": "^5.19.0",
