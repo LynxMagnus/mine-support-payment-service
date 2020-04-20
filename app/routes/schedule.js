@@ -1,4 +1,4 @@
-const scheduleService = require('../services/schedule-service')
+const scheduling = require('../services/scheduling')
 
 module.exports = [
   {
@@ -6,7 +6,7 @@ module.exports = [
     path: '/schedule/{claimId}',
     options: {
       handler: async (request, h) => {
-        const schedules = await scheduleService.getById(request.params.claimId)
+        const schedules = await scheduling.getById(request.params.claimId)
         return h.response(schedules).code(200)
       }
     }
@@ -20,7 +20,7 @@ module.exports = [
         scope: 'payment-admin'
       },
       handler: async (request, h) => {
-        const schedules = await scheduleService.getAll()
+        const schedules = await scheduling.getAll()
         return h.response(schedules).code(200)
       }
     }

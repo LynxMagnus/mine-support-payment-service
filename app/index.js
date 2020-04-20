@@ -1,6 +1,6 @@
 const hapi = require('@hapi/hapi')
 const config = require('./config')
-const messageService = require('./services/message-service')
+const messaging = require('./services/messaging')
 
 async function createServer () {
   // Create the hapi server
@@ -25,7 +25,7 @@ async function createServer () {
     await server.register(require('./plugins/logging'))
   }
 
-  await messageService.registerService()
+  await messaging.registerService()
 
   return server
 }

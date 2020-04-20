@@ -1,4 +1,4 @@
-const paymentService = require('../services/payment-service')
+const payments = require('../services/payments')
 
 module.exports = [
   {
@@ -6,7 +6,7 @@ module.exports = [
     path: '/payment',
     options: {
       handler: async (request, h) => {
-        const schedules = await paymentService.getAll()
+        const schedules = await payments.getAll()
         return h.response(schedules).code(200)
       }
     }
@@ -16,7 +16,7 @@ module.exports = [
     path: '/payment/{claimId}',
     options: {
       handler: async (request, h) => {
-        const payment = await paymentService.getById(request.params.claimId)
+        const payment = await payments.getById(request.params.claimId)
         return h.response(payment).code(200)
       }
     }

@@ -3,7 +3,7 @@ ARG PARENT_VERSION=1.0.0-node12.16.0
 ARG REGISTRY
 
 # Development
-FROM ${REGISTRY}/ffc-node-development:${PARENT_VERSION} AS development
+FROM ffc-node-development AS development
 ARG PORT
 ARG PARENT_VERSION
 ARG REGISTRY
@@ -19,7 +19,7 @@ COPY --chown=node:node . .
 CMD [ "npm", "run", "start:watch" ]
 
 # Production
-FROM ${REGISTRY}/ffc-node:${PARENT_VERSION} AS production
+FROM ffc-node AS production
 ARG PARENT_VERSION
 ARG REGISTRY
 ARG PORT

@@ -1,8 +1,8 @@
-const { scheduleMessageAction } = require('./schedule-message-action')
-const { paymentMessageAction } = require('./payment-message-action')
-const MessageConsumer = require('./messaging/message-consumer')
-const createQueue = require('./messaging/create-queue')
-const config = require('../config')
+const { scheduleMessageAction } = require('./actions/schedule-message-action')
+const { paymentMessageAction } = require('./actions/payment-message-action')
+const MessageConsumer = require('./sqs/message-consumer')
+const createQueue = require('./sqs/create-queue')
+const config = require('../../config')
 let scheduleConsumer
 let paymentConsumer
 
