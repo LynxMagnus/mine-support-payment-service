@@ -15,10 +15,10 @@ module.exports = [
     method: 'GET',
     path: '/schedule',
     options: {
-      // auth: {
-      //   strategy: 'auth-okta',
-      //   scope: 'payment-admin'
-      // },
+      auth: {
+        strategy: 'auth-okta',
+        scope: 'payment-admin'
+      },
       handler: async (request, h) => {
         const schedules = await scheduleService.getAll()
         return h.response(schedules).code(200)

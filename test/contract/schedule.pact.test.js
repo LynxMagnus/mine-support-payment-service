@@ -7,6 +7,10 @@ describe('Pact Verification', () => {
   let server
 
   beforeAll(async () => {
+    const oktaJwtVerifier = require('../../server/plugins/auth-okta/okta-jwt-verifier')
+    jest.mock('../../server/plugins/auth-okta/okta-jwt-verifier')
+    oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { roles: ['payment-admin'] } }))
+
     jest.mock('../../server/repository/schedule-repository', () => mockScheduleRepository)
     createServer = require('../../server')
   })
@@ -22,7 +26,8 @@ describe('Pact Verification', () => {
       provider: 'ffc-demo-payment-service',
       pactUrls: [
         path.resolve(__dirname, './pact/ffc-demo-payment-web-ffc-demo-payment-service.json')
-      ]
+      ],
+      customProviderHeaders: ['Authorization: Bearer token']
     }
 
     return new Verifier(opts).verifyProvider()
