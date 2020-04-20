@@ -36,4 +36,8 @@ describe('Pact Verification', () => {
   afterEach(async () => {
     await server.stop()
   })
+
+  afterAll(() => {
+    jest.clearAllMocks()
+  })
 })
