@@ -3,7 +3,7 @@ const paymentMapper = require('./payment-mapper')
 
 async function getById (claimId) {
   try {
-    const payment = db.payment.findOne({
+    const payment = await db.payment.findOne({
       where: { claimId: claimId },
       include: [db.schedule]
     })

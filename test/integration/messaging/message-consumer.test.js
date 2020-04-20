@@ -1,9 +1,9 @@
-const MessageConsumer = require('../../server/services/messaging/message-consumer')
-const MessageSender = require('../../server/services/messaging/message-sender')
-const createQueue = require('../../server/services/messaging/create-queue')
-const purgeQueue = require('../../server/services/messaging/purge-queue')
+const MessageConsumer = require('../../../app/modules/messaging/sqs/message-consumer')
+const MessageSender = require('../../../app/modules/messaging/sqs/message-sender')
+const createQueue = require('../../../app/modules/messaging/sqs/create-queue')
+const purgeQueue = require('../../../app/modules/messaging/sqs/purge-queue')
 
-const config = require('../../server/config')
+const config = require('../../../app/config')
 const queueName = 'testq2'
 const queueUrl = `${config.scheduleQueueConfig.endpoint}/queue/${queueName}`
 

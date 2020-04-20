@@ -5,11 +5,11 @@ describe('Healthy test', () => {
   let messageService
 
   beforeAll(async () => {
-    jest.mock('../../../../server/services/database-service')
-    databaseService = require('../../../../server/services/database-service')
-    jest.mock('../../../../server/services/message-service')
-    messageService = require('../../../../server/services/message-service')
-    createServer = require('../../../../server')
+    jest.mock('../../../app/modules/database')
+    databaseService = require('../../../app/modules/database')
+    jest.mock('../../../app/modules/messaging')
+    messageService = require('../../../app/modules/messaging')
+    createServer = require('../../../app')
   })
 
   beforeEach(async () => {
@@ -22,9 +22,6 @@ describe('Healthy test', () => {
       method: 'GET',
       url: '/healthy'
     }
-
-    databaseService.isConnected = jest.fn(() => true)
-    messageService.isRunning = jest.fn(() => true)
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
@@ -74,6 +71,6 @@ describe('Healthy test', () => {
   })
 
   afterAll(async () => {
-    jest.unmock('../../../../server/models')
+    jest.clearAllMocks()
   })
 })

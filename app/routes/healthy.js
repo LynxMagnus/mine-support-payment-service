@@ -1,5 +1,5 @@
-const database = require('../services/database')
-const messaging = require('../services/messaging')
+const database = require('../modules/database')
+const messaging = require('../modules/messaging')
 
 module.exports = {
   method: 'GET',

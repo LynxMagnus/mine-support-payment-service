@@ -1,4 +1,4 @@
-const payments = require('../services/payments')
+const payments = require('../modules/payments')
 
 module.exports = [
   {

@@ -1,7 +1,6 @@
-const db = require('../../../server/models')
-const createServer = require('../../../server/index')
-
-describe('API', () => {
+describe('payment routes', () => {
+  const db = require('../../../app/models')
+  const createServer = require('../../../app/index')
   let server
 
   beforeAll(async () => {

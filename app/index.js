@@ -1,6 +1,6 @@
 const hapi = require('@hapi/hapi')
 const config = require('./config')
-const messaging = require('./services/messaging')
+const messaging = require('./modules/messaging')
 
 async function createServer () {
   // Create the hapi server

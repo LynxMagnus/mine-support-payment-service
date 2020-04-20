@@ -6,7 +6,7 @@ async function getById (claimId) {
     const schedule = await db.schedule.findAll({
       where: { claimId: claimId },
       include: [db.payment],
-      order: ['paymentDate', 'DESC']
+      order: [['paymentDate', 'DESC']]
     })
     return scheduleMapper(schedule)
   } catch (err) {

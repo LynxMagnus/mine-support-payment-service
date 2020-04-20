@@ -1,4 +1,4 @@
-const scheduling = require('../services/scheduling')
+const scheduling = require('../modules/scheduling')
 
 module.exports = [
   {

@@ -1,5 +1,5 @@
 
-const messageService = require('../../server/services/message-service')
+const messageService = require('../../../app/modules/messaging')
 
 describe('message service', () => {
   afterEach(async () => {
