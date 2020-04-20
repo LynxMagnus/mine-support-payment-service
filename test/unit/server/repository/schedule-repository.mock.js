@@ -10,6 +10,6 @@ module.exports = {
     return true
   },
   getAll: async function () {
-    return data
+    return data.schedules
   }
 }

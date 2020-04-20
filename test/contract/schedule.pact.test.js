@@ -13,29 +13,22 @@ describe('Pact Verification', () => {
 
   beforeEach(async () => {
     server = await createServer()
-    await server.initialize()
+    await server.start()
   })
 
   test('validates the expectations of ffc-demo-payment-web', () => {
     const opts = {
-      logLevel: 'INFO',
       providerBaseUrl: 'http://localhost:3004',
       provider: 'ffc-demo-payment-service',
-      providerVersion: '1.0.0',
       pactUrls: [
         path.resolve(__dirname, './pact/ffc-demo-payment-web-ffc-demo-payment-service.json')
       ]
-      //   stateHandlers: {
-      //     'get all schedules': () => {
-      //         mockScheduleRepository.getAll = () => new Map([
-      //         ['10', new Product('10', 'CREDIT_CARD', '28 Degrees', 'v1')]
-      //       ])
-      //     }
-      //   }
     }
 
-    return new Verifier(opts).verifyProvider().finally(() => {
-      server.stop()
-    })
+    return new Verifier(opts).verifyProvider()
+  })
+
+  afterEach(async () => {
+    await server.stop()
   })
 })
