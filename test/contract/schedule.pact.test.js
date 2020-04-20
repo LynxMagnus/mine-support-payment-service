@@ -20,7 +20,7 @@ describe('Pact Verification', () => {
     await server.start()
   })
 
-  test('validates the expectations of ffc-demo-payment-web', () => {
+  test('validates the expectations of ffc-demo-payment-web', async (done) => {
     const opts = {
       providerBaseUrl: 'http://localhost:3004',
       provider: 'ffc-demo-payment-service',
@@ -30,7 +30,7 @@ describe('Pact Verification', () => {
       customProviderHeaders: ['Authorization: Bearer token']
     }
 
-    return new Verifier(opts).verifyProvider()
+    await new Verifier(opts).verifyProvider().then(() => done())
   })
 
   afterEach(async () => {
