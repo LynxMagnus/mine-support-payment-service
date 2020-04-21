@@ -30,7 +30,8 @@ describe('Pact Verification', () => {
       customProviderHeaders: ['Authorization: Bearer token']
     }
 
-    await new Verifier(opts).verifyProvider().then(() => done())
+    await new Verifier(opts).verifyProvider()
+    done()
   })
 
   afterEach(async () => {
