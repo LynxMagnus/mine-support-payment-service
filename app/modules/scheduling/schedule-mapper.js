@@ -6,6 +6,7 @@ function scheduleMapper (schedule) {
   if (schedule.payment) {
     payment.paymentAmount = Number.parseFloat(schedule.payment.value).toFixed(2)
   }
+  console.log(payment)
   return payment
 }
 

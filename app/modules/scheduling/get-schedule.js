@@ -8,7 +8,7 @@ async function getById (claimId) {
       include: [db.payment],
       order: [['paymentDate', 'DESC']]
     })
-    return scheduleMapper(schedule)
+    return schedule.map(scheduleMapper)
   } catch (err) {
     console.error(err)
     throw err

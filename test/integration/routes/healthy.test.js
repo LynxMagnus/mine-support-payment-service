@@ -23,6 +23,9 @@ describe('Healthy test', () => {
       url: '/healthy'
     }
 
+    databaseService.isConnected = jest.fn(() => true)
+    messageService.isRunning = jest.fn(() => true)
+
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
   })

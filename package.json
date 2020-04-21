@@ -7,11 +7,10 @@
     "build:watch": "nodemon --exec npm run build --ext scss --legacy-watch",
     "migrate": "sequelize db:migrate",
     "pretest": "npm run test:lint",
-    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js",
-    "test": "npm run test:unit",
+    "test": "jest --forceExit",
     "test:lint": "standard",
-    "test:unit": "jest --forceExit --detectOpenHandles",
-    "test:unit-watch": "jest --coverage=false --onlyChanged --watch --forceExit"
+    "test:watch": "jest --coverage=false --onlyChanged --watch",
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js"
   },
   "author": "John Watson, Mark Harrop, Matthew Collins, David Bingham, Fay Toward",
   "license": "OGL-UK-3.0",
