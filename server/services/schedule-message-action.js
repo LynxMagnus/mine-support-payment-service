@@ -2,11 +2,12 @@ const scheduleService = require('./schedule-service')
 
 async function scheduleMessageAction (message) {
   try {
-    console.log('message received - schedule ', message.Body)
+    console.log('message received - schedule ', message)
     const claim = JSON.parse(message.Body)
     await scheduleService.create(claim, new Date())
-  } catch (ex) {
-    console.error('unable to process message ', ex)
+  } catch (err) {
+    console.error('unable to process message ', err)
+    throw err
   }
 }
 
