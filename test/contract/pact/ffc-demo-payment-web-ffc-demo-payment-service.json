@@ -40,6 +40,41 @@
           }
         }
       }
+    },
+    {
+      "description": "get schedule",
+      "providerState": "schedule exists",
+      "request": {
+        "method": "GET",
+        "path": "/schedule/MINE001"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": [
+          {
+            "claimId": "MINE001",
+            "paymentDate": "2015-08-06T16:53:10+01:00"
+          }
+        ],
+        "matchingRules": {
+          "$.body": {
+            "min": 1
+          },
+          "$.body[*].*": {
+            "match": "type"
+          },
+          "$.body[*].claimId": {
+            "match": "type"
+          },
+          "$.body[*].paymentDate": {
+            "match": "regex",
+            "regex": "^\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z)$"
+          }
+        }
+      }
     }
   ],
   "metadata": {
