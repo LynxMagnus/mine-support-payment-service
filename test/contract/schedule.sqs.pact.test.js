@@ -2,7 +2,7 @@ const path = require('path')
 const { MessageConsumerPact } = require('@pact-foundation/pact')
 const Matchers = require('@pact-foundation/pact/dsl/matchers')
 const { scheduleMessageAction } = require('../../server/services/schedule-message-action')
-const pactMessageHandler = require('./pactMessageHandler')
+const sqsMessageHandler = require('./sqsMessageHandler')
 let messagePact
 
 describe('Schedule SQS contract test', () => {
@@ -23,7 +23,10 @@ describe('Schedule SQS contract test', () => {
         .withContent({
           claimId: Matchers.like('MINE123')
         })
-        .verify(pactMessageHandler(scheduleMessageAction))
+        .withMetadata({
+          'content-type': 'application/json'
+        })
+        .verify(sqsMessageHandler(scheduleMessageAction))
     )
   })
 })

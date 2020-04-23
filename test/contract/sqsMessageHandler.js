@@ -1,4 +1,4 @@
-function pactMessageHandler (handler) {
+function sqsMessageHandler (handler) {
   return (message) => {
     message.Body = JSON.stringify(message.contents)
     console.log(message)
@@ -6,4 +6,4 @@ function pactMessageHandler (handler) {
   }
 }
 
-module.exports = pactMessageHandler
+module.exports = sqsMessageHandler
