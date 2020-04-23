@@ -7,7 +7,7 @@ module.exports = [
     options: {
       handler: async (request, h) => {
         const data = await scheduleService.getById(request.params.claimId)
-        if (data && data.schedules && data.schedules.length) {
+        if (data && data.length) {
           return h.response(data).code(200)
         }
         return h.response('Claim id not found').code(404)

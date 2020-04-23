@@ -6,10 +6,9 @@ describe('Schedule test', () => {
   beforeAll(async () => {
     const oktaJwtVerifier = require('../../../../server/plugins/auth-okta/okta-jwt-verifier')
     jest.mock('../../../../server/plugins/auth-okta/okta-jwt-verifier')
-    oktaJwtVerifier.verifyAccessToken.mockImplementation(() => {
-      console.log('validating token')
+    oktaJwtVerifier.verifyAccessToken.mockImplementation(() =>
       Promise.resolve({ claims: { roles: ['payment-admin'] } })
-    })
+    )
 
     jest.mock('../../../../server/services/schedule-service')
     scheduleService = require('../../../../server/services/schedule-service')
@@ -21,55 +20,20 @@ describe('Schedule test', () => {
     await server.initialize()
   })
 
-  /* test('GET /schedule route returns 200', async () => {
-    const options = {
-      method: 'GET',
-      url: '/schedule',
-      headers: { authorization: 'Bearer token' }
-    }
-    const expectedPayload = {
-      schedules: [
-        {
-          scheduleId: 1,
-          claimId: 'MINE123',
-          paymentDate: '2020-03-01T14:30:00.000Z'
-        },
-        {
-          scheduleId: 2,
-          claimId: 'MINE123',
-          paymentDate: '2020-04-01T14:30:00.000Z'
-        },
-        {
-          scheduleId: 3,
-          claimId: 'MINE124',
-          paymentDate: '2020-05-01T14:30:00.000Z'
-        }
-      ]
-    }
-    scheduleService.getAll = jest.fn(() => expectedPayload)
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const payload = JSON.parse(response.payload)
-    expect(payload).toEqual(expectedPayload)
-  }) */
-
   test('GET /schedule/MINE123 retrieves schedule', async () => {
     const sampleClaimId = 'MINE123'
-    const expectedPayload = {
-      schedules: [
-        {
-          scheduleId: 1,
-          claimId: 'MINE123',
-          paymentDate: '2020-03-01T14:30:00.000Z'
-        },
-        {
-          scheduleId: 2,
-          claimId: 'MINE123',
-          paymentDate: '2020-04-01T14:30:00.000Z'
-        }
-      ]
-    }
+    const expectedPayload = [
+      {
+        scheduleId: 1,
+        claimId: 'MINE123',
+        paymentDate: '2020-03-01T14:30:00.000Z'
+      },
+      {
+        scheduleId: 2,
+        claimId: 'MINE123',
+        paymentDate: '2020-04-01T14:30:00.000Z'
+      }
+    ]
     const options = {
       method: 'GET',
       url: `/schedule/${sampleClaimId}`
@@ -85,9 +49,7 @@ describe('Schedule test', () => {
 
   test('GET non-existent claim id gives a 404', async () => {
     const sampleClaimId = 'NOTMINEWONTFIND'
-    const expectedPayload = {
-      schedules: []
-    }
+    const expectedPayload = []
     const options = {
       method: 'GET',
       url: `/schedule/${sampleClaimId}`
