@@ -75,6 +75,19 @@
           }
         }
       }
+    },
+    {
+      "description": "get schedule",
+      "providerState": "schedule doesn't exist",
+      "request": {
+        "method": "GET",
+        "path": "/schedule/NOTMINEWONTFIND"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+        }
+      }
     }
   ],
   "metadata": {
