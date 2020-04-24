@@ -7,7 +7,7 @@
     "build:watch": "nodemon --exec npm run build --ext scss --legacy-watch",
     "migrate": "sequelize db:migrate",
     "pretest": "npm run test:lint",
-    "test": "jest",
+    "test": "jest --forceExit",
     "test:lint": "standard",
     "test:pact": "jest --testPathPattern=test/contract --coverage=false",
     "test:watch": "jest --coverage=false --onlyChanged --watch",
