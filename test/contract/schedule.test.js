@@ -3,10 +3,13 @@ const { MessageConsumerPact } = require('@pact-foundation/pact')
 const Matchers = require('@pact-foundation/pact/dsl/matchers')
 const { scheduleMessageAction } = require('../../server/services/schedule-message-action')
 const sqsMessageHandler = require('./sqsMessageHandler')
+const db = require('../../server/models')
 let messagePact
 
 describe('Schedule SQS contract test', () => {
   beforeAll(async () => {
+    await db.schedule.destroy({ truncate: true })
+
     messagePact = new MessageConsumerPact({
       consumer: 'ffc-demo-payment-service',
       provider: 'ffc-demo-claim-service',
@@ -28,5 +31,9 @@ describe('Schedule SQS contract test', () => {
         })
         .verify(sqsMessageHandler(scheduleMessageAction))
     )
+  })
+
+  afterAll(async () => {
+    await db.schedule.destroy({ truncate: true })
   })
 })

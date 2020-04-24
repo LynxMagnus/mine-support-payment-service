@@ -2,14 +2,10 @@ describe('Payment service tests', () => {
   let paymentRepository
   let paymentService
 
-  beforeAll(async () => {
+  beforeAll(() => {
     jest.mock('../../../../server/repository/payment-repository')
     paymentRepository = require('../../../../server/repository/payment-repository')
     paymentService = require('../../../../server/services/payment-service')
-  })
-
-  afterEach(async () => {
-    jest.unmock('../../../../server/repository/payment-repository')
   })
 
   test('getAll retrieves all payments', async () => {

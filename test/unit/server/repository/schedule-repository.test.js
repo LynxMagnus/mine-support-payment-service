@@ -2,16 +2,12 @@ describe('Schedule repository tests', () => {
   const mockDb = require('./index.mock')
   let scheduleRepository
 
-  beforeEach(async () => {
+  beforeAll(() => {
     jest.mock('../../../../server/models', () => mockDb)
     scheduleRepository = require('../../../../server/repository/schedule-repository')
   })
 
-  afterEach(async () => {
-    jest.unmock('../../../../server/models')
-  })
-
-  test('create function creates', async (done) => {
+  test('create function creates', async () => {
     const schedule = {
       claimId: 'MINE123',
       paymentDate: new Date()
@@ -23,10 +19,9 @@ describe('Schedule repository tests', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     spy.mockRestore()
-    done()
   })
 
-  test('create function logs error', async (done) => {
+  test('create function logs error', async () => {
     const spy = jest.spyOn(global.console, 'log')
 
     try {
@@ -35,16 +30,14 @@ describe('Schedule repository tests', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     spy.mockRestore()
-    done()
   })
 
-  test('getById calls findAll', async (done) => {
+  test('getById calls findAll', async () => {
     const spy = jest.spyOn(mockDb.schedule, 'findAll')
 
     await scheduleRepository.getById('MINE123')
 
     expect(spy).toHaveBeenCalledTimes(1)
     spy.mockRestore()
-    done()
   })
 })

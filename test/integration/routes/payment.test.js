@@ -5,6 +5,7 @@ describe('API', () => {
   let server
 
   beforeAll(async () => {
+    jest.mock('../../../server/services/message-service')
     await db.schedule.bulkCreate([
       { scheduleId: 1, claimId: 'MINE123', paymentDate: '2020-03-01 14:30' },
       { scheduleId: 2, claimId: 'MINE123', paymentDate: '2020-04-01 14:30' },
