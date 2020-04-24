@@ -8,7 +8,8 @@ services:
         REGISTRY: ${DOCKER_REGISTRY}
     image: ffc-demo-payment-service
     depends_on:
-      - ffc-demo-payment-postgres      
+      - ffc-demo-payment-postgres
+      - ffc-demo-payment-message-queue  
     environment:
       POSTGRES_DB: ffc_demo_payments
       POSTGRES_PASSWORD: ppp

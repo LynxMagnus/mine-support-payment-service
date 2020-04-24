@@ -108,6 +108,5 @@ describe('API', () => {
   afterAll(async () => {
     await db.payment.destroy({ truncate: true })
     await db.schedule.destroy({ truncate: true })
-    jest.clearAllMocks()
   })
 })

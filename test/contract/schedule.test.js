@@ -1,12 +1,12 @@
-const path = require('path')
-const { MessageConsumerPact } = require('@pact-foundation/pact')
-const Matchers = require('@pact-foundation/pact/dsl/matchers')
-const { scheduleMessageAction } = require('../../server/services/schedule-message-action')
-const sqsMessageHandler = require('./sqsMessageHandler')
-const db = require('../../server/models')
-let messagePact
-
 describe('Schedule SQS contract test', () => {
+  const path = require('path')
+  const { MessageConsumerPact } = require('@pact-foundation/pact')
+  const Matchers = require('@pact-foundation/pact/dsl/matchers')
+  const { scheduleMessageAction } = require('../../server/services/schedule-message-action')
+  const sqsMessageHandler = require('./sqsMessageHandler')
+  const db = require('../../server/models')
+  let messagePact
+
   beforeAll(async () => {
     await db.schedule.destroy({ truncate: true })
 
@@ -19,18 +19,16 @@ describe('Schedule SQS contract test', () => {
   })
 
   test('scheduleMessageAction can process message', async () => {
-    return (
-      messagePact
-        .given('valid message')
-        .expectsToReceive('a request for new payment schedule')
-        .withContent({
-          claimId: Matchers.like('MINE123')
-        })
-        .withMetadata({
-          'content-type': 'application/json'
-        })
-        .verify(sqsMessageHandler(scheduleMessageAction))
-    )
+    await messagePact
+      .given('valid message')
+      .expectsToReceive('a request for new payment schedule')
+      .withContent({
+        claimId: Matchers.like('MINE123')
+      })
+      .withMetadata({
+        'content-type': 'application/json'
+      })
+      .verify(sqsMessageHandler(scheduleMessageAction))
   })
 
   afterAll(async () => {

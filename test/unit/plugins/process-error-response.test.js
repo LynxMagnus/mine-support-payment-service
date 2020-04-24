@@ -1,7 +1,7 @@
 describe('Process Error plugin tests', () => {
   const processErrorResponse = require('../../../server/plugins/process-error-response')
 
-  test('processErrorResponse returns 404 response', async (done) => {
+  test('processErrorResponse returns 404 response', () => {
     const request = {
       response: {
         output: {
@@ -12,10 +12,9 @@ describe('Process Error plugin tests', () => {
 
     const response = processErrorResponse(request)
     expect(response).toStrictEqual(request.response)
-    done()
   })
 
-  test('processErrorResponse returns 404 response', async (done) => {
+  test('processErrorResponse returns 404 response', () => {
     const request = {
       response: {
         output: {
@@ -27,6 +26,5 @@ describe('Process Error plugin tests', () => {
 
     const response = processErrorResponse(request)
     expect(response).toStrictEqual(request.response)
-    done()
   })
 })
