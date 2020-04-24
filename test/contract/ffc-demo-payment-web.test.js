@@ -25,7 +25,7 @@ describe('Pact Verification', () => {
       providerBaseUrl: 'http://localhost:3004',
       provider: 'ffc-demo-payment-service',
       pactUrls: [
-        path.resolve(__dirname, './pact/ffc-demo-payment-web-ffc-demo-payment-service.json')
+        path.resolve(__dirname, './pacts/ffc-demo-payment-web-ffc-demo-payment-service.json')
       ],
       customProviderHeaders: ['Authorization: Bearer token']
     }

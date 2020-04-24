@@ -4,7 +4,7 @@ function isRunning () {
   return true
 }
 
-async function closeConnections () {}
+function closeConnections () {}
 
 module.exports = {
   registerService,
