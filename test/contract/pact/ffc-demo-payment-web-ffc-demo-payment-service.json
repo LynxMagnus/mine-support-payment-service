@@ -11,7 +11,15 @@
       "providerState": "schedules exist",
       "request": {
         "method": "GET",
-        "path": "/schedule"
+        "path": "/schedule",
+        "headers": {
+          "Authorization": "Bearer abc-123"
+        },
+        "matchingRules": {
+          "$.headers.Authorization": {
+            "match": "type"
+          }
+        }
       },
       "response": {
         "status": 200,
