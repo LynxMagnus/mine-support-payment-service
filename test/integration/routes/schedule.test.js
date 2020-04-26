@@ -1,7 +1,7 @@
 
 describe('schedule routes', () => {
   const createServer = require('../../../app/index')
-  const db = require('../../../app/models')
+  const db = require('../../../app/database/models')
   let server
 
   beforeAll(async () => {

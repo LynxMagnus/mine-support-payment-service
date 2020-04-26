@@ -1,5 +1,5 @@
 describe('payment routes', () => {
-  const db = require('../../../app/models')
+  const db = require('../../../app/database/models')
   const createServer = require('../../../app/index')
   let server
 
