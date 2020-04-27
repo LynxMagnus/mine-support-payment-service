@@ -72,8 +72,4 @@ describe('Healthy test', () => {
   afterEach(async () => {
     await server.stop()
   })
-
-  afterAll(async () => {
-    jest.unmock('../../../../server/models')
-  })
 })

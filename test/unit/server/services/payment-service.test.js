@@ -2,16 +2,12 @@ describe('Payment service tests', () => {
   const mockPaymentRepository = require('../repository/payment-repository.mock')
   let paymentService
 
-  beforeEach(async () => {
+  beforeEach(() => {
     jest.mock('../../../../server/repository/payment-repository', () => mockPaymentRepository)
     paymentService = require('../../../../server/services/payment-service')
   })
 
-  afterEach(async () => {
-    jest.unmock('../../../../server/repository/payment-repository')
-  })
-
-  test('updateValue creates payment', async (done) => {
+  test('updateValue creates payment', async () => {
     const calculation = {
       claimId: 'MINE003',
       value: 100
@@ -22,10 +18,9 @@ describe('Payment service tests', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     spy.mockRestore()
-    done()
   })
 
-  test('updateValue does not create duplicate payment', async (done) => {
+  test('updateValue does not create duplicate payment', async () => {
     const calculation = {
       claimId: 'MINE001',
       value: 100
@@ -36,6 +31,5 @@ describe('Payment service tests', () => {
 
     expect(spy).toHaveBeenCalledTimes(0)
     spy.mockRestore()
-    done()
   })
 })

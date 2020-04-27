@@ -2,14 +2,10 @@ describe('Schedule service tests', () => {
   let scheduleRepository
   let scheduleService
 
-  beforeAll(async () => {
+  beforeAll(() => {
     jest.mock('../../../../server/repository/schedule-repository')
     scheduleRepository = require('../../../../server/repository/schedule-repository')
     scheduleService = require('../../../../server/services/schedule-service')
-  })
-
-  afterEach(async () => {
-    jest.unmock('../../../../server/repository/schedule-repository')
   })
 
   test('getAll handles missing payment', async () => {

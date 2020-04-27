@@ -31,17 +31,17 @@ function isRunning () {
   return !scheduleConsumer.stopped && !paymentConsumer.stopped
 }
 
-process.on('SIGTERM', async function () {
-  await closeConnections()
+process.on('SIGTERM', function () {
+  closeConnections()
   process.exit(0)
 })
 
-process.on('SIGINT', async function () {
-  await closeConnections()
+process.on('SIGINT', function () {
+  closeConnections()
   process.exit(0)
 })
 
-async function closeConnections () {
+function closeConnections () {
   scheduleConsumer.stop()
   paymentConsumer.stop()
 }

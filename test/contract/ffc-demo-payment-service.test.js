@@ -28,7 +28,7 @@ describe('Pact Verification', () => {
       providerBaseUrl: `http://localhost:${config.port}`,
       provider: 'ffc-demo-payment-service',
       pactUrls: [
-        path.resolve(__dirname, './pact/ffc-demo-payment-web-ffc-demo-payment-service.json')
+        path.resolve(__dirname, './pacts/ffc-demo-payment-web-ffc-demo-payment-service.json')
       ],
       customProviderHeaders: ['Authorization: Bearer token']
     }
@@ -38,9 +38,5 @@ describe('Pact Verification', () => {
 
   afterEach(async () => {
     await server.stop()
-  })
-
-  afterAll(() => {
-    jest.clearAllMocks()
   })
 })

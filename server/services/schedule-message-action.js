@@ -5,8 +5,9 @@ async function scheduleMessageAction (message) {
     console.log('message received - schedule ', message.Body)
     const claim = JSON.parse(message.Body)
     await scheduleService.create(claim, new Date())
-  } catch (ex) {
-    console.error('unable to process message ', ex)
+  } catch (err) {
+    console.error('unable to process message ', err)
+    throw err
   }
 }
 
