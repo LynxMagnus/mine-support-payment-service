@@ -23,7 +23,7 @@ describe('Pact Verification', () => {
     await server.start()
   })
 
-  test('validates the expectations of ffc-demo-payment-web', async (done) => {
+  test('validates the expectations of ffc-demo-payment-web', async () => {
     const opts = {
       providerBaseUrl: `http://localhost:${config.port}`,
       provider: 'ffc-demo-payment-service',
@@ -34,7 +34,6 @@ describe('Pact Verification', () => {
     }
 
     await new Verifier(opts).verifyProvider()
-    done()
   })
 
   afterEach(async () => {
