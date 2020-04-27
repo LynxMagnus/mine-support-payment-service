@@ -50,7 +50,7 @@
       }
     },
     {
-      "description": "get schedule",
+      "description": "get schedule by claim id",
       "providerState": "schedule exists",
       "request": {
         "method": "GET",
@@ -85,7 +85,7 @@
       }
     },
     {
-      "description": "get schedule",
+      "description": "schedule by claim id",
       "providerState": "schedule doesn't exist",
       "request": {
         "method": "GET",
