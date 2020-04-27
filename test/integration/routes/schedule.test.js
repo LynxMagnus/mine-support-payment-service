@@ -7,6 +7,8 @@ describe('API', () => {
   let server
 
   beforeAll(async () => {
+    await db.payment.destroy({ truncate: true })
+    await db.schedule.destroy({ truncate: true })
     await db.schedule.bulkCreate([
       { scheduleId: 1, claimId: 'MINE123', paymentDate: '2020-03-01 14:30' },
       { scheduleId: 2, claimId: 'MINE123', paymentDate: '2020-04-01 14:30' },

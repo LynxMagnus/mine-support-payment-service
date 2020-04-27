@@ -8,5 +8,8 @@ module.exports = {
   },
   create: async function (schedule) {
     return true
+  },
+  getAll: async function () {
+    return data.schedules
   }
 }

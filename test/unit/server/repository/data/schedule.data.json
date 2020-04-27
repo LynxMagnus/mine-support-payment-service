@@ -3,15 +3,18 @@
   [
     {
       "scheduleId" : 1,
-      "claimId": "MINE001"
+      "claimId": "MINE001",
+      "paymentDate": "2020-02-02T02:02:02+00:00"
     },
     {
       "scheduleId" : 2,
-      "claimId": "MINE001"
+      "claimId": "MINE001",
+      "paymentDate": "2020-03-30T13:53:10+01:00"
     },
     {
       "scheduleId" : 3,
-      "claimId": "MINE002"
+      "claimId": "MINE002",
+      "paymentDate": "2020-01-01T16:53:10+00:00"
     }
   ]
 }

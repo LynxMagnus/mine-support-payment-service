@@ -1,4 +1,4 @@
-describe('Schedule test', () => {
+describe('Payment test', () => {
   let createServer
   let server
   let paymentService
