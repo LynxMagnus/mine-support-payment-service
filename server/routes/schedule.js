@@ -6,8 +6,11 @@ module.exports = [
     path: '/schedule/{claimId}',
     options: {
       handler: async (request, h) => {
-        const schedules = await scheduleService.getById(request.params.claimId)
-        return h.response(schedules).code(200)
+        const data = await scheduleService.getById(request.params.claimId)
+        if (data && data.length) {
+          return h.response(data).code(200)
+        }
+        return h.response('Claim id not found').code(404)
       }
     }
   },

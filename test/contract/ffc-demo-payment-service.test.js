@@ -1,3 +1,5 @@
+const config = require('../../server/config')
+
 describe('Pact Verification', () => {
   const { Verifier } = require('@pact-foundation/pact')
   const mockScheduleRepository = require('../unit/server/repository/schedule-repository.mock')
@@ -23,7 +25,7 @@ describe('Pact Verification', () => {
 
   test('validates the expectations of ffc-demo-payment-web', async () => {
     const opts = {
-      providerBaseUrl: 'http://localhost:3004',
+      providerBaseUrl: `http://localhost:${config.port}`,
       provider: 'ffc-demo-payment-service',
       pactUrls: [
         path.resolve(__dirname, './pacts/ffc-demo-payment-web-ffc-demo-payment-service.json')
