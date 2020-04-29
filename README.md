@@ -46,16 +46,6 @@ The following environment variables are required by the application container. V
 
 ## Building the project locally
 
-To build the project locally the Docker client must be authenticated against the private Defra container registry to retrieve the parent image.
-An ECR registry provides exact commands for authenticating the Docker client.
-These can be found by selecting a repository and clicking the `View push commands` button.
-
-The environment variable `DOCKER_REGISTRY` must be set to the registry holding the Defra parent image,
-i.e.
-```
-export DOCKER_REGISTRY=registryid.myprivatedockersite.com
-```
-
 The API can be secured using JWT access tokens, verified against an [Okta](https://www.okta.com/) authentication server, or disabled for local development. 
 To use access token authentication set `OKTA_ENABLED` to `"true"`.
 
@@ -216,7 +206,7 @@ Builds will be deployed into a namespace with the format `mine-support-payment-s
 
 A detailed description on the build pipeline and PR work flow is available in the [Defra Confluence page](https://eaflood.atlassian.net/wiki/spaces/FFCPD/pages/1281359920/Build+Pipeline+and+PR+Workflow)
 
-## License
+## Licence
 
 THIS INFORMATION IS LICENSED UNDER THE CONDITIONS OF THE OPEN GOVERNMENT LICENCE found at:
 
@@ -226,7 +216,7 @@ The following attribution statement MUST be cited in your products and applicati
 
 > Contains public sector information licensed under the Open Government license v3
 
-### About the license
+### About the licence
 
 The Open Government Licence (OGL) was developed by the Controller of Her Majesty's Stationery Office (HMSO) to enable information providers in the public sector to license the use and re-use of their information under a common open licence.
 
