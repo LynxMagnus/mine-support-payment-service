@@ -2,23 +2,10 @@
 name: {{ quote .Values.name }}
 envFrom:
 - secretRef:
-  name: {{ .Values.name }}-secret
+    name: {{ .Values.name }}-secret
+- configMapRef:
+    name: {{ .Values.name }}-configmap
 env:
-- name: POSTGRES_DB
-  valueFrom:
-    configMapKeyRef:
-      name: {{ .Values.name }}-configmap
-      key: POSTGRES_DB
-- name: POSTGRES_HOST
-  valueFrom:
-    configMapKeyRef:
-      name: {{ .Values.name }}-configmap
-      key: POSTGRES_HOST
-- name: POSTGRES_PORT
-  valueFrom:
-    configMapKeyRef:
-      name: {{ .Values.name }}-configmap
-      key: POSTGRES_PORT
 - name: NODE_ENV
   value: {{ quote .Values.environment }}
 - name: SCHEDULE_QUEUE_NAME
