@@ -6,8 +6,6 @@ metadata:
   labels:
     {{- include "ffc-helm-library.labels" . | nindent 4 }}
 data:
-  POSTGRES_USERNAME: {{ quote .Values.postgresService.postgresUsername }}
-  POSTGRES_PASSWORD: {{ quote .Values.postgresService.postgresPassword }}
   POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
   POSTGRES_HOST: {{ quote .Values.postgresService.postgresExternalName }}
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}

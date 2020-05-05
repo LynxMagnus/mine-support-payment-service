@@ -3,13 +3,13 @@ name: {{ quote .Values.name }}
 env:
 - name: POSTGRES_USERNAME
   valueFrom:
-    configMapKeyRef:
-      name: {{ .Values.name }}-configmap
+    secretKeyRef:
+      name: {{ .Values.name }}-secret
       key: POSTGRES_USERNAME
 - name: POSTGRES_PASSWORD
   valueFrom:
-    configMapKeyRef:
-      name: {{ .Values.name }}-configmap
+    secretKeyRef:
+      name: {{ .Values.name }}-secret
       key: POSTGRES_PASSWORD
 - name: POSTGRES_DB
   valueFrom:
