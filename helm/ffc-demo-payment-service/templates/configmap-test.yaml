@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.name }}-configmap
+data:
+  POSTGRES_USERNAME: {{ quote .Values.postgresService.postgresUsername }}
+  POSTGRES_PASSWORD: {{ quote .Values.postgresService.postgresPassword }}
+  POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
+  POSTGRES_HOST: {{ quote .Values.postgresService.postgresExternalName }}
+  POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
