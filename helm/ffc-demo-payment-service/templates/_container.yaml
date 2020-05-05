@@ -1,6 +1,11 @@
 {{- define "ffc-demo-payment-service.container" -}}
 name: {{ quote .Values.name }}
 env:
+- name: POSTGRES_USERNAME
+  valueFrom:
+    configMapKeyRef:
+      name: {{ .Values.name }}-configmap
+      key: POSTGRES_USERNAME
 - name: NODE_ENV
   value: {{ quote .Values.environment }}
 - name: SCHEDULE_QUEUE_NAME
