@@ -1,8 +1,5 @@
 {{- define "ffc-demo-payment-service.container" -}}
 name: {{ quote .Values.name }}
-envFrom:
-- configMapRef:
-  name: {{ .Values.name }}-configmap
 env:
 - name: NODE_ENV
   value: {{ quote .Values.environment }}
