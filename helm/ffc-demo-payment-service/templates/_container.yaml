@@ -1,16 +1,9 @@
 {{- define "ffc-demo-payment-service.container" -}}
 name: {{ quote .Values.name }}
+envFrom:
+- secretRef:
+  name: {{ .Values.name }}-secret
 env:
-- name: POSTGRES_USERNAME
-  valueFrom:
-    secretKeyRef:
-      name: {{ .Values.name }}-secret
-      key: POSTGRES_USERNAME
-- name: POSTGRES_PASSWORD
-  valueFrom:
-    secretKeyRef:
-      name: {{ .Values.name }}-secret
-      key: POSTGRES_PASSWORD
 - name: POSTGRES_DB
   valueFrom:
     configMapKeyRef:
