@@ -29,6 +29,8 @@ env:
   value: {{ quote .Values.container.paymentQueueRegion }}
 - name: CREATE_PAYMENT_QUEUE
   value: {{ quote .Values.container.paymentCreateQueue }}
+- name: OIDC_PROVIDER
+  value: {{ quote .Values.oidcProvider }}
 {{- if .Values.okta }}
 - name: OKTA_DOMAIN
   value: {{ quote .Values.okta.domain }}
