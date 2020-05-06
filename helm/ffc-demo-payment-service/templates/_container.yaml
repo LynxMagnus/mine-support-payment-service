@@ -29,12 +29,22 @@ env:
   value: {{ quote .Values.container.paymentQueueRegion }}
 - name: CREATE_PAYMENT_QUEUE
   value: {{ quote .Values.container.paymentCreateQueue }}
+{{- if .Values.okta }}
 - name: OKTA_DOMAIN
   value: {{ quote .Values.okta.domain }}
 - name: OKTA_CLIENT_ID
   value: {{ quote .Values.okta.clientId }}
 - name: OKTA_AUTH_SERVER_ID
   value: {{ quote .Values.okta.authorizationServerId }}
+{{- end }}
+{{- if .Values.b2c }}
+- name: B2C_CLIENT_ID
+  value: {{ quote .Values.b2c.clientId }}
+- name: B2C_CLIENT_SECRET
+  value: {{ quote .Values.b2c.clientSecret }}
+- name: B2C_URL
+  value: {{ quote .Values.b2c.url }}
+{{- end }}
 - name: PORT
   value: {{ quote .Values.container.port }}
 ports:
