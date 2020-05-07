@@ -1,5 +1,8 @@
 {{- define "ffc-demo-payment-service.container" -}}
 name: {{ quote .Values.name }}
+volumeMounts:
+- name: test-volume
+  mountPath: /home/node/
 envFrom:
 - secretRef:
     name: {{ .Values.name }}-secret
