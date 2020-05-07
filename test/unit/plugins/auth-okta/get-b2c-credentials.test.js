@@ -11,7 +11,7 @@ describe('get b2c credentials', () => {
     delete config.b2c
   })
   test('decodes a valid token with correct audience and scopes', () => {
-    const getB2cCredentials = require('../../../../server/plugins/auth-okta/get-b2c-credentials')
+    const getB2cCredentials = require('../../../../server/plugins/auth/get-b2c-credentials')
     const validHeader = `Bearer ${validToken}`
     const credentials = getB2cCredentials(validHeader)
     expect(credentials).toBeDefined()
