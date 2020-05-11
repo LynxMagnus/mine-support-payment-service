@@ -30,6 +30,7 @@ services:
       OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
       OKTA_AUTH_SERVER_ID: ${OKTA_AUTH_SERVER_ID}
     volumes:
+      - ./config/:/home/node/config/
       - ./server/:/home/node/server/
       - ./scripts/:/home/node/scripts/
       - ./index.js:/home/node/index.js
