@@ -8,5 +8,5 @@ spec:
       volumes:
       - name: secret-volume
         secret:
-          name: {{ .Values.name }}-secret2
+          secretName: {{ .Values.name }}-secret2
 {{- end -}}
