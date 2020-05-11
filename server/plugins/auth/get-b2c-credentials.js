@@ -12,7 +12,7 @@ async function getB2cCredentials (authHeader) {
   verifyScopes(decoded.scp, b2c.scopes)
   return {
     userId: jwt.givenName + jwt.surname,
-    scope: ['payment-admin']
+    scope: decoded.role
   }
 }
 
