@@ -1,8 +1,6 @@
 {{- define "ffc-demo-payment-service.container" -}}
 name: {{ quote .Values.name }}
 volumeMounts:
-- name: test-volume
-  mountPath: /home/node/config
 - name: secret-volume
   mountPath: /home/node/secret
 envFrom:
@@ -11,7 +9,6 @@ envFrom:
 - configMapRef:
     name: {{ .Values.name }}-configmap
 env:
-
 - name: CREATE_PAYMENT_QUEUE
   value: {{ quote .Values.container.paymentCreateQueue }}
 - name: OKTA_DOMAIN

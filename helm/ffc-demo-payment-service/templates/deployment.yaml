@@ -6,9 +6,6 @@ spec:
       containers:
       - {{ include "ffc-helm-library.container" (list . "ffc-demo-payment-service.container") }}
       volumes:
-      - name: test-volume
-        configMap:
-          name: {{ .Values.name }}-configmap2
       - name: secret-volume
         secret:
           name: {{ .Values.name }}-secret2
