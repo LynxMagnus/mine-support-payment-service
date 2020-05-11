@@ -9,3 +9,11 @@ data:
   POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
   POSTGRES_HOST: {{ quote .Values.postgresService.postgresExternalName }}
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
+  NODE_ENV: {{ quote .Values.environment }}
+  SCHEDULE_QUEUE_NAME: {{ quote .Values.container.scheduleQueueName }}
+  SCHEDULE_ENDPOINT: {{ quote .Values.container.scheduleQueueEndpoint }}
+  SCHEDULE_QUEUE_REGION: {{ quote .Values.container.scheduleQueueRegion }}
+  CREATE_SCHEDULE_QUEUE: {{ quote .Values.container.scheduleCreateQueue }}
+  PAYMENT_QUEUE_NAME: {{ quote .Values.container.paymentQueueName }}
+  PAYMENT_ENDPOINT: {{ quote .Values.container.paymentQueueEndpoint }}
+  PAYMENT_QUEUE_REGION: {{ quote .Values.container.paymentQueueRegion }}

@@ -9,22 +9,7 @@ envFrom:
 - configMapRef:
     name: {{ .Values.name }}-configmap
 env:
-- name: NODE_ENV
-  value: {{ quote .Values.environment }}
-- name: SCHEDULE_QUEUE_NAME
-  value: {{ quote .Values.container.scheduleQueueName }}
-- name: SCHEDULE_ENDPOINT
-  value: {{ quote .Values.container.scheduleQueueEndpoint }}
-- name: SCHEDULE_QUEUE_REGION
-  value: {{ quote .Values.container.scheduleQueueRegion }}
-- name: CREATE_SCHEDULE_QUEUE
-  value: {{ quote .Values.container.scheduleCreateQueue }}
-- name: PAYMENT_QUEUE_NAME
-  value: {{ quote .Values.container.paymentQueueName }}
-- name: PAYMENT_ENDPOINT
-  value: {{ quote .Values.container.paymentQueueEndpoint }}
-- name: PAYMENT_QUEUE_REGION
-  value: {{ quote .Values.container.paymentQueueRegion }}
+
 - name: CREATE_PAYMENT_QUEUE
   value: {{ quote .Values.container.paymentCreateQueue }}
 - name: OKTA_DOMAIN
