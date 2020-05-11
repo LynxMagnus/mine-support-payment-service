@@ -3,6 +3,8 @@ name: {{ quote .Values.name }}
 volumeMounts:
 - name: test-volume
   mountPath: /home/node/config
+- name: secret-volume
+  mountPath: /home/node/secret
 envFrom:
 - secretRef:
     name: {{ .Values.name }}-secret
