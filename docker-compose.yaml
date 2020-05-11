@@ -7,7 +7,7 @@ services:
     image: ffc-demo-payment-service
     depends_on:
       - ffc-demo-payment-postgres
-      - ffc-demo-payment-message-queue  
+      - ffc-demo-payment-message-queue
     environment:
       POSTGRES_DB: ffc_demo_payments
       POSTGRES_PASSWORD: ppp
@@ -28,7 +28,7 @@ services:
       OKTA_DOMAIN: ${OKTA_DOMAIN}
       OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
       OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
-      OKTA_AUTH_SERVER_ID: ${OKTA_AUTH_SERVER_ID}      
+      OKTA_AUTH_SERVER_ID: ${OKTA_AUTH_SERVER_ID}
     volumes:
       - ./server/:/home/node/server/
       - ./scripts/:/home/node/scripts/
