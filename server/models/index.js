@@ -38,7 +38,7 @@ const watchDir = '/home/node/config/'
 let fsWait = false
 
 fs.watch(watchDir, (event, filename) => {
-  if (filename && event === 'change') {
+  if (filename) {
     if (fsWait) return
 
     fsWait = setTimeout(() => {
