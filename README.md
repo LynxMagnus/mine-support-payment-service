@@ -23,8 +23,8 @@ Or:
 
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
-| Name                  | Description                    | Required | Default     | Valid                       | Notes                             |
-|-----------------------|--------------------------------|:--------:|-------------|-----------------------------|-----------------------------------|
+| Name                  | Description                               | Required | Default     | Valid                       | Notes                             |
+|-----------------------|-------------------------------------------|:--------:|-------------|-----------------------------|-----------------------------------|
 | NODE_ENV              | Node environment                          | no       | development | development,test,production |                                   |
 | PORT                  | Port number                               | no       | 3004        |                             |                                   |
 | SCHEDULE_QUEUE_NAME   | Message queue name                        | yes      |             |                             |                                   |
@@ -34,10 +34,13 @@ The following environment variables are required by the application container. V
 | DEV_ACCESS_KEY_ID     | Local dev only access key Id              | no       |             |                             |                                   |
 | DEV_ACCESS_KEY        | Local dev only access key                 | no       |             |                             |                                   |
 | CREATE_SCHEDULE_QUEUE | Create queue before connection            | no       | false       |                             | For local development set to true |
-| OKTA_ENABLED          | set to true to enable Okta authentication | no       | "true"      |                             |
-| OKTA_DOMAIN           | Okta domain, i.e. `mysite.okta.com`       | no       |             |                             |
-| OKTA_CLIENT_ID        | Client ID of Okta OpenID Connect app      | no       |             |                             |
-| OKTA_AUTH_SERVER_ID   | ID of Okta custom authorisation server    | no       |             |                             |
+| OIDC_PROVIDER         | set the OIDC provider to use              | no       |             |  okta, b2c                  |                                   |
+| OKTA_DOMAIN           | Okta domain, i.e. `mysite.okta.com`       | no       |             |                             |                                   |
+| OKTA_CLIENT_ID        | Client ID of Okta OpenID Connect app      | no       |             |                             |                                   |
+| OKTA_AUTH_SERVER_ID   | ID of Okta custom authorisation server    | no       |             |                             |                                   |
+| B2C_CLIENT_ID         | Client ID of B2C OpenID Connect app       | no       |             |                             |                                   |
+| B2C_CLIENT_SECRET     | Client Secret of B2C OpenID Connect app   | no       |             |                             |                                   |
+| B2C_URL               | OAuth URL of B2C OpenID Connect app       | no       |             |                             |                                   |
 | PAYMENT_QUEUE_NAME    | Message queue name                        | yes      |             |                             |                                   |
 | PAYMENT_ENDPOINT      | Message base url                          | yes      |             |                             |                                   |
 | PAYMENT_QUEUE_URL     | Message queue url                         | no       |             |                             |                                   |
@@ -46,13 +49,15 @@ The following environment variables are required by the application container. V
 
 ## Building the project locally
 
-The API can be secured using JWT access tokens, verified against an [Okta](https://www.okta.com/) authentication server, or disabled for local development. 
-To use access token authentication set `OKTA_ENABLED` to `"true"`.
+The API can be secured using JWT access tokens, verified against an [Okta](https://www.okta.com/) authentication server, B2C, or disabled for local development. 
 
-Okta specific environment variables must be set if `OKTA_ENABLED` is set to `"true"`.
+Okta specific environment variables must be set if `OIDC_PROVIDER` is set to `"okta"`.
 A valid Okta OpenID Connect application is required, and the Okta domain, client ID, and Custom Authorisation
 Server ID must be set in the environment variables `OKTA_DOMAIN`, `OKTA_CLIENT_ID`, and `OKTA_AUTH_SERVER_ID` respectively.
 
+B2C specific environment variables must be set if `OIDC_PROVIDER` is set to `"b2c"`.
+A valid B2C OpenID Connect application is required, and the B2C client ID, Client Secret, Oauth URL, and URL of the site
+must be set in the environment variable `B2C_CLIENT_ID`, `B2C_CLIENT_SECRET`, and `B2C_URL` respectively.
 
 ## How to run tests
 
