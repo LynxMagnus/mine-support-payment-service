@@ -34,26 +34,32 @@ function setupSequelise () {
   })
 }
 
-const watchDir = '/home/node/config/'
-let fsWait = false
+const watchFilename = '/home/node/config/postgresUsername'
 
-fs.watch(watchDir, (event, filename) => {
-  if (filename) {
-    if (fsWait) return
-
-    fsWait = setTimeout(() => {
-      fsWait = false
-    }, 100)
-
-    const username = fs.readFileSync(watchDir + filename, 'utf8')
-    console.log(`Changing username to ${username}`)
-
-    // config.username = username
-
-    // sequelize.close()
-    // setupSequelise()
-  }
+fs.watchFile(watchFilename, { interval: 1000 }, (curr, prev) => {
+  const username = fs.readFileSync(watchFilename, 'utf8')
+  console.log(`Changing username to ${username}`)
 })
+
+// let fsWait = false
+
+// fs.watch(watchDir, (event, filename) => {
+//   if (filename) {
+//     if (fsWait) return
+
+//     fsWait = setTimeout(() => {
+//       fsWait = false
+//     }, 100)
+
+//     const username = fs.readFileSync(watchDir + filename, 'utf8')
+//     console.log(`Changing username to ${username}`)
+
+//     // config.username = username
+
+//     // sequelize.close()
+//     // setupSequelise()
+//   }
+// })
 
 setupSequelise()
 
