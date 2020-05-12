@@ -36,9 +36,11 @@ function setupSequelise () {
 
 const watchFilename = '/home/node/config/postgresUsername'
 
-fs.watch(watchFilename, (event, filename) => {
+const realFile = '/home/node/config/' + fs.readlinkSync(watchFilename)
+
+fs.watch(realFile, (event, filename) => {
   if (filename) {
-    const username = fs.readFileSync(watchFilename, 'utf8')
+    const username = fs.readFileSync(realFile, 'utf8')
     config.username = username
     console.log(`Changing username to ${username}`)
     sequelize.close()
