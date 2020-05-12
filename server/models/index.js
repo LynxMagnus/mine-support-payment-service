@@ -41,10 +41,10 @@ const realFile = '/home/node/config/' + fs.readlinkSync(watchFilename)
 fs.watch(realFile, (event, filename) => {
   if (filename) {
     const username = fs.readFileSync(realFile, 'utf8')
-    config.username = username
+    // config.username = username
     console.log(`Changing username to ${username}`)
-    sequelize.close()
-    setupSequelise()
+    // sequelize.close()
+    // setupSequelise()
   }
 })
 
