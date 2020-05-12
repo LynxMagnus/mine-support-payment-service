@@ -34,7 +34,7 @@ The following environment variables are required by the application container. V
 | DEV_ACCESS_KEY_ID     | Local dev only access key Id              | no       |             |                             |                                   |
 | DEV_ACCESS_KEY        | Local dev only access key                 | no       |             |                             |                                   |
 | CREATE_SCHEDULE_QUEUE | Create queue before connection            | no       | false       |                             | For local development set to true |
-| OIDC_PROVIDER         | set the OIDC provider to use              | no       |             |  okta, b2c                  |                                   |
+| OIDC_PROVIDER         | set the OIDC provider to use              | no       |  dev        |  dev, okta, b2c                  |                                   |
 | OKTA_DOMAIN           | Okta domain, i.e. `mysite.okta.com`       | no       |             |                             |                                   |
 | OKTA_CLIENT_ID        | Client ID of Okta OpenID Connect app      | no       |             |                             |                                   |
 | OKTA_AUTH_SERVER_ID   | ID of Okta custom authorisation server    | no       |             |                             |                                   |

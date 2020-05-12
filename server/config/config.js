@@ -8,7 +8,7 @@ const getB2cConfig = require('./get-b2c-config')
 const schema = Joi.object({
   port: Joi.number().default(3004),
   env: Joi.string().valid('development', 'test', 'production').default('development'),
-  oidcProvider: Joi.string().default('').lowercase()
+  oidcProvider: Joi.string().default('dev').lowercase()
 })
 
 // Build config
