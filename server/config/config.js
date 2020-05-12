@@ -38,7 +38,9 @@ value.scheduleQueueConfig = mqConfig.scheduleQueueConfig
 value.paymentQueueConfig = mqConfig.paymentQueueConfig
 
 value.dbConfig = dbConfig
+
 if (value.oktaEnabled) {
   value.okta = getOktaConfig()
 }
+
 module.exports = value

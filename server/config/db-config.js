@@ -1,5 +1,7 @@
+const fs = require('fs')
+
 const dbConfig = {
-  username: process.env.POSTGRES_USERNAME,
+  username: fs.readFileSync('/home/node/config/postgresUsername', 'utf8'),
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB || 'mine_payments',
   host: process.env.POSTGRES_HOST || 'ffc-demo-payment-postgres',
