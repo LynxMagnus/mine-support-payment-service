@@ -36,9 +36,12 @@ function setupSequelise () {
 
 const watchFilename = '/home/node/config/postgresUsername'
 
-fs.watchFile(watchFilename, { interval: 1000 }, (curr, prev) => {
+fs.watchFile(watchFilename, { interval: 1000 }, async (curr, prev) => {
   const username = fs.readFileSync(watchFilename, 'utf8')
   console.log(`Changing username to ${username}`)
+  config.username = username
+  await sequelize.close()
+  setupSequelise()
 })
 
 // let fsWait = false
