@@ -9,8 +9,8 @@ describe('Pact Verification', () => {
   let server
 
   beforeAll(async () => {
-    const oktaJwtVerifier = require('../../server/plugins/auth-okta/okta-jwt-verifier')
-    jest.mock('../../server/plugins/auth-okta/okta-jwt-verifier')
+    const oktaJwtVerifier = require('../../server/plugins/auth/okta-jwt-verifier')
+    jest.mock('../../server/plugins/auth/okta-jwt-verifier')
     oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { roles: ['payment-admin'] } }))
 
     jest.mock('../../server/repository/schedule-repository', () => mockScheduleRepository)
