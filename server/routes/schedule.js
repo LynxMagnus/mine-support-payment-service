@@ -19,7 +19,7 @@ module.exports = [
     path: '/schedule',
     options: {
       auth: {
-        strategy: 'auth-okta',
+        strategy: 'auth',
         scope: 'payment-admin'
       },
       handler: async (request, h) => {
