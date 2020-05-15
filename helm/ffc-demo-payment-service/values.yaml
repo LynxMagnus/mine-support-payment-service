@@ -5,8 +5,9 @@ workstream: ffc-demo
 image: ffc-demo-payment-service
 
 labels: {}
-
+oidcProvider: dev
 okta: {}
+b2c: {}
 
 serviceAccount:
   name: ffc-demo-payment-service-account

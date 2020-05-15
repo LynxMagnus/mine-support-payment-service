@@ -1,6 +1,6 @@
 const getCredentialsFromAccessToken = require('./get-credentials-from-access-token')
 
-const pluginName = 'auth-okta'
+const pluginName = 'auth'
 
 function scheme () {
   return {
