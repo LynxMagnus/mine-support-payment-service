@@ -2,7 +2,7 @@ const config = require('../../server/config')
 
 describe('Pact Verification', () => {
   const { Verifier } = require('@pact-foundation/pact')
-  const mockScheduleRepository = require('../unit/server/repository/schedule-repository.mock')
+  const mockScheduleRepository = require('../integration/server/repository/schedule-repository.mock')
   const path = require('path')
 
   let createServer
