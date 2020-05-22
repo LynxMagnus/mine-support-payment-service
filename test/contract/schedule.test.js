@@ -30,8 +30,4 @@ describe('Schedule SQS contract test', () => {
       })
       .verify(sqsMessageHandler(scheduleMessageAction))
   })
-
-  afterAll(async () => {
-    await db.schedule.destroy({ truncate: true })
-  })
 })

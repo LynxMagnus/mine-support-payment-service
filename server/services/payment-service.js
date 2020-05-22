@@ -1,29 +1,35 @@
-const paymentRepository = require('../repository/payment-repository')
+const paymentMapper = require('./payment-mapper')
 
-function paymentMapper (payment) {
-  return {
-    claimId: payment.claimId,
-    paymentAmount: Number.parseFloat(payment.value).toFixed(2),
-    schedule: payment.schedules.map((s) => s.paymentDate)
+const db = require('../models')
+
+async function getById (claimId) {
+  const payment = await db.payment.findOne({
+    where: { claimId: claimId },
+    include: [db.schedule]
+  })
+  return payment ? paymentMapper(payment) : undefined
+}
+
+async function create (calculation) {
+  const existingPayment = await getById(calculation.claimId)
+  if (existingPayment != null) {
+    console.log('payment already exists')
+    return
   }
+  console.log('creating payment')
+  await db.payment.upsert({
+    claimId: calculation.claimId,
+    value: calculation.value
+  })
+}
+
+async function getAll () {
+  const payments = await db.payment.findAll({ include: [db.schedule] })
+  return payments.map(paymentMapper)
 }
 
 module.exports = {
-  create: async function (calculation) {
-    const existingPayment = await paymentRepository.getById(calculation.claimId)
-    if (existingPayment != null) {
-      console.log('payment already exists')
-      return
-    }
-    console.log('creating payment')
-    await paymentRepository.create(calculation)
-  },
-  getAll: async function () {
-    const payments = await paymentRepository.getAll()
-    return payments.map(paymentMapper)
-  },
-  getById: async function (claimId) {
-    const payment = await paymentRepository.getById(claimId)
-    return paymentMapper(payment)
-  }
+  create,
+  getAll,
+  getById
 }

@@ -1,4 +1,4 @@
-const db = require('../../../server/models')
+const dbHelper = require('../services/db-helper')
 const createServer = require('../../../server/index')
 
 describe('API', () => {
@@ -6,12 +6,13 @@ describe('API', () => {
 
   beforeAll(async () => {
     jest.mock('../../../server/services/message-service')
-    await db.schedule.bulkCreate([
+    await dbHelper.truncate()
+    await dbHelper.createScheduleRecords([
       { scheduleId: 1, claimId: 'MINE123', paymentDate: '2020-03-01 14:30' },
       { scheduleId: 2, claimId: 'MINE123', paymentDate: '2020-04-01 14:30' },
       { scheduleId: 3, claimId: 'MINE124', paymentDate: '2020-05-01 14:30' }
     ])
-    await db.payment.bulkCreate([
+    await dbHelper.createPaymentRecords([
       { claimId: 'MINE123', value: 150.50 },
       { claimId: 'MINE124', value: 50.75 }
     ])
@@ -85,10 +86,5 @@ describe('API', () => {
 
   afterEach(async () => {
     await server.stop()
-  })
-
-  afterAll(async () => {
-    await db.payment.destroy({ truncate: true })
-    await db.schedule.destroy({ truncate: true })
   })
 })
