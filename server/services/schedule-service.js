@@ -1,5 +1,4 @@
-const scheduleRepository = require('../repository/schedule-repository')
-// const db = require('../models')
+const db = require('../models')
 
 const { getPaymentDates } = require('./scheduler')
 
@@ -15,31 +14,42 @@ function scheduleMapper (schedule) {
 }
 
 async function getAll () {
-  const schedule = await scheduleRepository.getAll()
+  const schedule = await db.schedule.findAll({
+    include: [db.payment],
+    order: [['paymentDate', 'DESC']]
+  })
   return schedule.map(scheduleMapper)
+}
+
+async function getById (claimId) {
+  const schedule = await db.schedule.findAll({
+    where: { claimId: claimId },
+    include: [db.payment],
+    order: [['paymentDate', 'DESC']]
+  })
+  return schedule.map(scheduleMapper)
+}
+
+async function create (claim, startDate) {
+  const existingSchedule = await getById(claim.claimId)
+  if (existingSchedule.length) {
+    console.log('payments already scheduled for claim')
+    return
+  }
+
+  const paymentDates = getPaymentDates(startDate)
+
+  for (let i = 0; i < paymentDates.length; i++) {
+    console.log('creating schedule')
+    await db.schedule.upsert({
+      claimId: claim.claimId,
+      paymentDate: paymentDates[i]
+    })
+  }
 }
 
 module.exports = {
   getAll,
-  getById: async function (claimId) {
-    const schedule = await scheduleRepository.getById(claimId)
-    return schedule.map(scheduleMapper)
-  },
-  create: async function (claim, startDate) {
-    const existingSchedule = await scheduleRepository.getById(claim.claimId)
-    if (existingSchedule.length) {
-      console.log('payments already scheduled for claim')
-      return
-    }
-
-    const paymentDates = getPaymentDates(startDate)
-
-    for (let i = 0; i < paymentDates.length; i++) {
-      console.log('creating schedule')
-      await scheduleRepository.create({
-        claimId: claim.claimId,
-        paymentDate: paymentDates[i]
-      })
-    }
-  }
+  getById,
+  create
 }
