@@ -1,8 +1,7 @@
 const config = require('../../server/config')
-
 describe('Pact Verification', () => {
   const { Verifier } = require('@pact-foundation/pact')
-  const mockScheduleRepository = require('../integration/server/repository/schedule-repository.mock')
+  const mockScheduleService = require('./schedule-service.mock')
   const path = require('path')
 
   let createServer
@@ -13,7 +12,7 @@ describe('Pact Verification', () => {
     jest.mock('../../server/plugins/auth/okta-jwt-verifier')
     oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { roles: ['payment-admin'] } }))
 
-    jest.mock('../../server/repository/schedule-repository', () => mockScheduleRepository)
+    jest.mock('../../server/services/schedule-service', () => mockScheduleService)
     jest.mock('../../server/services/message-service')
     createServer = require('../../server')
   })

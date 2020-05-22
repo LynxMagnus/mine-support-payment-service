@@ -1,4 +1,6 @@
 const scheduleRepository = require('../repository/schedule-repository')
+// const db = require('../models')
+
 const { getPaymentDates } = require('./scheduler')
 
 function scheduleMapper (schedule) {
@@ -12,11 +14,13 @@ function scheduleMapper (schedule) {
   return payment
 }
 
+async function getAll () {
+  const schedule = await scheduleRepository.getAll()
+  return schedule.map(scheduleMapper)
+}
+
 module.exports = {
-  getAll: async function () {
-    const schedule = await scheduleRepository.getAll()
-    return schedule.map(scheduleMapper)
-  },
+  getAll,
   getById: async function (claimId) {
     const schedule = await scheduleRepository.getById(claimId)
     return schedule.map(scheduleMapper)
