@@ -7,7 +7,6 @@ describe('API', () => {
   let server
 
   beforeAll(async () => {
-    jest.mock('../../../server/services/message-service')
     await db.payment.destroy({ truncate: true })
     await db.schedule.destroy({ truncate: true })
     await db.schedule.bulkCreate([
