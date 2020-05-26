@@ -13,8 +13,13 @@ async function createPaymentRecords (schedules) {
   await db.payment.bulkCreate(schedules)
 }
 
+async function close () {
+  await db.sequelize.close()
+}
+
 module.exports = {
-  truncate,
+  close,
   createScheduleRecords,
-  createPaymentRecords
+  createPaymentRecords,
+  truncate
 }

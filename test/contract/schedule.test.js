@@ -4,11 +4,11 @@ describe('Schedule SQS contract test', () => {
   const Matchers = require('@pact-foundation/pact/dsl/matchers')
   const { scheduleMessageAction } = require('../../server/services/schedule-message-action')
   const sqsMessageHandler = require('./sqsMessageHandler')
-  const db = require('../../server/models')
+  const dbHelper = require('../narrow-integration/services/db-helper')
   let messagePact
 
   beforeAll(async () => {
-    await db.schedule.destroy({ truncate: true })
+    await dbHelper.truncate()
 
     messagePact = new MessageConsumerPact({
       consumer: 'ffc-demo-payment-service',
@@ -16,6 +16,10 @@ describe('Schedule SQS contract test', () => {
       log: path.resolve(process.cwd(), 'test-output', 'pact.log'),
       dir: path.resolve(process.cwd(), 'test-output')
     })
+  })
+
+  afterAll(() => {
+    dbHelper.close()
   })
 
   test('scheduleMessageAction can process message', async () => {

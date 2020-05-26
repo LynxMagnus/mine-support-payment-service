@@ -17,6 +17,10 @@ describe('Payment service test', () => {
     await dbHelper.truncate()
   })
 
+  afterAll(() => {
+    dbHelper.close()
+  })
+
   test('create creates payment', async () => {
     await paymentService.create(payment1)
   })

@@ -7,6 +7,10 @@ describe('Payment service test', () => {
     await dbHelper.truncate()
   })
 
+  afterAll(() => {
+    dbHelper.close()
+  })
+
   test('create creates payment schedules', async () => {
     const claim = {
       claimId: 'MINE001'
