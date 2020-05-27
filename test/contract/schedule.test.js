@@ -2,7 +2,7 @@ describe('Schedule SQS contract test', () => {
   const path = require('path')
   const { MessageConsumerPact } = require('@pact-foundation/pact')
   const Matchers = require('@pact-foundation/pact/dsl/matchers')
-  const { scheduleMessageAction } = require('../../server/services/schedule-message-action')
+  const scheduleMessageAction = require('../../server/services/schedule-message-action')
   const sqsMessageHandler = require('./sqsMessageHandler')
   const dbHelper = require('../narrow-integration/services/db-helper')
   let messagePact

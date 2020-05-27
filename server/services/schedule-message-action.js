@@ -11,4 +11,4 @@ async function scheduleMessageAction (message) {
   }
 }
 
-module.exports = { scheduleMessageAction }
+module.exports = scheduleMessageAction
