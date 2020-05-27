@@ -1,30 +1,32 @@
-const dbHelper = require('../services/db-helper')
 const createServer = require('../../../server/index')
 
-const db = require('../../../server/models')
+jest.mock('../../../server/services/message-service')
+
+function mockScheduleService () {
+  const scheduleService = require('../../../server/services/schedule-service')
+  jest.mock('../../../server/services/schedule-service')
+  scheduleService.getAll.mockImplementation(() => [])
+}
+
+function mockOktaJwtVerifier () {
+  const oktaJwtVerifier = require('../../../server/plugins/auth/okta-jwt-verifier')
+  jest.mock('../../../server/plugins/auth/okta-jwt-verifier')
+  oktaJwtVerifier.verifyAccessToken.mockImplementation(
+    () => {
+      return Promise.resolve({ claims: { roles: ['payment-admin'] } })
+    }
+  )
+}
 
 describe('API', () => {
   let server
 
-  beforeAll(async () => {
-    jest.mock('../../../server/services/message-service')
-    await dbHelper.truncate()
-    await dbHelper.createScheduleRecords([
-      { scheduleId: 1, claimId: 'MINE123', paymentDate: '2020-03-01 14:30' },
-      { scheduleId: 2, claimId: 'MINE123', paymentDate: '2020-04-01 14:30' },
-      { scheduleId: 3, claimId: 'MINE124', paymentDate: '2020-05-01 14:30' }
-    ])
-    await dbHelper.createPaymentRecords([
-      { claimId: 'MINE123', value: 150.50 },
-      { claimId: 'MINE124', value: 50.75 }
-    ])
+  beforeAll(() => {
+    mockScheduleService()
+    mockOktaJwtVerifier()
   })
 
-  test('GET /schedule route returns results in descending date order for valid token', async () => {
-    const oktaJwtVerifier = require('../../../server/plugins/auth/okta-jwt-verifier')
-    jest.mock('../../../server/plugins/auth/okta-jwt-verifier')
-    oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { roles: ['payment-admin'] } }))
-
+  test('GET /schedule route returns 200 for valid token', async () => {
     server = await createServer()
     await server.initialize()
 
@@ -37,26 +39,6 @@ describe('API', () => {
     }
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
-    expect((response.headers['content-type'])).toEqual(expect.stringContaining('application/json'))
-    const payload = JSON.parse(response.payload)
-    const expectedPayload = [
-      {
-        claimId: 'MINE124',
-        paymentAmount: '50.75',
-        paymentDate: '2020-05-01T14:30:00.000Z'
-      },
-      {
-        claimId: 'MINE123',
-        paymentAmount: '150.50',
-        paymentDate: '2020-04-01T14:30:00.000Z'
-      },
-      {
-        claimId: 'MINE123',
-        paymentAmount: '150.50',
-        paymentDate: '2020-03-01T14:30:00.000Z'
-      }
-    ]
-    expect(payload).toEqual(expectedPayload)
   })
 
   test('GET /schedule route returns 401 error for missing token', async () => {
@@ -74,38 +56,12 @@ describe('API', () => {
     expect(response.statusCode).toBe(401)
   })
 
-  test('GET /schedule/MINE123 route returns claim results in descending date order', async () => {
-    server = await createServer()
-    await server.initialize()
-    const options = {
-      method: 'GET',
-      url: '/schedule/MINE123'
-    }
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    expect((response.headers['content-type'])).toEqual(expect.stringContaining('application/json'))
-    const payload = JSON.parse(response.payload)
-    const expectedPayload = [
-      {
-        claimId: 'MINE123',
-        paymentAmount: '150.50',
-        paymentDate: '2020-04-01T14:30:00.000Z'
-      },
-      {
-        claimId: 'MINE123',
-        paymentAmount: '150.50',
-        paymentDate: '2020-03-01T14:30:00.000Z'
-      }
-    ]
-    expect(payload).toEqual(expectedPayload)
-  })
-
   afterEach(async () => {
     await server.stop()
+    jest.clearAllMocks()
   })
 
   afterAll(async () => {
-    await db.payment.destroy({ truncate: true })
-    await db.schedule.destroy({ truncate: true })
+    jest.resetAllMocks()
   })
 })

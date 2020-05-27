@@ -19,7 +19,7 @@ describe('Payment service test', () => {
     await scheduleService.create(claim, startDate)
   })
 
-  test('getById returns payment schedules', async () => {
+  test('getById returns payment schedules in descending order by date', async () => {
     const claim = {
       claimId: 'MINE003'
     }
@@ -54,7 +54,7 @@ describe('Payment service test', () => {
     expect(result[5].paymentDate).toEqual(new Date(2020, 4, 1))
   })
 
-  test('getAll returns all claims', async () => {
+  test('getAll returns all claims in descending order by date', async () => {
     const claim1 = {
       claimId: 'MINE001'
     }
@@ -62,10 +62,22 @@ describe('Payment service test', () => {
       claimId: 'MINE002'
     }
     const startDate1 = new Date(2020, 3, 7)
-    const startDate2 = new Date(2020, 3, 7)
+    const startDate2 = new Date(2020, 4, 7)
     await scheduleService.create(claim1, startDate1)
     await scheduleService.create(claim2, startDate2)
     const result = await scheduleService.getAll()
     expect(result.length).toEqual(12)
+    expect(result[0].paymentDate).toEqual(new Date(2020, 10, 1))
+    expect(result[1].paymentDate).toEqual(new Date(2020, 9, 1))
+    expect(result[2].paymentDate).toEqual(new Date(2020, 9, 1))
+    expect(result[3].paymentDate).toEqual(new Date(2020, 8, 1))
+    expect(result[4].paymentDate).toEqual(new Date(2020, 8, 1))
+    expect(result[5].paymentDate).toEqual(new Date(2020, 7, 1))
+    expect(result[6].paymentDate).toEqual(new Date(2020, 7, 1))
+    expect(result[7].paymentDate).toEqual(new Date(2020, 6, 1))
+    expect(result[8].paymentDate).toEqual(new Date(2020, 6, 1))
+    expect(result[9].paymentDate).toEqual(new Date(2020, 5, 1))
+    expect(result[10].paymentDate).toEqual(new Date(2020, 5, 1))
+    expect(result[11].paymentDate).toEqual(new Date(2020, 4, 1))
   })
 })
