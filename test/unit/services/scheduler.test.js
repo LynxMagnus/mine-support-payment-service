@@ -1,5 +1,5 @@
 describe('Scheduler tests', () => {
-  const scheduler = require('../../../../server/services/scheduler')
+  const scheduler = require('../../../server/services/scheduler')
 
   test('getPaymentDate creates all payment schedules', () => {
     const startDate = new Date(2020, 3, 7)
