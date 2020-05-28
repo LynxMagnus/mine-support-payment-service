@@ -1,5 +1,5 @@
 
-const dbHelper = require('./db-helper')
+const dbHelper = require('../../db-helper')
 const scheduleService = require('../../../server/services/schedule-service')
 
 describe('Payment service test', () => {

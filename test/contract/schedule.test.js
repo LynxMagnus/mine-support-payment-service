@@ -4,7 +4,7 @@ describe('Schedule SQS contract test', () => {
   const Matchers = require('@pact-foundation/pact/dsl/matchers')
   const scheduleMessageAction = require('../../server/services/schedule-message-action')
   const sqsMessageHandler = require('./sqsMessageHandler')
-  const dbHelper = require('../local-integration/services/db-helper')
+  const dbHelper = require('../db-helper')
   let messagePact
 
   beforeAll(async () => {

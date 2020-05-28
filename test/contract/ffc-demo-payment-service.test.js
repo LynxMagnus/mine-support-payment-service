@@ -1,5 +1,5 @@
 const config = require('../../server/config')
-const dbHelper = require('../local-integration/services/db-helper')
+const dbHelper = require('../db-helper')
 
 describe.skip('Pact Verification', () => {
   const { Verifier } = require('@pact-foundation/pact')

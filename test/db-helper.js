@@ -1,5 +1,5 @@
 
-const db = require('../../../server/models')
+const db = require('../server/models')
 
 async function truncate () {
   await db.payment.destroy({ truncate: true })
