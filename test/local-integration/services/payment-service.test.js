@@ -42,5 +42,7 @@ describe('Payment service test', () => {
     await paymentService.create(payment2)
     const result = await paymentService.getAll()
     expect(result.length).toEqual(2)
+    expect(result[0].claimId).toEqual(payment1.claimId)
+    expect(result[1].claimId).toEqual(payment2.claimId)
   })
 })

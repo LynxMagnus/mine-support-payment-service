@@ -13,7 +13,6 @@ const greeting = 'test message'
 const redeliverGreeting = 'test redelivered message'
 
 function messageHandler (message, done) {
-  console.log('received message', message)
   const data = JSON.parse(message.Body)
   expect(data.greeting).toEqual(greeting)
   done()
@@ -25,7 +24,6 @@ function messageHandlerErrorOnFirst (message, done) {
     receivedCount++
     throw new Error('ignore first delivery of message by throwing error')
   }
-  console.log('received message again', message)
   const data = JSON.parse(message.Body)
   expect(data.greeting).toEqual(redeliverGreeting)
   done()
