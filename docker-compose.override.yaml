@@ -9,12 +9,7 @@ services:
       context: .
       target: development
     image: ffc-demo-payment-service
-    command: >
-      sh -c "
-        scripts/wait-for/wait-for ffc-demo-payment-postgres:5432 --
-        scripts/wait-for/wait-for ffc-demo-payment-message-queue:9324 --
-        npm run migrate &&
-        npm run start:watch"
+    command:  sh -c "scripts/wait-for-dependencies && npm run start:watch"
     ports:
       - "3004:3004"
     depends_on:

@@ -1,7 +1,7 @@
 const config = require('../../server/config')
 const dbHelper = require('../db-helper')
 
-describe.skip('Pact Verification', () => {
+describe('Pact Verification', () => {
   const { Verifier } = require('@pact-foundation/pact')
   const path = require('path')
 

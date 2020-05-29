@@ -5,11 +5,11 @@ describe('Healthy test', () => {
   let messageService
 
   beforeAll(async () => {
-    jest.mock('../../../server/services/database-service')
-    databaseService = require('../../../server/services/database-service')
-    jest.mock('../../../server/services/message-service')
-    messageService = require('../../../server/services/message-service')
-    createServer = require('../../../server')
+    jest.mock('../../../../server/services/database-service')
+    databaseService = require('../../../../server/services/database-service')
+    jest.mock('../../../../server/services/message-service')
+    messageService = require('../../../../server/services/message-service')
+    createServer = require('../../../../server')
   })
 
   beforeEach(async () => {
