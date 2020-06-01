@@ -9,6 +9,9 @@ oidcProvider: dev
 okta: {}
 b2c: {}
 
+configMap:
+  name: my-config-map
+
 serviceAccount:
   name: ffc-demo-payment-service-account
 
