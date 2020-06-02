@@ -11,4 +11,4 @@ async function paymentMessageAction (message) {
   }
 }
 
-module.exports = { paymentMessageAction }
+module.exports = paymentMessageAction

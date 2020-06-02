@@ -8,12 +8,7 @@ services:
     build:
       context: .
       target: development
-    command: >
-      sh -c "
-        scripts/wait-for/wait-for ffc-demo-payment-postgres:5432 --
-        scripts/wait-for/wait-for ffc-demo-payment-message-queue:9324 --
-        npm run migrate &&
-        npm run test"
+    command: sh -c "scripts/wait-for-dependencies && npm run test"
     environment: 
       OIDC_PROVIDER: "okta"
       OKTA_DOMAIN: fake-domain.okta.com

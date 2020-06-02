@@ -1,16 +1,18 @@
 {
   "name": "ffc-demo-payment-service",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build:watch": "nodemon --exec npm run build --ext scss --legacy-watch",
     "migrate": "sequelize db:migrate",
     "pretest": "npm run test:lint",
-    "test": "jest --forceExit --detectOpenHandles",
+    "test": "jest --runInBand",
     "test:lint": "standard",
     "test:pact": "jest --testPathPattern=test/contract --coverage=false",
-    "test:watch": "jest --coverage=false --onlyChanged --watch",
+    "test:integration": "jest --testPathPattern=test/integration --coverage=false",
+    "test:unit": "jest --testPathPattern=test/unit --coverage=false",
+    "test:watch": "jest --coverage=false --onlyChanged --watch --runInBand",
     "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js"
   },
   "author": "John Watson, Mark Harrop, Matthew Collins, David Bingham, Fay Toward",

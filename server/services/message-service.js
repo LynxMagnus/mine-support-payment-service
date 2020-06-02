@@ -1,5 +1,5 @@
-const { scheduleMessageAction } = require('./schedule-message-action')
-const { paymentMessageAction } = require('./payment-message-action')
+const scheduleMessageAction = require('./schedule-message-action')
+const paymentMessageAction = require('./payment-message-action')
 const MessageConsumer = require('./messaging/message-consumer')
 const createQueue = require('./messaging/create-queue')
 const config = require('../config')
@@ -30,16 +30,6 @@ function registerPaymentConsumer () {
 function isRunning () {
   return !scheduleConsumer.stopped && !paymentConsumer.stopped
 }
-
-process.on('SIGTERM', function () {
-  closeConnections()
-  process.exit(0)
-})
-
-process.on('SIGINT', function () {
-  closeConnections()
-  process.exit(0)
-})
 
 function closeConnections () {
   scheduleConsumer.stop()
