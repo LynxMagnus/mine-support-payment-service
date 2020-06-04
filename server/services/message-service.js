@@ -1,21 +1,21 @@
 const MessageReceiver = require('./messaging/message-receiver')
 const scheduleMessageAction = require('./schedule-message-action')
 const paymentMessageAction = require('./payment-message-action')
-const config = require('../config')
+const { scheduleQueueConfig, paymentQueueConfig } = require('../config')
 
 class MessageService {
   async registerReceivers () {
     this.scheduleMessageReceiver = await this.registerReceiver(
       {
         name: 'schedule-queue-receiver',
-        config: config.scheduleQueueConfig,
+        config: scheduleQueueConfig,
         action: scheduleMessageAction
       }
     )
     this.paymentMessageReceiver = await this.registerReceiver(
       {
         name: 'payment-queue-receiver',
-        config: config.paymentQueueConfig,
+        config: paymentQueueConfig,
         action: paymentMessageAction
       }
     )

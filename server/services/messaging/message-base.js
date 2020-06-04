@@ -23,7 +23,7 @@ class MessageBase {
   }
 
   isConnected () {
-    return this.connection.is_open()
+    return this.connection.isOpen()
   }
 }
 
