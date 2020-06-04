@@ -9,7 +9,7 @@ oidcProvider: dev
 okta: {}
 b2c: {}
 
-configMap:
+containerConfigMap:
   name: my-config-map
 
 serviceAccount:
