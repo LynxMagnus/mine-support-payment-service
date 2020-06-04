@@ -1,63 +1,56 @@
 
-const messageService = require('../../../server/services/message-service')
 const config = require('../../../server/config')
 const scheduleMessageAction = require('../../../server/services/schedule-message-action')
 const paymentMessageAction = require('../../../server/services/payment-message-action')
 
-const MessageConsumer = require('../../../server/services/messaging/message-consumer')
-jest.mock('../../../server/services/messaging/message-consumer')
-
-const createQueue = require('../../../server/services/messaging/create-queue')
-jest.mock('../../../server/services/messaging/create-queue')
+const MessageReceiver = require('../../../server/services/messaging/message-receiver')
+jest.mock('../../../server/services/messaging/message-receiver')
 
 describe('message service', () => {
-  test('registerService queues created on startup', async () => {
-    await messageService.registerService()
-    expect(createQueue).toHaveBeenCalledTimes(2)
-    expect(createQueue).toHaveBeenCalledWith('schedule', config.scheduleQueueConfig)
-    expect(createQueue).toHaveBeenCalledWith('payment', config.paymentQueueConfig)
+  test('registerReceivers creates and starts receivers for schedule and payment queues with correct configs', async () => {
+    const messageService = require('../../../server/services/message-service')
+    await messageService.registerReceivers()
+    // expect receives to be created
+    expect(MessageReceiver).toHaveBeenCalledTimes(2)
+    expect(MessageReceiver).toHaveBeenCalledWith('schedule-queue-receiver', config.scheduleQueueConfig)
+    expect(MessageReceiver).toHaveBeenCalledWith('payment-queue-receiver', config.paymentQueueConfig)
+    // expect receives to be started
+    const scheduleReceiveInstance = MessageReceiver.mock.instances[0]
+    expect(scheduleReceiveInstance.openConnection).toHaveBeenCalledTimes(1)
+    expect(scheduleReceiveInstance.setupReceiver).toHaveBeenCalledWith(scheduleMessageAction)
+    const paymentReceiveInstance = MessageReceiver.mock.instances[1]
+    expect(paymentReceiveInstance.openConnection).toHaveBeenCalledTimes(1)
+    expect(paymentReceiveInstance.setupReceiver).toHaveBeenCalledWith(paymentMessageAction)
   })
 
-  test('register service creates and starts consumers for schedule and payment queues with correct configs', async () => {
-    await messageService.registerService()
-    // expect consumers to be created
-    expect(MessageConsumer).toHaveBeenCalledTimes(2)
-    expect(MessageConsumer).toHaveBeenCalledWith(config.scheduleQueueConfig, config.scheduleQueueConfig.queueUrl, scheduleMessageAction)
-    expect(MessageConsumer).toHaveBeenCalledWith(config.paymentQueueConfig, config.paymentQueueConfig.queueUrl, paymentMessageAction)
-    // expect consumers to be started
-    const scheduleConsumerInstance = MessageConsumer.mock.instances[0]
-    expect(scheduleConsumerInstance.start).toHaveBeenCalledTimes(1)
-    const paymentConsumerInstance = MessageConsumer.mock.instances[1]
-    expect(paymentConsumerInstance.start).toHaveBeenCalledTimes(1)
-  })
-
-  test('isRunning returns true if consumers are both running', async () => {
-    await messageService.registerService()
-    const scheduleConsumerInstance = MessageConsumer.mock.instances[0]
-    const paymentConsumerInstance = MessageConsumer.mock.instances[1]
-    // expect service to be running if consumers not stopped
-    scheduleConsumerInstance.stopped = false
-    paymentConsumerInstance.stopped = false
+  test('isRunning returns true if receives are both running', async () => {
+    const messageService = require('../../../server/services/message-service')
+    await messageService.registerReceivers()
+    const scheduleReceiveInstance = MessageReceiver.mock.instances[0]
+    const paymentReceiveInstance = MessageReceiver.mock.instances[1]
+    scheduleReceiveInstance.isConnected.mockReturnValue(true)
+    paymentReceiveInstance.isConnected.mockReturnValue(true)
     expect(messageService.isRunning()).toEqual(true)
   })
 
-  test('isRunning returns false if a consumer is stopped', async () => {
-    await messageService.registerService()
-    const scheduleConsumerInstance = MessageConsumer.mock.instances[0]
-    const paymentConsumerInstance = MessageConsumer.mock.instances[1]
-    // expect service to be running if consumers not stopped
-    scheduleConsumerInstance.stopped = false
-    paymentConsumerInstance.stopped = true
+  test('isRunning returns false if a receive connection is closed', async () => {
+    const messageService = require('../../../server/services/message-service')
+    await messageService.registerReceivers()
+    const scheduleReceiveInstance = MessageReceiver.mock.instances[0]
+    const paymentReceiveInstance = MessageReceiver.mock.instances[1]
+    scheduleReceiveInstance.isConnected.mockReturnValue(false)
+    paymentReceiveInstance.isConnected.mockReturnValue(true)
     expect(messageService.isRunning()).toEqual(false)
   })
 
-  test('close connections calls stop on both consumers', async () => {
-    await messageService.registerService()
-    messageService.closeConnections()
-    const scheduleConsumerInstance = MessageConsumer.mock.instances[0]
-    expect(scheduleConsumerInstance.stop).toHaveBeenCalledTimes(1)
-    const paymentConsumerInstance = MessageConsumer.mock.instances[1]
-    expect(paymentConsumerInstance.stop).toHaveBeenCalledTimes(1)
+  test('close connections calls closeConnection on both receivers', async () => {
+    const messageService = require('../../../server/services/message-service')
+    await messageService.registerReceivers()
+    await messageService.closeConnections()
+    const scheduleReceiveInstance = MessageReceiver.mock.instances[0]
+    expect(scheduleReceiveInstance.closeConnection).toHaveBeenCalledTimes(1)
+    const paymentReceiveInstance = MessageReceiver.mock.instances[1]
+    expect(paymentReceiveInstance.closeConnection).toHaveBeenCalledTimes(1)
   })
 
   afterEach(() => {

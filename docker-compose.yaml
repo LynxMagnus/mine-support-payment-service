@@ -14,16 +14,15 @@ services:
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: ffc-demo-payment-postgres
       POSTGRES_PORT: 5432
-      SCHEDULE_ENDPOINT: http://ffc-demo-payment-message-queue:9324
-      SCHEDULE_QUEUE_NAME: schedule
-      SCHEDULE_QUEUE_URL: http://ffc-demo-payment-message-queue:9324/queue/schedule
-      CREATE_SCHEDULE_QUEUE: "true"
-      PAYMENT_ENDPOINT: http://ffc-demo-payment-message-queue:9324
-      PAYMENT_QUEUE_NAME: payment
-      PAYMENT_QUEUE_URL: http://ffc-demo-payment-message-queue:9324/queue/payment
-      CREATE_PAYMENT_QUEUE: "true"
-      DEV_ACCESS_KEY_ID: elasticmq
-      DEV_ACCESS_KEY: elasticmq
+      MESSAGE_QUEUE_HOST: ffc-demo-payment-message-queue
+      MESSAGE_QUEUE_PORT: 5672
+      MESSAGE_QUEUE_RECONNECT_LIMIT: 10
+      SCHEDULE_QUEUE_ADDRESS: schedule
+      SCHEDULE_QUEUE_USER: artemis
+      SCHEDULE_QUEUE_PASSWORD: artemis
+      PAYMENT_QUEUE_ADDRESS: payment
+      PAYMENT_QUEUE_USER: artemis
+      PAYMENT_QUEUE_PASSWORD: artemis
       OIDC_PROVIDER: dev
       OKTA_DOMAIN: ${OKTA_DOMAIN}
       OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
@@ -48,7 +47,10 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   ffc-demo-payment-message-queue:
-    image: softwaremill/elasticmq
+    image: vromero/activemq-artemis:2.9.0-alpine
+    environment:
+      ARTEMIS_USERNAME: artemis
+      ARTEMIS_PASSWORD: artemis
 
 volumes:
   postgres_data: {}

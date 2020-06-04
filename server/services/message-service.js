@@ -1,43 +1,44 @@
+const MessageReceiver = require('./messaging/message-receiver')
 const scheduleMessageAction = require('./schedule-message-action')
 const paymentMessageAction = require('./payment-message-action')
-const MessageConsumer = require('./messaging/message-consumer')
-const createQueue = require('./messaging/create-queue')
 const config = require('../config')
-let scheduleConsumer
-let paymentConsumer
 
-async function registerService () {
-  if (config.scheduleQueueConfig.createQueue) {
-    await createQueue(config.scheduleQueueConfig.name, config.scheduleQueueConfig)
+class MessageService {
+  async registerReceivers () {
+    this.scheduleMessageReceiver = await this.registerReceiver(
+      {
+        name: 'schedule-queue-receiver',
+        config: config.scheduleQueueConfig,
+        action: scheduleMessageAction
+      }
+    )
+    this.paymentMessageReceiver = await this.registerReceiver(
+      {
+        name: 'payment-queue-receiver',
+        config: config.paymentQueueConfig,
+        action: paymentMessageAction
+      }
+    )
   }
-  if (config.paymentQueueConfig.createQueue) {
-    await createQueue(config.paymentQueueConfig.name, config.paymentQueueConfig)
+
+  async registerReceiver ({ name, config, action }) {
+    const receiver = new MessageReceiver(name, config)
+    await receiver.openConnection()
+    await receiver.setupReceiver(action)
+    return receiver
   }
-  registerScheduleConsumer()
-  registerPaymentConsumer()
+
+  async closeConnections () {
+    await this.scheduleMessageReceiver.closeConnection()
+    await this.paymentMessageReceiver.closeConnection()
+  }
+
+  isRunning () {
+    return this.scheduleMessageReceiver &&
+    this.scheduleMessageReceiver.isConnected() &&
+    this.paymentMessageReceiver &&
+     this.paymentMessageReceiver.isConnected()
+  }
 }
 
-function registerScheduleConsumer () {
-  scheduleConsumer = new MessageConsumer(config.scheduleQueueConfig, config.scheduleQueueConfig.queueUrl, scheduleMessageAction)
-  scheduleConsumer.start()
-}
-
-function registerPaymentConsumer () {
-  paymentConsumer = new MessageConsumer(config.paymentQueueConfig, config.paymentQueueConfig.queueUrl, paymentMessageAction)
-  paymentConsumer.start()
-}
-
-function isRunning () {
-  return !scheduleConsumer.stopped && !paymentConsumer.stopped
-}
-
-function closeConnections () {
-  scheduleConsumer.stop()
-  paymentConsumer.stop()
-}
-
-module.exports = {
-  registerService,
-  closeConnections,
-  isRunning
-}
+module.exports = new MessageService()
