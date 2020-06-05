@@ -1,0 +1,28 @@
+{{- include "ffc-helm-library.container-config-map" (list . "ffc-demo-payment-service.config-map") -}}
+{{- define "ffc-demo-payment-service.config-map" -}}
+data:
+  NODE_ENV: {{ quote .Values.environment }}
+  POSTGRES_USERNAME: {{ quote .Values.postgresService.postgresUsername }}
+  POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
+  POSTGRES_HOST: {{ quote .Values.postgresService.postgresExternalName }}
+  POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
+  SCHEDULE_QUEUE_NAME: {{ quote .Values.container.scheduleQueueName }}
+  SCHEDULE_ENDPOINT: {{ quote .Values.container.scheduleQueueEndpoint }}
+  SCHEDULE_QUEUE_REGIONe: {{ quote .Values.container.scheduleQueueRegion }}
+  CREATE_SCHEDULE_QUEUE: {{ quote .Values.container.scheduleCreateQueue }}
+  PAYMENT_QUEUE_NAME: {{ quote .Values.container.paymentQueueName }}
+  PAYMENT_ENDPOINT: {{ quote .Values.container.paymentQueueEndpoint }}
+  PAYMENT_QUEUE_REGION: {{ quote .Values.container.paymentQueueRegion }}
+  CREATE_PAYMENT_QUEUE: {{ quote .Values.container.paymentCreateQueue }}
+  OIDC_PROVIDER: {{ quote .Values.oidcProvider }}
+  {{- if .Values.okta }}
+  OKTA_DOMAIN: {{ quote .Values.okta.domain }}
+  OKTA_CLIENT_ID: {{ quote .Values.okta.clientId }}
+  OKTA_AUTH_SERVER_ID: {{ quote .Values.okta.authorizationServerId }}
+  {{- end }}
+  {{- if .Values.b2c }}
+  B2C_CLIENT_ID: {{ quote .Values.b2c.clientId }}
+  B2C_URL: {{ quote .Values.b2c.url }}
+  {{- end }}
+  PORT: {{ quote .Values.container.port }}
+{{- end -}}
