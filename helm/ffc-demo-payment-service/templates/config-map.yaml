@@ -3,7 +3,6 @@
 data:
   NODE_ENV: {{ quote .Values.environment }}
   POSTGRES_USERNAME: {{ quote .Values.postgresService.postgresUsername }}
-  POSTGRES_PASSWORD: {{ quote .Values.postgresService.postgresPassword }}
   POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
   POSTGRES_HOST: {{ quote .Values.postgresService.postgresExternalName }}
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
@@ -20,11 +19,10 @@ data:
   OKTA_DOMAIN: {{ quote .Values.okta.domain }}
   OKTA_CLIENT_ID: {{ quote .Values.okta.clientId }}
   OKTA_AUTH_SERVER_ID: {{ quote .Values.okta.authorizationServerId }}
-{{- end }}
-{{- if .Values.b2c }}
+  {{- end }}
+  {{- if .Values.b2c }}
   B2C_CLIENT_ID: {{ quote .Values.b2c.clientId }}
-  B2C_CLIENT_SECRET: {{ quote .Values.b2c.clientSecret }}
   B2C_URL: {{ quote .Values.b2c.url }}
-{{- end }}
+  {{- end }}
   PORT: {{ quote .Values.container.port }}
 {{- end -}}
