@@ -10,10 +10,10 @@ okta: {}
 b2c: {}
 
 containerConfigMap:
-  name: my-config-map
+  name: ffc-demo-payment-service-config-map
 
 containerSecret:
-  name: ffc-demo-web-container-secret
+  name: ffc-demo-payment-service-container-secret
   type: Opaque
 
 serviceAccount:
