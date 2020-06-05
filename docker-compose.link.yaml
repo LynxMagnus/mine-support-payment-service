@@ -8,7 +8,14 @@ services:
     build:
       context: .
       target: development
-    command: sh -c "scripts/wait-for-dependencies && npm run start:watch"
+    command: >
+      sh -c "
+        scripts/wait-for/wait-for ffc-demo-payment-postgres:5432 --
+        scripts/wait-for/wait-for ffc-demo-message-queue:5672 --
+        npm run migrate &&
+        npm run start:watch"
+    environment:
+      MESSAGE_QUEUE_HOST : ffc-demo-message-queue
     networks:
       - default
       - ffc-demo

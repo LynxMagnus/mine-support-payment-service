@@ -17,35 +17,33 @@ Or:
 Or:
 - Node 10
 - PostgreSQL database
-- SQS compatible message queue
+- AMQP 1.0 compatible message queue
 
 ## Environment variables
 
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
-| Name                  | Description                               | Required | Default     | Valid                       | Notes                             |
-|-----------------------|-------------------------------------------|:--------:|-------------|-----------------------------|-----------------------------------|
-| NODE_ENV              | Node environment                          | no       | development | development,test,production |                                   |
-| PORT                  | Port number                               | no       | 3004        |                             |                                   |
-| SCHEDULE_QUEUE_NAME   | Message queue name                        | yes      |             |                             |                                   |
-| SCHEDULE_ENDPOINT     | Message base url                          | yes      |             |                             |                                   |
-| SCHEDULE_QUEUE_URL    | Message queue url                         | no       |             |                             |                                   |
-| SCHEDULE_QUEUE_REGION | AWS region                                | no       | eu-west-2   |                             | Ignored in local dev              |
-| DEV_ACCESS_KEY_ID     | Local dev only access key Id              | no       |             |                             |                                   |
-| DEV_ACCESS_KEY        | Local dev only access key                 | no       |             |                             |                                   |
-| CREATE_SCHEDULE_QUEUE | Create queue before connection            | no       | false       |                             | For local development set to true |
-| OIDC_PROVIDER         | set the OIDC provider to use              | no       |  dev        |  dev, okta, b2c                  |                                   |
-| OKTA_DOMAIN           | Okta domain, i.e. `mysite.okta.com`       | no       |             |                             |                                   |
-| OKTA_CLIENT_ID        | Client ID of Okta OpenID Connect app      | no       |             |                             |                                   |
-| OKTA_AUTH_SERVER_ID   | ID of Okta custom authorisation server    | no       |             |                             |                                   |
-| B2C_CLIENT_ID         | Client ID of B2C OpenID Connect app       | no       |             |                             |                                   |
-| B2C_CLIENT_SECRET     | Client Secret of B2C OpenID Connect app   | no       |             |                             |                                   |
-| B2C_URL               | OAuth URL of B2C OpenID Connect app       | no       |             |                             |                                   |
-| PAYMENT_QUEUE_NAME    | Message queue name                        | yes      |             |                             |                                   |
-| PAYMENT_ENDPOINT      | Message base url                          | yes      |             |                             |                                   |
-| PAYMENT_QUEUE_URL     | Message queue url                         | no       |             |                             |                                   |
-| PAYMENT_QUEUE_REGION  | AWS region                                | no       | eu-west-2   |                             | Ignored in local dev              |
-| CREATE_PAYMENT_QUEUE  | Create queue before connection            | no       | false       |                             | For local development set to true |
+| Name                          | Description                               | Required | Default     | Valid                       | Notes                             |
+|-------------------------------|-------------------------------------------|:--------:|-------------|-----------------------------|-----------------------------------|
+| NODE_ENV                      | Node environment                          | no       | development | development,test,production |                                   |
+| PORT                          | Port number                               | no       | 3004        |                             |                                   |
+| MESSAGE_QUEUE_HOST            | Host address of message queue             | no       | localhost   |                             |                                   |
+| MESSAGE_QUEUE_PORT            | Message queue port                        | no       | 5672        |                             |                                   |
+| MESSAGE_QUEUE_RECONNECT_LIMIT | Reconnection limit for message queues     | no       | 10          |                             |                                   |
+| MESSAGE_QUEUE_TRANSPORT       | Message queue transport                   | no       | tcp         |                             |                                   |
+| SCHEDULE_QUEUE_ADDRESS        | 'Schedule' message queue name             | no       | schedule    |                             |                                   |
+| SCHEDULE_QUEUE_USER           | 'Schedule' message queue username         | yes      |             |                             |                                   |
+| SCHEDULE_QUEUE_PASSWORD       | 'Schedule' message queue password         | yes      |             |                             |                                   |
+| PAYMENT_QUEUE_ADDRESS         | 'Payment' message queue name              | no       | payment     |                             |                                   |
+| PAYMENT_QUEUE_USER            | 'Payment' message queue username          | yes      |             |                             |                                   |
+| PAYMENT_QUEUE_PASSWORD        | 'Payment' message queue password          | yes      |             |                             |                                   |
+| OIDC_PROVIDER                 | set the OIDC provider to use              | no       |  dev        |  dev, okta, b2c             |                                   |
+| OKTA_DOMAIN                   | Okta domain, i.e. `mysite.okta.com`       | no       |             |                             |                                   |
+| OKTA_CLIENT_ID                | Client ID of Okta OpenID Connect app      | no       |             |                             |                                   |
+| OKTA_AUTH_SERVER_ID           | ID of Okta custom authorisation server    | no       |             |                             |                                   |
+| B2C_CLIENT_ID                 | Client ID of B2C OpenID Connect app       | no       |             |                             |                                   |
+| B2C_CLIENT_SECRET             | Client Secret of B2C OpenID Connect app   | no       |             |                             |                                   |
+| B2C_URL                       | OAuth URL of B2C OpenID Connect app       | no       |             |                             |                                   |
 
 ## Building the project locally
 
@@ -119,47 +117,33 @@ Use Docker Compose to run service locally.
 
 Additional Docker Compose files are provided for scenarios such as linking to other running services.
 
-Link to other services and expose inspection SQS and Postgres ports:
+Link to other services and expose inspection Artemis and Postgres ports:
 * `docker network create ffc-demo`
 * `docker-compose -f docker-compose.yaml -f docker-compose.link.yaml -f docker-compose.override.yaml up`
 
+
 ### Test the service
 
-**Message Queues**
+This service reacts to messages retrieved from an AMQP 1.0 message broker.
 
-This service reacts to messages retrieved from two AWS SQS message queues (one for schedules and one for payments).
+`docker-compose up` runs [ActiveMQ Artemis](https://activemq.apache.org/components/artemis) alongside the application to provide the required message bus and broker.
 
-Test messages can be sent using REST by employing tools such as `curl` or `postman`
+Test messages can be sent via the Artemis console UI hosted at http://localhost:8161/console/login (username: artemis, password: artemis). Messages should match the format of the sample JSON below.
+
+Sample valid JSON for each message queue is:
 
 ```
-# Sample schedule queue message
-{
-  "claimId": "MINE123"
-}
-# Adding an item to the schedule queue
-curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123"}' "http://localhost:9324/queue/schedule"
-
 # Sample payment queue message
 {
   "claimId": "MINE123",
   "value": 190.96
 }
-# Adding an item to the payment queue
-curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'Action=SendMessage&MessageBody={"claimId":"MINE123","value":190.96}' "http://localhost:9324/queue/payment"
 
-# Test the API
-
-After running the above two commands to insert data then the API can be queried using the following :
-
-curl "http://localhost:3004/payment"
-curl "http://localhost:3004/schedule"
-curl "http://localhost:3004/payment/MINE123"
-curl "http://localhost:3004/schedule/MINE123"
-
+# Sample schedule queue message
+{
+  "claimId": "MINE123"
+}
 ```
-
-See [here](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-making-api-requests.html) for background on AWS SQS Query API Requests
-
 **Database**
 
 The insertion of records into the postgres db can be checked using psql. For example
