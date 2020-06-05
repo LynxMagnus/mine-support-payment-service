@@ -35,9 +35,9 @@ class MessageService {
 
   isRunning () {
     return this.scheduleMessageReceiver &&
-    this.scheduleMessageReceiver.isConnected() &&
-    this.paymentMessageReceiver &&
-     this.paymentMessageReceiver.isConnected()
+           this.scheduleMessageReceiver.isConnected() &&
+           this.paymentMessageReceiver &&
+           this.paymentMessageReceiver.isConnected()
   }
 }
 

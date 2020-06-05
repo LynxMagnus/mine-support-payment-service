@@ -1,6 +1,6 @@
 const Joi = require('@hapi/joi')
-const dbConfig = require('./db-config')
 const mqConfig = require('./mq-config')
+const dbConfig = require('./db-config')
 
 const getOktaConfig = require('./get-okta-config')
 const getB2cConfig = require('./get-b2c-config')
@@ -35,8 +35,10 @@ const value = result.value
 // Add some helper props
 value.isDev = value.env === 'development'
 value.isProd = value.env === 'production'
+
 value.scheduleQueueConfig = mqConfig.scheduleQueueConfig
 value.paymentQueueConfig = mqConfig.paymentQueueConfig
+
 value.dbConfig = dbConfig
 if (value.oidcProvider === 'okta') {
   value.okta = getOktaConfig()
