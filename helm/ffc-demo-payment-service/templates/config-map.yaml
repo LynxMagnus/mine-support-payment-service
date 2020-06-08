@@ -6,14 +6,16 @@ data:
   POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
   POSTGRES_HOST: {{ quote .Values.postgresService.postgresExternalName }}
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
-  SCHEDULE_QUEUE_NAME: {{ quote .Values.container.scheduleQueueName }}
-  SCHEDULE_ENDPOINT: {{ quote .Values.container.scheduleQueueEndpoint }}
-  SCHEDULE_QUEUE_REGIONe: {{ quote .Values.container.scheduleQueueRegion }}
-  CREATE_SCHEDULE_QUEUE: {{ quote .Values.container.scheduleCreateQueue }}
-  PAYMENT_QUEUE_NAME: {{ quote .Values.container.paymentQueueName }}
-  PAYMENT_ENDPOINT: {{ quote .Values.container.paymentQueueEndpoint }}
-  PAYMENT_QUEUE_REGION: {{ quote .Values.container.paymentQueueRegion }}
-  CREATE_PAYMENT_QUEUE: {{ quote .Values.container.paymentCreateQueue }}
+  MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
+  MESSAGE_QUEUE_RECONNECT_LIMIT: {{ quote .Values.container.messageQueueReconnectLimit }}
+  MESSAGE_QUEUE_PORT: {{ quote .Values.container.messageQueuePort }}
+  MESSAGE_QUEUE_TRANSPORT: {{ quote .Values.container.messageQueueTransport }}
+  SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
+  SCHEDULE_QUEUE_USER: {{ quote .Values.container.scheduleQueueUser }}
+  SCHEDULE_QUEUE_PASSWORD: {{ quote .Values.container.scheduleQueuePassword }}
+  PAYMENT_QUEUE_ADDRESS: {{ quote .Values.container.paymentQueueAddress }}
+  PAYMENT_QUEUE_USER: {{ quote .Values.container.paymentQueueUser }}
+  PAYMENT_QUEUE_PASSWORD: {{ quote .Values.container.paymentQueuePassword }}
   OIDC_PROVIDER: {{ quote .Values.oidcProvider }}
   {{- if .Values.okta }}
   OKTA_DOMAIN: {{ quote .Values.okta.domain }}
@@ -26,3 +28,4 @@ data:
   {{- end }}
   PORT: {{ quote .Values.container.port }}
 {{- end -}}
+ 

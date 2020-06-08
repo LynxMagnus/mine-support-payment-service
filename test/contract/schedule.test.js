@@ -1,4 +1,4 @@
-describe('Schedule SQS contract test', () => {
+describe('Schedule AMQP contract test', () => {
   const path = require('path')
   const { MessageConsumerPact } = require('@pact-foundation/pact')
   const Matchers = require('@pact-foundation/pact/dsl/matchers')
