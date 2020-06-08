@@ -1,9 +1,8 @@
-describe('Schedule SQS contract test', () => {
+describe('Schedule AMQP contract test', () => {
   const path = require('path')
   const { MessageConsumerPact } = require('@pact-foundation/pact')
   const Matchers = require('@pact-foundation/pact/dsl/matchers')
   const scheduleMessageAction = require('../../server/services/schedule-message-action')
-  const sqsMessageHandler = require('./sqsMessageHandler')
   const dbHelper = require('../db-helper')
   let messagePact
 
@@ -32,6 +31,6 @@ describe('Schedule SQS contract test', () => {
       .withMetadata({
         'content-type': 'application/json'
       })
-      .verify(sqsMessageHandler(scheduleMessageAction))
+      .verify(message => scheduleMessageAction(message.contents))
   })
 })

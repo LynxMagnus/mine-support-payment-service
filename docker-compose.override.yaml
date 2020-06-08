@@ -9,7 +9,7 @@ services:
       context: .
       target: development
     image: ffc-demo-payment-service
-    command:  sh -c "scripts/wait-for-dependencies && npm run start:watch"
+    command: sh -c "scripts/wait-for-dependencies && npm run start:watch"
     ports:
       - "3004:3004"
     depends_on:
@@ -17,7 +17,8 @@ services:
 
   ffc-demo-payment-message-queue:
     ports:
-      - "9324:9324"
+      - "8161:8161"
+      - "5672:5672"
 
   ffc-demo-payment-postgres:
     ports:

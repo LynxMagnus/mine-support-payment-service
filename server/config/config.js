@@ -1,6 +1,7 @@
 const Joi = require('@hapi/joi')
 const mqConfig = require('./mq-config')
 const dbConfig = require('./db-config')
+
 const getOktaConfig = require('./get-okta-config')
 const getB2cConfig = require('./get-b2c-config')
 

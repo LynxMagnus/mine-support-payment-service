@@ -38,14 +38,16 @@ container:
   limitCpu: 80m
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
-  scheduleQueueName: schedule
-  scheduleQueueEndpoint: http://ffc-demo-payment-message-queue:9324
-  scheduleQueueRegion: eu-west-2
-  scheduleCreateQueue: false
-  paymentQueueName: payment
-  paymentQueueEndpoint: http://ffc-demo-payment-message-queue:9324
-  paymentQueueRegion: eu-west-2
-  paymentCreateQueue: false
+  messageQueueHost: amq
+  messageQueuePort: "5672"
+  messageQueueReconnectLimit: 10
+  messageQueueTransport: tcp
+  scheduleQueueAddress: schedule
+  scheduleQueueUser: artemis
+  scheduleQueuePassword: artemis
+  paymentQueueAddress: payment
+  paymentQueueUser: artemis
+  paymentQueuePassword: artemis
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate; node index"]
 
