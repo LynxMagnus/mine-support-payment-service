@@ -9,7 +9,7 @@ describe('schedule handler', () => {
     // arrange
     const h = new MockHapiH()
     const noClaimResult = []
-    scheduleService.getById = jest.fn().mockReturnValueOnce(noClaimResult)
+    scheduleService.getById.mockReturnValueOnce(noClaimResult)
     // act
     const request = { params: { id: 'noSuchClaim' } }
     await scheduleHandler.getClaim(request, h)
@@ -28,7 +28,7 @@ describe('schedule handler', () => {
         paymentAmount: '190.96'
       }
     ]
-    scheduleService.getById = jest.fn().mockReturnValueOnce(validClaimResult)
+    scheduleService.getById.mockReturnValueOnce(validClaimResult)
     // act
     const request = { params: { id: 'claim001' } }
     await scheduleHandler.getClaim(request, h)
@@ -52,7 +52,7 @@ describe('schedule handler', () => {
         paymentAmount: '190.96'
       }
     ]
-    scheduleService.getAll = jest.fn().mockReturnValueOnce(validClaimResult)
+    scheduleService.getAll.mockReturnValueOnce(validClaimResult)
     // act
     const request = { }
     await scheduleHandler.getClaims(request, h)

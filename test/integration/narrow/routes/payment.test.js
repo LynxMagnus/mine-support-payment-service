@@ -39,7 +39,7 @@ describe('Payment test', () => {
         }
       ]
     }
-    paymentService.getAll = jest.fn(() => expectedPayload)
+    paymentService.getAll.mockReturnValue(expectedPayload)
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)

@@ -20,7 +20,7 @@ describe('payment handler', () => {
       ]
     }
 
-    paymentService.getById = jest.fn().mockReturnValue(validPaymentResult)
+    paymentService.getById.mockReturnValue(validPaymentResult)
     // act
     const request = { params: { id: 'claim001' } }
     await paymentHandler.getPayment(request, h)
@@ -49,7 +49,7 @@ describe('payment handler', () => {
         schedule: []
       }]
 
-    paymentService.getAll = jest.fn().mockReturnValue(validPaymentResults)
+    paymentService.getAll.mockReturnValue(validPaymentResults)
     // act
     const request = {}
     await paymentHandler.getPayments(request, h)
