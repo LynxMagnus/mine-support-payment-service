@@ -4,23 +4,19 @@ const config = require('../../../../server/config')
 
 const consoleErrorOrig = console.consoleError
 
-let mockConsoleError
 let messageBase
 
 describe('message base', () => {
   beforeAll(() => {
-    mockConsoleError = jest.fn()
-    console.error = mockConsoleError
+    console.error = jest.fn()
   })
+
   afterAll(() => {
     console.error = consoleErrorOrig
   })
-  beforeEach(() => {
-    mockConsoleError.mockClear()
-  })
+
   afterEach(async () => {
     await messageBase.closeConnection()
-    messageBase = undefined
   })
 
   test('open connection error is logged with name then rethrown', async () => {
@@ -34,10 +30,8 @@ describe('message base', () => {
       ex = err
     }
     expect(ex.message).toContain('Failed to authenticate')
+    expect(console.error).toHaveBeenCalledTimes(1)
 
-    expect(mockConsoleError.mock.calls.length).toEqual(1)
-    const call1 = mockConsoleError.mock.calls[0]
-    expect(call1[0]).toEqual(`error opening ${name} connection`)
-    expect(call1[1]).toEqual(ex)
+    expect(console.error).toHaveBeenCalledWith(`error opening ${name} connection`, ex)
   })
 })

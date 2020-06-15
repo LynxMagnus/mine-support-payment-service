@@ -1,17 +1,11 @@
+let server
+
+jest.mock('../../../../server/services/database-service')
+const databaseService = require('../../../../server/services/database-service')
+jest.mock('../../../../server/services/message-service')
+
+const createServer = require('../../../../server')
 describe('Healthy test', () => {
-  let createServer
-  let server
-  let databaseService
-  let messageService
-
-  beforeAll(async () => {
-    jest.mock('../../../../server/services/database-service')
-    databaseService = require('../../../../server/services/database-service')
-    jest.mock('../../../../server/services/message-service')
-    messageService = require('../../../../server/services/message-service')
-    createServer = require('../../../../server')
-  })
-
   beforeEach(async () => {
     server = await createServer()
     await server.initialize()
@@ -23,8 +17,7 @@ describe('Healthy test', () => {
       url: '/healthy'
     }
 
-    databaseService.isConnected = jest.fn(() => true)
-    messageService.isRunning = jest.fn(() => true)
+    databaseService.isConnected.mockReturnValue(true)
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
@@ -36,40 +29,33 @@ describe('Healthy test', () => {
       url: '/healthy'
     }
 
-    databaseService.isConnected = jest.fn(() => false)
-    messageService.isRunning = jest.fn(() => true)
+    databaseService.isConnected.mockReturnValue(false)
 
     const response = await server.inject(options)
-    expect(response.statusCode).toBe(500)
+    expect(response.statusCode).toBe(503)
   })
 
-  test('GET /healthy route returns error if message queue unavailable', async () => {
+  test('GET /healthy returns 503 and error message if database check throws an error', async () => {
     const options = {
       method: 'GET',
       url: '/healthy'
     }
 
-    databaseService.isConnected = jest.fn(() => true)
-    messageService.isRunning = jest.fn(() => false)
+    const errorMessage = 'database connection timeout'
+    databaseService.isConnected.mockImplementation(() => { throw new Error(errorMessage) })
 
     const response = await server.inject(options)
-    expect(response.statusCode).toBe(500)
-  })
 
-  test('GET /healthy route returns error if message queue and database unavailable', async () => {
-    const options = {
-      method: 'GET',
-      url: '/healthy'
-    }
-
-    databaseService.isConnected = jest.fn(() => false)
-    messageService.isRunning = jest.fn(() => false)
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(500)
+    expect(response.statusCode).toBe(503)
+    expect(response.payload).toBe(`error running healthy check: ${errorMessage}`)
   })
 
   afterEach(async () => {
     await server.stop()
+    jest.clearAllMocks()
+  })
+
+  afterAll(async () => {
+    jest.resetAllMocks()
   })
 })
