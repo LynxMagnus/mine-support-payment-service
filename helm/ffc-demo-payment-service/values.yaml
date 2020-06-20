@@ -16,9 +16,6 @@ containerSecret:
   name: ffc-demo-payment-service-container-secret
   type: Opaque
 
-serviceAccount:
-  name: ffc-demo-payment-service-account
-
 deployment:
   restartPolicy: Always
   priorityClassName: low
@@ -52,8 +49,8 @@ container:
   args: ["npm --no-update-notifier run migrate; node index"]
 
 postgresService:
-  postgresUsername: postgres@mine-support2
-  postgresPassword: changeme
+  paymentUsername: postgres
+  paymentPassword: changeme
   postgresDatabase: mine_payments
   postgresHost: ffc-demo-payments-postgres
   postgresPort: 5432
