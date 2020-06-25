@@ -19,3 +19,4 @@ okta.authorizationServerId
 b2c.clientId
 b2c.clientSecret
 b2c.url
+appInsights.key

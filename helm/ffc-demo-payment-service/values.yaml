@@ -9,6 +9,10 @@ oidcProvider: dev
 okta: {}
 b2c: {}
 
+appInsights:
+  key:
+  role: ffc-demo-payment-service
+
 containerConfigMap:
   name: ffc-demo-payment-service-config-map
 
