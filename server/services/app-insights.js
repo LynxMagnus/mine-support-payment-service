@@ -4,7 +4,6 @@ function setup () {
   if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
     appInsights
       .setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY)
-      .setAutoCollectConsole(true, true)
       .start()
 
     const cloudRoleTag = appInsights.defaultClient.context.keys.cloudRole
