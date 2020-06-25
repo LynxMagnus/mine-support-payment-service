@@ -1,6 +1,6 @@
 {
   "name": "ffc-demo-payment-service",
-  "version": "3.3.1",
+  "version": "3.4.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,7 @@
     "@hapi/hapi": "^19.1.1",
     "@hapi/joi": "^17.1.1",
     "@okta/jwt-verifier": "^1.0.0",
+    "applicationinsights": "^1.8.0",
     "aws-sdk": "^2.699.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.12.1",

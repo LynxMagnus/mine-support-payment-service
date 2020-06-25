@@ -23,27 +23,29 @@ Or:
 
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
-| Name                          | Description                               | Required | Default     | Valid                       | Notes                             |
-|-------------------------------|-------------------------------------------|:--------:|-------------|-----------------------------|-----------------------------------|
-| NODE_ENV                      | Node environment                          | no       | development | development,test,production |                                   |
-| PORT                          | Port number                               | no       | 3004        |                             |                                   |
-| MESSAGE_QUEUE_HOST            | Host address of message queue             | no       | localhost   |                             |                                   |
-| MESSAGE_QUEUE_PORT            | Message queue port                        | no       | 5672        |                             |                                   |
-| MESSAGE_QUEUE_RECONNECT_LIMIT | Reconnection limit for message queues     | no       | 10          |                             |                                   |
-| MESSAGE_QUEUE_TRANSPORT       | Message queue transport                   | no       | tcp         |                             |                                   |
-| SCHEDULE_QUEUE_ADDRESS        | 'Schedule' message queue name             | no       | schedule    |                             |                                   |
-| SCHEDULE_QUEUE_USER           | 'Schedule' message queue username         | yes      |             |                             |                                   |
-| SCHEDULE_QUEUE_PASSWORD       | 'Schedule' message queue password         | yes      |             |                             |                                   |
-| PAYMENT_QUEUE_ADDRESS         | 'Payment' message queue name              | no       | payment     |                             |                                   |
-| PAYMENT_QUEUE_USER            | 'Payment' message queue username          | yes      |             |                             |                                   |
-| PAYMENT_QUEUE_PASSWORD        | 'Payment' message queue password          | yes      |             |                             |                                   |
-| OIDC_PROVIDER                 | set the OIDC provider to use              | no       |  dev        |  dev, okta, b2c             |                                   |
-| OKTA_DOMAIN                   | Okta domain, i.e. `mysite.okta.com`       | no       |             |                             |                                   |
-| OKTA_CLIENT_ID                | Client ID of Okta OpenID Connect app      | no       |             |                             |                                   |
-| OKTA_AUTH_SERVER_ID           | ID of Okta custom authorisation server    | no       |             |                             |                                   |
-| B2C_CLIENT_ID                 | Client ID of B2C OpenID Connect app       | no       |             |                             |                                   |
-| B2C_CLIENT_SECRET             | Client Secret of B2C OpenID Connect app   | no       |             |                             |                                   |
-| B2C_URL                       | OAuth URL of B2C OpenID Connect app       | no       |             |                             |                                   |
+| Name                           | Description                               | Required | Default     | Valid                       | Notes                                                                             |
+|--------------------------------|-------------------------------------------|:--------:|-------------|-----------------------------|-----------------------------------------------------------------------------------|
+| NODE_ENV                       | Node environment                          | no       | development | development,test,production |                                                                                   |
+| PORT                           | Port number                               | no       | 3004        |                             |                                                                                   |
+| MESSAGE_QUEUE_HOST             | Host address of message queue             | no       | localhost   |                             |                                                                                   |
+| MESSAGE_QUEUE_PORT             | Message queue port                        | no       | 5672        |                             |                                                                                   |
+| MESSAGE_QUEUE_RECONNECT_LIMIT  | Reconnection limit for message queues     | no       | 10          |                             |                                                                                   |
+| MESSAGE_QUEUE_TRANSPORT        | Message queue transport                   | no       | tcp         |                             |                                                                                   |
+| SCHEDULE_QUEUE_ADDRESS         | 'Schedule' message queue name             | no       | schedule    |                             |                                                                                   |
+| SCHEDULE_QUEUE_USER            | 'Schedule' message queue username         | yes      |             |                             |                                                                                   |
+| SCHEDULE_QUEUE_PASSWORD        | 'Schedule' message queue password         | yes      |             |                             |                                                                                   |
+| PAYMENT_QUEUE_ADDRESS          | 'Payment' message queue name              | no       | payment     |                             |                                                                                   |
+| PAYMENT_QUEUE_USER             | 'Payment' message queue username          | yes      |             |                             |                                                                                   |
+| PAYMENT_QUEUE_PASSWORD         | 'Payment' message queue password          | yes      |             |                             |                                                                                   |
+| OIDC_PROVIDER                  | set the OIDC provider to use              | no       |  dev        |  dev, okta, b2c             |                                                                                   |
+| OKTA_DOMAIN                    | Okta domain, i.e. `mysite.okta.com`       | no       |             |                             |                                                                                   |
+| OKTA_CLIENT_ID                 | Client ID of Okta OpenID Connect app      | no       |             |                             |                                                                                   |
+| OKTA_AUTH_SERVER_ID            | ID of Okta custom authorisation server    | no       |             |                             |                                                                                   |
+| B2C_CLIENT_ID                  | Client ID of B2C OpenID Connect app       | no       |             |                             |                                                                                   |
+| B2C_CLIENT_SECRET              | Client Secret of B2C OpenID Connect app   | no       |             |                             |                                                                                   |
+| B2C_URL                        | OAuth URL of B2C OpenID Connect app       | no       |             |                             |                                                                                   |
+| APPINSIGHTS_INSTRUMENTATIONKEY | Key for application insight               | no       |             |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
+| APPINSIGHTS_CLOUDROLE          | Role used for filtering metrics           | no       |             |                             | Set to `payment-service-local` in docker compose files                            |
 
 ## Building the project locally
 
