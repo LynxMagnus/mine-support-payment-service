@@ -9,8 +9,8 @@ services:
       - ffc-demo-payment-postgres
       - ffc-demo-payment-message-queue  
     environment:
+      APPINSIGHTS_CLOUDROLE: payment-service-local
       APPINSIGHTS_INSTRUMENTATIONKEY:
-      APPINSIGHTS_CLOUD_ROLE: payment-service-local
       POSTGRES_DB: ffc_demo_payments
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
