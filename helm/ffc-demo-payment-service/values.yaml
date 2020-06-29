@@ -53,8 +53,8 @@ container:
   args: ["npm --no-update-notifier run migrate; node index"]
 
 postgresService:
-  paymentUsername: postgres
-  paymentPassword: changeme
+  postgresUsername: postgres
+  postgresPassword: changeme
   postgresDatabase: mine_payments
   postgresHost: ffc-demo-payments-postgres
   postgresPort: 5432
