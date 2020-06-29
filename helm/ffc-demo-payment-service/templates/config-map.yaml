@@ -15,10 +15,10 @@ data:
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.appInsights.role }}
   APPINSIGHTS_INSTRUMENTATIONKEY: {{ quote .Values.appInsights.key }}
   PORT: {{ quote .Values.container.port }}
-  {{- if .Values.okta }}
+  {{- if .Values.okta.domain }}
   OKTA_DOMAIN: {{ quote .Values.okta.domain }}
   {{- end }}
-  {{- if .Values.b2c }}
+  {{- if .Values.b2c.url }}
   B2C_URL: {{ quote .Values.b2c.url }}
   {{- end }}
 {{- end -}}
