@@ -53,6 +53,7 @@ container:
   args: ["npm --no-update-notifier run migrate; node index"]
 
 postgresService:
+  postgresExternalName:
   postgresUsername: postgres
   postgresPassword: changeme
   postgresDatabase: mine_payments
