@@ -45,7 +45,6 @@ The following environment variables are required by the application container. V
 | B2C_CLIENT_SECRET              | Client Secret of B2C OpenID Connect app   | no       |             |                             |                                                                                   |
 | B2C_URL                        | OAuth URL of B2C OpenID Connect app       | no       |             |                             |                                                                                   |
 | APPINSIGHTS_INSTRUMENTATIONKEY | Key for application insight               | no       |             |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
-| APPINSIGHTS_CLOUDROLE          | Role used for filtering metrics           | no       |             |                             | Set to `payment-service-local` in docker compose files                            |
 
 ## Building the project locally
 

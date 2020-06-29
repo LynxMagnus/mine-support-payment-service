@@ -13,7 +13,7 @@ data:
   PAYMENT_QUEUE_ADDRESS: {{ quote .Values.container.paymentQueueAddress }}
   OIDC_PROVIDER: {{ quote .Values.oidcProvider }}
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.appInsights.role }}
-  APPINSIGHTS_INSTRUMENTATIONKEY: {{ quote .Values.appInsights.key }}
+  APPINSIGHTS_INSTRUMENTATIONKEY: {{ quote .Values.name }}
   PORT: {{ quote .Values.container.port }}
   {{- if .Values.okta }}
   OKTA_DOMAIN: {{ quote .Values.okta.domain }}
