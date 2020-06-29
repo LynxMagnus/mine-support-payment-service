@@ -6,8 +6,15 @@ image: ffc-demo-payment-service
 
 labels: {}
 oidcProvider: dev
-okta: {}
-b2c: {}
+okta:
+  domain:
+  clientId: dummy
+  authorizationServerId: dummy
+  clientSecret: dummy
+b2c:
+  url:
+  clientId: dummy
+  clientSecret: dummy
 
 appInsights:
   key:
