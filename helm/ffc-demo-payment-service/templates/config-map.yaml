@@ -3,7 +3,7 @@
 data:
   NODE_ENV: {{ quote .Values.environment }}
   POSTGRES_DB: {{ quote .Values.postgresService.postgresDatabase }}
-  POSTGRES_HOST: {{ quote .Values.postgresService.postgresExternalName }}
+  POSTGRES_HOST: {{ quote .Values.postgresService.postgresHost }}
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
   MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
   MESSAGE_QUEUE_RECONNECT_LIMIT: {{ quote .Values.container.messageQueueReconnectLimit }}
@@ -12,8 +12,7 @@ data:
   SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
   PAYMENT_QUEUE_ADDRESS: {{ quote .Values.container.paymentQueueAddress }}
   OIDC_PROVIDER: {{ quote .Values.oidcProvider }}
-  APPINSIGHTS_CLOUDROLE: {{ quote .Values.appInsights.role }}
-  APPINSIGHTS_INSTRUMENTATIONKEY: {{ quote .Values.appInsights.key }}
+  APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
   PORT: {{ quote .Values.container.port }}
   {{- if .Values.okta }}
   OKTA_DOMAIN: {{ quote .Values.okta.domain }}
