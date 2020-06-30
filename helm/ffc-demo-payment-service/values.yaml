@@ -18,7 +18,6 @@ b2c:
 
 appInsights:
   key:
-  role: ffc-demo-payment-service
 
 containerConfigMap:
   name: ffc-demo-payment-service-config-map
@@ -65,6 +64,10 @@ postgresService:
   postgresPassword: changeme
   postgresDatabase: mine_payments
   postgresHost: ffc-demo-payments-postgres
+  # postgresExternalName is the external host name to which PostgreSQL
+  # requests should be forwarded. If empty, PostgreSQL is assumed to be
+  # within the cluster and accessible via postgresHost
+  postgresExternalName:
   postgresPort: 5432
 
 readinessProbe:
