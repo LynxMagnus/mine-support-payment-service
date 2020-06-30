@@ -6,8 +6,15 @@ image: ffc-demo-payment-service
 
 labels: {}
 oidcProvider: dev
-okta: {}
-b2c: {}
+okta:
+  domain:
+  clientId: dummy
+  authorizationServerId: dummy
+  clientSecret: dummy
+b2c:
+  url:
+  clientId: dummy
+  clientSecret: dummy
 
 appInsights:
   key:
@@ -52,8 +59,9 @@ container:
   args: ["npm --no-update-notifier run migrate; node index"]
 
 postgresService:
-  paymentUsername: postgres
-  paymentPassword: changeme
+  postgresExternalName:
+  postgresUsername: postgres
+  postgresPassword: changeme
   postgresDatabase: mine_payments
   postgresHost: ffc-demo-payments-postgres
   # postgresExternalName is the external host name to which PostgreSQL
