@@ -4,5 +4,5 @@
 
   node {
     checkout scm
-    sh " git remote show"
+    sh " git remote show origin"
   }
