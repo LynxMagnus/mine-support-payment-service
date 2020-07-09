@@ -3,6 +3,6 @@
 // buildNodeJs environment: 'dev'
 
   node {
-    sh "env"
     checkout scm
+    sh "env"
   }
