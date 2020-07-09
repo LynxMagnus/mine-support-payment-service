@@ -4,5 +4,5 @@
 
   node {
     checkout scm
-    sh "env"
+    sh " git remote show"
   }
