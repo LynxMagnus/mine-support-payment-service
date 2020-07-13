@@ -5,7 +5,6 @@ function getPaymentDates (startDate) {
 }
 
 function getDate (dateIn, index) {
-  
   const date = new Date(dateIn)
   date.setDate(1)
   date.setMonth(date.getMonth() + 1 + index)
