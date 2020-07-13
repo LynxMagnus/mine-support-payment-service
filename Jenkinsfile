@@ -1,3 +1,3 @@
-@Library('defra-library@psd-867-webhook') _
+@Library('defra-library@v-8') _
 
 buildNodeJs environment: 'dev'
