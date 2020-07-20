@@ -6,6 +6,8 @@ Digital service mock to claim public money in the event property subsides into m
 
 ## Prerequisites
 
+- Azure Service Bus instance
+
 Either:
 - Docker
 - Docker Compose
@@ -14,10 +16,15 @@ Or:
 - Kubernetes
 - Helm
 
-Or:
-- Node 10
-- PostgreSQL database
-- AMQP 1.0 compatible message queue
+### Azure Service Bus
+This service depends on a valid Azure Service Bus connection string for asynchronous communication.  The following environment variables need to be set in any environment before the Docker container is started.
+
+| Name                             | Description                                                                                |
+|----------------------------------|--------------------------------------------------------------------------------------------|
+| MESSAGE_QUEUE_HOST               | Azure Service Bus hostname, eg `myservicebus.servicebus.windows.net`                       |
+| MESSAGE_QUEUE_USER               | Azure Service Bus SAS policy name, eg `RootManageSharedAccessKey`                          |
+| MESSAGE_QUEUE_PASSWORD           | Azure Service Bus SAS policy key                                                           |
+| MESSAGE_QUEUE_SUFFIX             | Developer specific queue suffix to prevent collisions, only required for local development |
 
 ## Environment variables
 
@@ -26,11 +33,7 @@ The following environment variables are required by the application container. V
 | Name                           | Description                               | Required | Default     | Valid                       | Notes                                                                             |
 |--------------------------------|-------------------------------------------|:--------:|-------------|-----------------------------|-----------------------------------------------------------------------------------|
 | NODE_ENV                       | Node environment                          | no       | development | development,test,production |                                                                                   |
-| PORT                           | Port number                               | no       | 3004        |                             |                                                                                   |
-| MESSAGE_QUEUE_HOST             | Host address of message queue             | no       | localhost   |                             |                                                                                   |
-| MESSAGE_QUEUE_PORT             | Message queue port                        | no       | 5672        |                             |                                                                                   |
-| MESSAGE_QUEUE_RECONNECT_LIMIT  | Reconnection limit for message queues     | no       | 10          |                             |                                                                                   |
-| MESSAGE_QUEUE_TRANSPORT        | Message queue transport                   | no       | tcp         |                             |                                                                                   |
+| PORT                           | Port number                               | no       | 3004        |                             |                                                                                   |                        |                                                                                   |
 | SCHEDULE_QUEUE_ADDRESS         | 'Schedule' message queue name             | no       | schedule    |                             |                                                                                   |
 | SCHEDULE_QUEUE_USER            | 'Schedule' message queue username         | yes      |             |                             |                                                                                   |
 | SCHEDULE_QUEUE_PASSWORD        | 'Schedule' message queue password         | yes      |             |                             |                                                                                   |
@@ -73,11 +76,11 @@ scripts/test --build
 
 This runs tests via a `docker-compose run` command. If tests complete successfully, all containers, networks and volumes are cleaned up before the script exits. If there is an error or any tests fail, the associated Docker resources will be left available for inspection.
 
-Alternatively, the same tests may be run locally via npm:
+Alternatively, unit tests may be run locally via npm:
 
 ```
-# Run tests without Docker
-npm run test
+# Run unit tests without Docker
+npm run test:unit
 ```
 
 The [package.json](package.json) contains scripts to run the different suites of tests individually: `test:unit`,
@@ -126,11 +129,11 @@ Link to other services and expose inspection Artemis and Postgres ports:
 
 ### Test the service
 
-This service reacts to messages retrieved from an AMQP 1.0 message broker.
+This service reacts to messages retrieved from an Azure Service Bus.
 
-`docker-compose up` runs [ActiveMQ Artemis](https://activemq.apache.org/components/artemis) alongside the application to provide the required message bus and broker.
+`docker-compose up` to start the service with a connection to the configured Azure Service Bus instance and developer queues.
 
-Test messages can be sent via the Artemis console UI hosted at http://localhost:8161/console/login (username: artemis, password: artemis). Messages should match the format of the sample JSON below.
+Test messages can be sent via a client that supports sending to Azure Service Bus. Messages should match the format of the sample JSON below.
 
 Sample valid JSON for each message queue is:
 

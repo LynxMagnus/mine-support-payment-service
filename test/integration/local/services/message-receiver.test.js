@@ -22,13 +22,11 @@ describe('message receiver', () => {
     const promise = new Promise((resolve) => {
       done = resolve
     })
-    const testConfig = { ...config.paymentQueueConfig, address }
+    const testConfig = { ...config.paymentQueueConfig }
     messageReceiver = new MessageReceiver('test-receiver', testConfig)
-    await messageReceiver.openConnection()
     await messageReceiver.setupReceiver((result) => done(result.hello === message.hello))
 
     messageSender = new MessageSender('test-sender', testConfig)
-    await messageSender.openConnection()
     await messageSender.sendMessage(message)
 
     return expect(promise).resolves.toEqual(true)

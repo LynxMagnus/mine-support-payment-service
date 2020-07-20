@@ -7,7 +7,6 @@ services:
     image: ffc-demo-payment-service
     depends_on:
       - ffc-demo-payment-postgres
-      - ffc-demo-payment-message-queue  
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-demo-payment-service-local
       APPINSIGHTS_INSTRUMENTATIONKEY:
@@ -16,15 +15,14 @@ services:
       POSTGRES_USERNAME: postgres
       POSTGRES_HOST: ffc-demo-payment-postgres
       POSTGRES_PORT: 5432
-      MESSAGE_QUEUE_HOST: ffc-demo-payment-message-queue
-      MESSAGE_QUEUE_PORT: 5672
+      MESSAGE_QUEUE_HOST: $(MESSAGE_QUEUE_HOST:-notset)
       MESSAGE_QUEUE_RECONNECT_LIMIT: 10
-      SCHEDULE_QUEUE_ADDRESS: schedule
-      SCHEDULE_QUEUE_USER: artemis
-      SCHEDULE_QUEUE_PASSWORD: artemis
-      PAYMENT_QUEUE_ADDRESS: payment
-      PAYMENT_QUEUE_USER: artemis
-      PAYMENT_QUEUE_PASSWORD: artemis
+      SCHEDULE_QUEUE_ADDRESS: ffc-demo-schedule-${MESSAGE_QUEUE_SUFFIX}
+      SCHEDULE_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
+      SCHEDULE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
+      PAYMENT_QUEUE_ADDRESS: ffc-demo-payment-${MESSAGE_QUEUE_SUFFIX}
+      PAYMENT_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
+      PAYMENT_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
       OIDC_PROVIDER: dev
       OKTA_DOMAIN: ${OKTA_DOMAIN}
       OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
@@ -47,12 +45,6 @@ services:
       POSTGRES_USERNAME: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
-  ffc-demo-payment-message-queue:
-    image: vromero/activemq-artemis:2.9.0-alpine
-    environment:
-      ARTEMIS_USERNAME: artemis
-      ARTEMIS_PASSWORD: artemis
 
 volumes:
   postgres_data: {}
