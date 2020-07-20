@@ -27,7 +27,7 @@ describe.only('Test message service', () => {
   }, 30000)
 
   test('Message service sends the payment to schedule queue', async () => {
-    const message = generateSamplePayment()
+    const message = generateSampleClaim()
     const scheduleSender = messageService.getScheduleSender()
     const spy = jest.spyOn(scheduleSender, 'sendMessage')
 
@@ -35,5 +35,4 @@ describe.only('Test message service', () => {
     await expect(spy).toHaveBeenCalledTimes(1)
     await expect(spy).toHaveBeenCalledWith(message)
   })
-
-  })
+})

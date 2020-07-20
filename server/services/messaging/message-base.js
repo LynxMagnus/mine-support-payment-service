@@ -1,4 +1,4 @@
-const { ServiceBusClient} = require ('@azure/service-bus')
+const { ServiceBusClient } = require('@azure/service-bus')
 
 class MessageBase {
   constructor (name, config) {
@@ -11,7 +11,6 @@ class MessageBase {
     await this.sbClient.close()
     console.log(`${this.name} connection closed`)
   }
-
 }
 
 module.exports = MessageBase

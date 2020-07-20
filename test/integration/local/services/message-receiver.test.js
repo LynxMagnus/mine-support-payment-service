@@ -4,7 +4,6 @@ const config = require('../../../../server/config')
 
 let messageReceiver
 let messageSender
-const address = 'test-receive'
 
 const message = {
   content: 'hello'
