@@ -16,10 +16,8 @@ describe('message service', () => {
     expect(MessageReceiver).toHaveBeenCalledWith('payment-queue-receiver', config.paymentQueueConfig)
     // expect receives to be started
     const scheduleReceiveInstance = MessageReceiver.mock.instances[0]
-    expect(scheduleReceiveInstance.openConnection).toHaveBeenCalledTimes(1)
     expect(scheduleReceiveInstance.setupReceiver).toHaveBeenCalledWith(scheduleMessageAction)
     const paymentReceiveInstance = MessageReceiver.mock.instances[1]
-    expect(paymentReceiveInstance.openConnection).toHaveBeenCalledTimes(1)
     expect(paymentReceiveInstance.setupReceiver).toHaveBeenCalledWith(paymentMessageAction)
   })
 

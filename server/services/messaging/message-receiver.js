@@ -1,4 +1,4 @@
-const {ReceiveMode } = require('@azure/service-bus')
+const { ReceiveMode } = require('@azure/service-bus')
 const { getReceiverConfig } = require('./config-helper')
 const MessageBase = require('./message-base')
 
@@ -20,7 +20,7 @@ class MessageReceiver extends MessageBase {
       } catch (ex) {
         console.error(`${this.name} error with message`, ex)
       }
-    })
+    }
 
     receiver.registerMessageHandler(receiverHandler, receiverError)
   }
