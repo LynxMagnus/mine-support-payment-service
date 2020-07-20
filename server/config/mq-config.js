@@ -2,11 +2,7 @@ const joi = require('@hapi/joi')
 
 const mqSchema = joi.object({
   messageQueue: {
-    host: joi.string().default('localhost'),
-    hostname: joi.string().default('localhost'),
-    port: joi.number().default(5672),
-    reconnect_Limit: joi.number().default(10),
-    transport: joi.string().default('tcp')
+    host: joi.string().default('localhost')
   },
   scheduleQueue: {
     address: joi.string().default('schedule'),
@@ -21,11 +17,7 @@ const mqSchema = joi.object({
 })
 const mqConfig = {
   messageQueue: {
-    host: process.env.MESSAGE_QUEUE_HOST,
-    hostname: process.env.MESSAGE_QUEUE_HOST,
-    port: process.env.MESSAGE_QUEUE_PORT,
-    reconnect_Limit: process.env.MESSAGE_QUEUE_RECONNECT_LIMIT,
-    transport: process.env.MESSAGE_QUEUE_TRANSPORT
+    host: process.env.MESSAGE_QUEUE_HOST
   },
   scheduleQueue: {
     address: process.env.SCHEDULE_QUEUE_ADDRESS,

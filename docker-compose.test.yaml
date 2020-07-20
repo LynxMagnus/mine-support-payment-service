@@ -23,5 +23,4 @@ services:
       - ./test-output/:/home/node/test-output/
       - ./jest.config.js:/home/node/jest.config.js
       - ./jest.setup.js:/home/node/jest.setup.js
-    depends_on: 
-      - ffc-demo-payment-message-queue
+  

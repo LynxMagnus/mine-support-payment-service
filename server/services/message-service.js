@@ -23,7 +23,6 @@ class MessageService {
 
   async registerReceiver ({ name, config, action }) {
     const receiver = new MessageReceiver(name, config)
-    await receiver.openConnection()
     await receiver.setupReceiver(action)
     return receiver
   }
@@ -31,13 +30,6 @@ class MessageService {
   async closeConnections () {
     await this.scheduleMessageReceiver.closeConnection()
     await this.paymentMessageReceiver.closeConnection()
-  }
-
-  isRunning () {
-    return this.scheduleMessageReceiver &&
-           this.scheduleMessageReceiver.isConnected() &&
-           this.paymentMessageReceiver &&
-           this.paymentMessageReceiver.isConnected()
   }
 }
 

@@ -12,13 +12,6 @@ services:
     command: sh -c "scripts/wait-for-dependencies && npm run start:watch"
     ports:
       - "3004:3004"
-    depends_on:
-      - ffc-demo-payment-message-queue
-
-  ffc-demo-payment-message-queue:
-    ports:
-      - "8161:8161"
-      - "5672:5672"
 
   ffc-demo-payment-postgres:
     ports:

@@ -6,9 +6,6 @@ data:
   POSTGRES_HOST: {{ quote .Values.postgresService.postgresHost }}
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
   MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
-  MESSAGE_QUEUE_RECONNECT_LIMIT: {{ quote .Values.container.messageQueueReconnectLimit }}
-  MESSAGE_QUEUE_PORT: {{ quote .Values.container.messageQueuePort }}
-  MESSAGE_QUEUE_TRANSPORT: {{ quote .Values.container.messageQueueTransport }}
   SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
   PAYMENT_QUEUE_ADDRESS: {{ quote .Values.container.paymentQueueAddress }}
   OIDC_PROVIDER: {{ quote .Values.oidcProvider }}

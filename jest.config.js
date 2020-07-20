@@ -21,6 +21,10 @@ module.exports = {
   modulePathIgnorePatterns: [
     'node_modules'
   ],
+  testPathIgnorePatterns: [
+    'test/integration/local',
+    'test/contract/payment.test.js'
+  ],
   reporters: [
     'default',
     [

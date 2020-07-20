@@ -6,4 +6,8 @@ ignore:
     - '*':
         reason: No uses of `zipObjectDeep` function within codebase
         expires: 2020-12-31T00:00:00.000Z
+  SNYK-JS-AJV-584908:
+    - '*':
+        reason: No known exploit, Okta no longer used
+        expires: 2020-12-31T00:00:00.000Z
 patch: {}
