@@ -9,3 +9,4 @@ lcov.info
 test-output/
 *.tgz
 helm/**/*.lock
+.env
