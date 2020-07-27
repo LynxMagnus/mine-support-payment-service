@@ -51,11 +51,7 @@ container:
   allowPrivilegeEscalation: false
   messageQueueHost: amq
   scheduleQueueAddress: schedule
-  scheduleQueueUser: artemis
-  scheduleQueuePassword: artemis
   paymentQueueAddress: payment
-  paymentQueueUser: artemis
-  paymentQueuePassword: artemis
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate; node index"]
 
