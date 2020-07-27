@@ -10,26 +10,24 @@ services:
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-demo-payment-service-local
       APPINSIGHTS_INSTRUMENTATIONKEY:
-      POSTGRES_DB: ffc_demo_payments
-      POSTGRES_PASSWORD: ppp
-      POSTGRES_USERNAME: postgres
-      POSTGRES_HOST: ffc-demo-payment-postgres
-      POSTGRES_PORT: 5432
-      MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST:-notset}
-      SCHEDULE_QUEUE_ADDRESS: ffc-demo-schedule-${MESSAGE_QUEUE_SUFFIX}
-      SCHEDULE_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
-      SCHEDULE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
-      PAYMENT_QUEUE_ADDRESS: ffc-demo-payment-${MESSAGE_QUEUE_SUFFIX}
-      PAYMENT_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
-      PAYMENT_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
-      OIDC_PROVIDER: dev
-      OKTA_DOMAIN: ${OKTA_DOMAIN}
-      OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
-      OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
-      OKTA_AUTH_SERVER_ID: ${OKTA_AUTH_SERVER_ID}      
       B2C_CLIENT_ID: ${B2C_CLIENT_ID}
       B2C_CLIENT_SECRET: ${B2C_CLIENT_SECRET}
-      B2C_URL: ${B2C_URL}      
+      B2C_URL: ${B2C_URL}
+      MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST:-notset}
+      MESSAGE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
+      MESSAGE_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
+      OIDC_PROVIDER: dev
+      OKTA_AUTH_SERVER_ID: ${OKTA_AUTH_SERVER_ID}
+      OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
+      OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
+      OKTA_DOMAIN: ${OKTA_DOMAIN}
+      PAYMENT_QUEUE_ADDRESS: ffc-demo-payment-${MESSAGE_QUEUE_SUFFIX}
+      POSTGRES_DB: ffc_demo_payments
+      POSTGRES_HOST: ffc-demo-payment-postgres
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_PORT: 5432
+      POSTGRES_USERNAME: postgres
+      SCHEDULE_QUEUE_ADDRESS: ffc-demo-schedule-${MESSAGE_QUEUE_SUFFIX}
     volumes:
       - ./server/:/home/node/server/
       - ./scripts/:/home/node/scripts/
