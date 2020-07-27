@@ -21,13 +21,13 @@ const mqConfig = {
   },
   scheduleQueue: {
     address: process.env.SCHEDULE_QUEUE_ADDRESS,
-    username: process.env.SCHEDULE_QUEUE_USER,
-    password: process.env.SCHEDULE_QUEUE_PASSWORD
+    username: process.env.MESSAGE_QUEUE_USER,
+    password: process.env.MESSAGE_QUEUE_PASSWORD
   },
   paymentQueue: {
     address: process.env.PAYMENT_QUEUE_ADDRESS,
-    username: process.env.PAYMENT_QUEUE_USER,
-    password: process.env.PAYMENT_QUEUE_PASSWORD
+    username: process.env.MESSAGE_QUEUE_USER,
+    password: process.env.MESSAGE_QUEUE_PASSWORD
   }
 }
 
