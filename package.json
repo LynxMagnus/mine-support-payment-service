@@ -35,7 +35,7 @@
     "@pact-foundation/pact": "^9.11.0",
     "blipp": "^4.0.1",
     "jest": "^26.1.0",
-    "jest-junit": "^11.0.1",
+    "jest-junit": "^11.1.0",
     "nodemon": "^2.0.4",
     "sequelize-mock": "^0.10.2",
     "standard": "^14.3.4"
