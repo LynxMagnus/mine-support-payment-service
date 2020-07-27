@@ -19,6 +19,10 @@ b2c:
 appInsights:
   key:
 
+azureIdentity:
+  clientID: not-a-real-clientID
+  resourceID: not-a-real-resourceID
+
 containerConfigMap:
   name: ffc-demo-payment-service-config-map
 
