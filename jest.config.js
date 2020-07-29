@@ -6,11 +6,6 @@ module.exports = {
     '!**/*.config.js'
   ],
   coverageDirectory: 'test-output',
-  coverageReporters: [
-    'text-summary',
-    'cobertura',
-    'lcov'
-  ],
   coveragePathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/test-output/',
@@ -18,12 +13,13 @@ module.exports = {
     '.*/__mocks__/.*',
     '<rootDir>/server/migrations/'
   ],
+  coverageReporters: [
+    'text-summary',
+    'cobertura',
+    'lcov'
+  ],
   modulePathIgnorePatterns: [
     'node_modules'
-  ],
-  testPathIgnorePatterns: [
-    'test/integration/local',
-    'test/contract/payment.test.js'
   ],
   reporters: [
     'default',
@@ -37,5 +33,9 @@ module.exports = {
     ]
   ],
   setupFilesAfterEnv: ['./jest.setup.js'],
-  testEnvironment: 'node'
+  testEnvironment: 'node',
+  testPathIgnorePatterns: [
+    'test/integration/local',
+    'test/contract/payment.test.js'
+  ]
 }
