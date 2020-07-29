@@ -1,30 +1,26 @@
+const auth = require('@azure/ms-rest-nodeauth')
 const MessageReceiver = require('./messaging/message-receiver')
 const scheduleMessageAction = require('./schedule-message-action')
 const paymentMessageAction = require('./payment-message-action')
-const { scheduleQueueConfig, paymentQueueConfig } = require('../config')
+const { isProd, paymentQueueConfig, scheduleQueueConfig } = require('../config')
+
+process.on('SIGTERM', function () {
+  messageService.closeConnections()
+  process.exit(0)
+})
+
+process.on('SIGINT', function () {
+  messageService.closeConnections()
+  process.exit(0)
+})
 
 class MessageService {
-  async registerReceivers () {
-    this.scheduleMessageReceiver = await this.registerReceiver(
-      {
-        name: 'schedule-queue-receiver',
-        config: scheduleQueueConfig,
-        action: scheduleMessageAction
-      }
-    )
-    this.paymentMessageReceiver = await this.registerReceiver(
-      {
-        name: 'payment-queue-receiver',
-        config: paymentQueueConfig,
-        action: paymentMessageAction
-      }
-    )
-  }
-
-  async registerReceiver ({ name, config, action }) {
-    const receiver = new MessageReceiver(name, config)
-    await receiver.setupReceiver(action)
-    return receiver
+  constructor (credentials) {
+    this.closeConnections = this.closeConnections.bind(this)
+    const paymentAction = payment => { paymentMessageAction(payment) }
+    this.paymentMessageReceiver = new MessageReceiver('payment-queue-receiver', paymentQueueConfig, credentials, paymentAction)
+    const scheduleAction = claim => { scheduleMessageAction(claim) }
+    this.scheduleMessageReceiver = new MessageReceiver('schedule-queue-receiver', scheduleQueueConfig, credentials, scheduleAction)
   }
 
   async closeConnections () {
@@ -33,4 +29,10 @@ class MessageService {
   }
 }
 
-module.exports = new MessageService()
+let messageService
+
+module.exports = (async function createConnections () {
+  const credentials = isProd ? await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net' }) : undefined
+  messageService = new MessageService(credentials)
+  return messageService
+}())
