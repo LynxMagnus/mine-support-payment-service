@@ -2,7 +2,6 @@ let server
 
 jest.mock('../../../../server/services/database-service')
 const databaseService = require('../../../../server/services/database-service')
-jest.mock('../../../../server/services/message-service')
 
 const createServer = require('../../../../server')
 describe('Healthy test', () => {

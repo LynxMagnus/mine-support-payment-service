@@ -2,10 +2,6 @@ describe('Server tests', () => {
   let createServer
   let server
 
-  beforeAll(() => {
-    jest.mock('../../../../server/services/message-service')
-  })
-
   test('createServer returns server', () => {
     jest.mock('../../../../server/config', () => {
       return {

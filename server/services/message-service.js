@@ -17,15 +17,15 @@ process.on('SIGINT', function () {
 class MessageService {
   constructor (credentials) {
     this.closeConnections = this.closeConnections.bind(this)
-    const paymentAction = payment => { paymentMessageAction(payment) }
+    const paymentAction = payment => paymentMessageAction(payment)
     this.paymentMessageReceiver = new MessageReceiver('payment-queue-receiver', paymentQueueConfig, credentials, paymentAction)
-    const scheduleAction = claim => { scheduleMessageAction(claim) }
+    const scheduleAction = claim => scheduleMessageAction(claim)
     this.scheduleMessageReceiver = new MessageReceiver('schedule-queue-receiver', scheduleQueueConfig, credentials, scheduleAction)
   }
 
   async closeConnections () {
-    await this.scheduleMessageReceiver.closeConnection()
     await this.paymentMessageReceiver.closeConnection()
+    await this.scheduleMessageReceiver.closeConnection()
   }
 }
 
