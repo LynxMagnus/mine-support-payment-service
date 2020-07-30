@@ -15,8 +15,7 @@ module.exports = {
     '<rootDir>/node_modules/',
     '<rootDir>/test-output/',
     '<rootDir>/test/',
-    '.*/__mocks__/.*',
-    '<rootDir>/server/migrations/'
+    '.*/__mocks__/.*'
   ],
   modulePathIgnorePatterns: [
     'node_modules'
