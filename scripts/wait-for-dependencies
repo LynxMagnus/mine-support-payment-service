@@ -1,3 +1,2 @@
 scripts/wait-for/wait-for ffc-demo-payment-postgres:5432 --
-scripts/wait-for/wait-for ffc-demo-payment-message-queue:5672 --
-npm run migrate
+echo "ready!"

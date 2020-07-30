@@ -26,10 +26,10 @@ services:
       OKTA_DOMAIN: ${OKTA_DOMAIN}
       OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
       OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
-      OKTA_AUTH_SERVER_ID: ${OKTA_AUTH_SERVER_ID}      
+      OKTA_AUTH_SERVER_ID: ${OKTA_AUTH_SERVER_ID}
       B2C_CLIENT_ID: ${B2C_CLIENT_ID}
       B2C_CLIENT_SECRET: ${B2C_CLIENT_SECRET}
-      B2C_URL: ${B2C_URL}      
+      B2C_URL: ${B2C_URL}
     volumes:
       - ./server/:/home/node/server/
       - ./scripts/:/home/node/scripts/

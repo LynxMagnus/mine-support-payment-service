@@ -1,0 +1,10 @@
+#!/bin/bash
+echo waiting for postgres $POSTGRES_HOST:$POSTGRES_PORT
+response=''
+until [ "$response" ]
+do
+  printf '.'
+  sleep 2
+  response=$(wget -SO- -T 1 -t 1 http://$POSTGRES_HOST:$POSTGRES_PORT 2>&1 | grep 'No data received')
+done
+echo postgres started

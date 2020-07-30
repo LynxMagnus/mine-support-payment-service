@@ -17,7 +17,7 @@ services:
       OKTA_AUTH_SERVER_ID: authserver
       B2C_CLIENT_ID: test-client-id
       B2C_CLIENT_SECRET: test-client-secret
-      B2C_URL: https://test/v2.0/   
+      B2C_URL: https://test/v2.0/
     volumes:
       - ./test/:/home/node/test/
       - ./test-output/:/home/node/test-output/
