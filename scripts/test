@@ -18,7 +18,8 @@ compose() {
   cd "${projectRoot}"
 
   # Guarantee clean environment
-  compose down --volumes
+  compose down -v
+  docker-compose -f docker-compose.migrate.yaml  -p "${service}-test" down
 
   # Ensure container images are up to date
   compose build
@@ -27,5 +28,6 @@ compose() {
   compose run ${service} ${command}
 
   # Clean up
-  compose down --volumes
+  compose down -v
+  docker-compose -f docker-compose.migrate.yaml  -p "${service}-test" down
 )

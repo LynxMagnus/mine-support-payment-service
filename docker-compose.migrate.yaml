@@ -1,48 +1,36 @@
 version: '3.7'
 
-services:
-  liquibase-export:
-    image: liquibase/liquibase:3.10.x
-    depends_on:
-      - ffc-demo-payment-postgres
-    entrypoint: >
-      sh -c "
-      /liquibase/liquibase
-      --driver=org.postgresql.Driver
-      --changeLogFile=/liquibase/changelog/db.changelog.xml
-      --url='jdbc:postgresql://host.docker.internal:5432/ffc_demo_payments'
-      --username=postgres 
-      --password=ppp --defaultSchemaName=public generateChangeLog"
-    volumes:
-      - ./changelog/:/liquibase/changelog/
-      - ./scripts/:/scripts/
+x-common-migration: &common-migration
+  POSTGRES_HOST: ffc-demo-payment-postgres
+  SCHEMA_ROLE: ${SCHEMA_ROLE:-postgres}
+  SCHEMA_PASSWORD: ${SCHEMA_PASSWORD:-ppp}
+  SCHEMA_NAME: ${SCHEMA_NAME:-public}
 
-  liquibase-up:
-    image: liquibase/liquibase
+x-common-postgres: &common-postgres
+  POSTGRES_PORT: 5432
+  POSTGRES_DB: ffc_demo_payments
+  POSTGRES_PASSWORD: ppp
+  POSTGRES_USERNAME: postgres
+
+services:
+  database-export:
+    image: liquibase/liquibase:3.10.x
+    environment:
+      << : *common-migration
+      << : *common-postgres
     depends_on:
       - ffc-demo-payment-postgres
     entrypoint: >
-      sh -c "/scripts/wait-for/wait-for -t 5000 ffc-demo-payment-postgres:5432 &&
-      /liquibase/liquibase --driver=org.postgresql.Driver
-      --changeLogFile=/changelog/db.changelog.xml
-      --url='jdbc:postgresql://ffc-demo-payment-postgres:5432/ffc_demo_payments'
-      --username=markh
-      --password=password --defaultSchemaName=mhdb update"
+      sh -c "/scripts/migration/export"
     volumes:
       - ./changelog/:/liquibase/changelog/
       - ./scripts/:/scripts/
 
   schema-up:
-    image: liquibase/liquibase
+    image: liquibase/liquibase:3.10.x
     environment:
-      - POSTGRES_HOST=ffc-demo-payment-postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=ffc_demo_payments
-      - POSTGRES_PASSWORD=ppp
-      - POSTGRES_USERNAME=postgres
-      - SCHEMA_ROLE=mark
-      - SCHEMA_PASSWORD=password
-      - SCHEMA_NAME=mhdb
+      << : *common-migration
+      << : *common-postgres
     entrypoint: >
       sh -c "/scripts/migration/schema-up"
     depends_on:
@@ -52,16 +40,10 @@ services:
       - ./scripts/:/scripts/
 
   database-up:
-    image: liquibase/liquibase
+    image: liquibase/liquibase:3.10.x
     environment:
-      - POSTGRES_HOST=ffc-demo-payment-postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=ffc_demo_payments
-      - POSTGRES_PASSWORD=ppp
-      - POSTGRES_USERNAME=postgres
-      - SCHEMA_ROLE=postgres
-      - SCHEMA_PASSWORD=ppp
-      - SCHEMA_NAME=public
+      << : *common-migration
+      << : *common-postgres
     entrypoint: >
       sh -c "/scripts/migration/update"
     depends_on:
@@ -71,16 +53,10 @@ services:
       - ./scripts/:/scripts/
 
   schema-down:
-    image: liquibase/liquibase
+    image: liquibase/liquibase:3.10.x
     environment:
-      - POSTGRES_HOST=ffc-demo-payment-postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=ffc_demo_payments
-      - POSTGRES_PASSWORD=ppp
-      - POSTGRES_USERNAME=postgres
-      - SCHEMA_ROLE=mark
-      - SCHEMA_PASSWORD=password
-      - SCHEMA_NAME=mhdb
+      << : *common-migration
+      << : *common-postgres
     entrypoint: >
       sh -c "/scripts/migration/schema-down"
     depends_on:
@@ -91,10 +67,7 @@ services:
 
   ffc-demo-payment-postgres:
     image: postgres:11.4-alpine
-    environment:
-      POSTGRES_DB: ffc_demo_payments
-      POSTGRES_PASSWORD: ppp
-      POSTGRES_USERNAME: postgres
+    environment: *common-postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

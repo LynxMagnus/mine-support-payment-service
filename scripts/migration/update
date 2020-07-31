@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "db update on $POSTGRES_HOST"
+echo "db update on $POSTGRES_HOST $SCHEMA_NAME as $SCHEMA_ROLE"
 /scripts/postgres-wait && /liquibase/liquibase \
 --driver=org.postgresql.Driver \
 --changeLogFile=/changelog/db.changelog.xml \
