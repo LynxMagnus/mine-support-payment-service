@@ -6,4 +6,7 @@ ignore:
     - '@okta/jwt-verifier > jwks-rsa > request > har-validator > ajv':
         reason: No known exploit, Okta no longer used
         expires: '2020-12-31T00:00:00.000Z'
+    - '@azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv':
+        reason: No known exploit
+        expires: '2020-12-31T00:00:00.000Z'
 patch: {}

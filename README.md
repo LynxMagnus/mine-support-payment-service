@@ -17,42 +17,48 @@ Or:
 - Helm
 
 ### Azure Service Bus
-This service depends on a valid Azure Service Bus connection string for asynchronous communication.  The following environment variables need to be set in any environment before the Docker container is started.
 
-| Name                             | Description                                                                                |
-|----------------------------------|--------------------------------------------------------------------------------------------|
-| MESSAGE_QUEUE_HOST               | Azure Service Bus hostname, eg `myservicebus.servicebus.windows.net`                       |
-| MESSAGE_QUEUE_USER               | Azure Service Bus SAS policy name, eg `RootManageSharedAccessKey`                          |
-| MESSAGE_QUEUE_PASSWORD           | Azure Service Bus SAS policy key                                                           |
-| MESSAGE_QUEUE_SUFFIX             | Developer specific queue suffix to prevent collisions, only required for local development |
+This service depends on a valid Azure Service Bus connection string for
+asynchronous communication.  The following environment variables need to be set
+in any non-production (`!config.isProd`) environment before the Docker
+container is started. When deployed into an appropriately configured AKS
+cluster (where [AAD Pod Identity](https://github.com/Azure/aad-pod-identity) is
+configured) the micro-service will use AAD Pod Identity through the manifests
+for
+[azure-identity](./helm/ffc-demo-claim-service/templates/azure-identity.yaml)
+and
+[azure-identity-binding](./helm/ffc-demo-claim-service/templates/azure-identity-binding.yaml).
+
+| Name                               | Description                                                                                  |
+| ---------------------------------- | -------------------------------------------------------------------------------------------- |
+| MESSAGE_QUEUE_HOST                 | Azure Service Bus hostname, e.g. `myservicebus.servicebus.windows.net`                       |
+| MESSAGE_QUEUE_PASSWORD             | Azure Service Bus SAS policy key                                                             |
+| MESSAGE_QUEUE_SUFFIX               | Developer specific queue suffix to prevent collisions, only required for local development   |
+| MESSAGE_QUEUE_USER                 | Azure Service Bus SAS policy name, e.g. `RootManageSharedAccessKey`                          |
 
 ## Environment variables
 
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
-| Name                           | Description                               | Required | Default     | Valid                       | Notes                                                                             |
-|--------------------------------|-------------------------------------------|:--------:|-------------|-----------------------------|-----------------------------------------------------------------------------------|
-| NODE_ENV                       | Node environment                          | no       | development | development,test,production |                                                                                   |
-| PORT                           | Port number                               | no       | 3004        |                             |                                                                                   |                        |                                                                                   |
-| SCHEDULE_QUEUE_ADDRESS         | 'Schedule' message queue name             | no       | schedule    |                             |                                                                                   |
-| SCHEDULE_QUEUE_USER            | 'Schedule' message queue username         | yes      |             |                             |                                                                                   |
-| SCHEDULE_QUEUE_PASSWORD        | 'Schedule' message queue password         | yes      |             |                             |                                                                                   |
-| PAYMENT_QUEUE_ADDRESS          | 'Payment' message queue name              | no       | payment     |                             |                                                                                   |
-| PAYMENT_QUEUE_USER             | 'Payment' message queue username          | yes      |             |                             |                                                                                   |
-| PAYMENT_QUEUE_PASSWORD         | 'Payment' message queue password          | yes      |             |                             |                                                                                   |
-| OIDC_PROVIDER                  | set the OIDC provider to use              | no       |  dev        |  dev, okta, b2c             |                                                                                   |
-| OKTA_DOMAIN                    | Okta domain, i.e. `mysite.okta.com`       | no       |             |                             |                                                                                   |
-| OKTA_CLIENT_ID                 | Client ID of Okta OpenID Connect app      | no       |             |                             |                                                                                   |
-| OKTA_AUTH_SERVER_ID            | ID of Okta custom authorisation server    | no       |             |                             |                                                                                   |
-| B2C_CLIENT_ID                  | Client ID of B2C OpenID Connect app       | no       |             |                             |                                                                                   |
-| B2C_CLIENT_SECRET              | Client Secret of B2C OpenID Connect app   | no       |             |                             |                                                                                   |
-| B2C_URL                        | OAuth URL of B2C OpenID Connect app       | no       |             |                             |                                                                                   |
-| APPINSIGHTS_INSTRUMENTATIONKEY | Key for application insight               | no       |             |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
-| APPINSIGHTS_CLOUDROLE          | Role used for filtering metrics           | no       |             |                             | Set to `ffc-demo-payment-service-local` in docker compose files                   |
+| Name                           | Description                             | Required  | Default     | Valid                       | Notes                                                                             |
+| ----                           | -----------                             | :-------: | -------     | -----                       | -----                                                                             |
+| APPINSIGHTS_CLOUDROLE          | Role used for filtering metrics         | no        |             |                             | Set to `ffc-demo-payment-service-local` in docker compose files                   |
+| APPINSIGHTS_INSTRUMENTATIONKEY | Key for application insight             | no        |             |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
+| B2C_CLIENT_ID                  | Client ID of B2C OpenID Connect app     | no        |             |                             |                                                                                   |
+| B2C_CLIENT_SECRET              | Client Secret of B2C OpenID Connect app | no        |             |                             |                                                                                   |
+| B2C_URL                        | OAuth URL of B2C OpenID Connect app     | no        |             |                             |                                                                                   |
+| NODE_ENV                       | Node environment                        | no        | development | development,test,production |                                                                                   |
+| PAYMENT_QUEUE_ADDRESS          | 'Payment' message queue name            | no        | payment     |                             |                                                                                   |
+| PORT                           | Port number                             | no        | 3004        |                             |                                                                                   |
+| OIDC_PROVIDER                  | set the OIDC provider to use            | no        | dev         | dev, okta, b2c              |                                                                                   |
+| OKTA_AUTH_SERVER_ID            | ID of Okta custom authorisation server  | no        |             |                             |                                                                                   |
+| OKTA_CLIENT_ID                 | Client ID of Okta OpenID Connect app    | no        |             |                             |                                                                                   |
+| OKTA_DOMAIN                    | Okta domain, i.e. `mysite.okta.com`     | no        |             |                             |                                                                                   |
+| SCHEDULE_QUEUE_ADDRESS         | 'Schedule' message queue name           | no        | schedule    |                             |                                                                                   |
 
 ## Building the project locally
 
-The API can be secured using JWT access tokens, verified against an [Okta](https://www.okta.com/) authentication server, B2C, or disabled for local development. 
+The API can be secured using JWT access tokens, verified against an [Okta](https://www.okta.com/) authentication server, B2C, or disabled for local development.
 
 Okta specific environment variables must be set if `OIDC_PROVIDER` is set to `"okta"`.
 A valid Okta OpenID Connect application is required, and the Okta domain, client ID, and Custom Authorisation

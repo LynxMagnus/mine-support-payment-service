@@ -19,6 +19,10 @@ b2c:
 appInsights:
   key:
 
+azureIdentity:
+  clientID: not-a-real-clientID
+  resourceID: not-a-real-resourceID
+
 containerConfigMap:
   name: ffc-demo-payment-service-config-map
 
@@ -47,11 +51,7 @@ container:
   allowPrivilegeEscalation: false
   messageQueueHost: amq
   scheduleQueueAddress: schedule
-  scheduleQueueUser: artemis
-  scheduleQueuePassword: artemis
   paymentQueueAddress: payment
-  paymentQueueUser: artemis
-  paymentQueuePassword: artemis
   command: ["/bin/sh","-c"]
   args: ["npm --no-update-notifier run migrate; node index"]
 

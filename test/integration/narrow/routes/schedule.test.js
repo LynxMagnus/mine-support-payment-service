@@ -1,7 +1,5 @@
 const createServer = require('../../../../server')
 
-jest.mock('../../../../server/services/message-service')
-
 function mockScheduleService () {
   const scheduleService = require('../../../../server/services/schedule-service')
   jest.mock('../../../../server/services/schedule-service')
