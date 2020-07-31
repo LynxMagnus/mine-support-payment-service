@@ -45,7 +45,20 @@ services:
       << : *common-migration
       << : *common-postgres
     entrypoint: >
-      sh -c "/scripts/migration/update"
+      sh -c "/scripts/migration/database-up"
+    depends_on:
+      - ffc-demo-payment-postgres
+    volumes:
+      - ./changelog/:/liquibase/changelog/
+      - ./scripts/:/scripts/
+
+  database-down:
+    image: liquibase/liquibase:3.10.x
+    environment:
+      << : *common-migration
+      << : *common-postgres
+    entrypoint: >
+      sh -c "/scripts/migration/database-down"
     depends_on:
       - ffc-demo-payment-postgres
     volumes:
