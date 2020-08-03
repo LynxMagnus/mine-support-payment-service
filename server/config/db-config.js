@@ -1,10 +1,10 @@
 const dbConfig = {
-  username: process.env.POSTGRES_USERNAME,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB || 'mine_payments',
+  database: process.env.POSTGRES_DB || 'ffc_demo_payment_service',
+  dialect: 'postgres',
   host: process.env.POSTGRES_HOST || 'ffc-demo-payment-postgres',
+  password: process.env.POSTGRES_PASSWORD,
   port: process.env.POSTGRES_PORT || 5432,
-  dialect: 'postgres'
+  username: process.env.POSTGRES_USERNAME
 }
 
 const config = {
