@@ -62,7 +62,6 @@ postgresService:
   # within the cluster and accessible via postgresHost
   postgresExternalName:
   postgresHost: ffc-demo-payments-postgres
-  postgresPassword: changeme
   postgresPort: 5432
   postgresUser: postgres
 
