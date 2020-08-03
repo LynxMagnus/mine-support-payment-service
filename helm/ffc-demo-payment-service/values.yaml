@@ -59,7 +59,7 @@ postgresService:
   postgresExternalName:
   postgresUsername: postgres
   postgresPassword: changeme
-  postgresDatabase: mine_payments
+  postgresDb: ffc_demo_payment_service
   postgresHost: ffc-demo-payments-postgres
   # postgresExternalName is the external host name to which PostgreSQL
   # requests should be forwarded. If empty, PostgreSQL is assumed to be
