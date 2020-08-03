@@ -37,8 +37,8 @@ const value = result.value
 value.isDev = value.env === env.development
 value.isProd = value.env === env.production
 
-value.scheduleQueueConfig = mqConfig.scheduleQueueConfig
-value.paymentQueueConfig = mqConfig.paymentQueueConfig
+value.scheduleQueue = mqConfig.scheduleQueue
+value.paymentQueue = mqConfig.paymentQueue
 
 value.dbConfig = dbConfig
 if (value.oidcProvider === 'okta') {

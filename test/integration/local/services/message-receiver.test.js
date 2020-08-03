@@ -2,31 +2,32 @@ const MessageReceiver = require('../../../../server/services/messaging/message-r
 const MessageSender = require('../../../../server/services/messaging/message-sender')
 const config = require('../../../../server/config')
 
-let messageReceiver
-let messageSender
-
-const message = {
-  content: 'hello'
-}
-
 describe('message receiver', () => {
-  afterEach(async () => {
-    await messageReceiver.closeConnection()
+  const message = { content: 'hello', claimId: 'claimId' }
+  const testConfig = { ...config.paymentQueue }
+  let messageReceiver
+  let messageSender
+
+  beforeEach(async () => {
+    messageSender = new MessageSender('test-sender', testConfig)
+    await messageSender.sendMessage(message)
     await messageSender.closeConnection()
   })
 
-  test('message receiver can receive messages', async () => {
-    expect.assertions(1)
-    let done
-    const promise = new Promise((resolve) => {
-      done = resolve
-    })
-    const testConfig = { ...config.paymentQueueConfig }
-    messageReceiver = new MessageReceiver('test-receiver', testConfig)
-    await messageReceiver.setupReceiver((result) => done(result.hello === message.hello))
+  afterEach(async () => {
+    await messageReceiver.closeConnection()
+  })
 
-    messageSender = new MessageSender('test-sender', testConfig)
-    await messageSender.sendMessage(message)
+  test('message receiver can receive messages', async () => {
+    // expect.assertions(1)
+    let done
+    const promise = new Promise((resolve) => { done = resolve })
+    const action = (result) => done(result.hello === message.hello)
+    messageReceiver = new MessageReceiver('test-receiver', testConfig, undefined, action)
+
+    console.log('promise NOT resolved')
+    const r = await promise
+    console.log('promise resolved', r)
 
     return expect(promise).resolves.toEqual(true)
   })

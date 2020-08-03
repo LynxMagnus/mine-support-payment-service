@@ -11,8 +11,8 @@ describe('message service', () => {
 
   test('MessageService should create a MessageReceiver for schedule and payment queues', async () => {
     expect(MessageReceiver).toHaveBeenCalledTimes(2)
-    expect(MessageReceiver).toHaveBeenNthCalledWith(1, 'payment-queue-receiver', config.paymentQueueConfig, undefined, expect.any(Function))
-    expect(MessageReceiver).toHaveBeenNthCalledWith(2, 'schedule-queue-receiver', config.scheduleQueueConfig, undefined, expect.any(Function))
+    expect(MessageReceiver).toHaveBeenNthCalledWith(1, 'payment-queue-receiver', config.paymentQueue, undefined, expect.any(Function))
+    expect(MessageReceiver).toHaveBeenNthCalledWith(2, 'schedule-queue-receiver', config.scheduleQueue, undefined, expect.any(Function))
   })
 
   test('close connections calls closeConnection on both receivers', async () => {

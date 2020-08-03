@@ -52,7 +52,7 @@ describe('Pact Verification', () => {
     await server.stop()
   })
 
-  afterAll(() => {
-    dbHelper.close()
+  afterAll(async () => {
+    await dbHelper.close()
   })
 })

@@ -40,7 +40,7 @@ if (mqResult.error) {
   throw new Error(`The message queue config is invalid. ${mqResult.error.message}`)
 }
 
-const paymentQueueConfig = { ...mqResult.value.messageQueue, ...mqResult.value.paymentQueue }
-const scheduleQueueConfig = { ...mqResult.value.messageQueue, ...mqResult.value.scheduleQueue }
+const paymentQueue = { ...mqResult.value.messageQueue, ...mqResult.value.paymentQueue }
+const scheduleQueue = { ...mqResult.value.messageQueue, ...mqResult.value.scheduleQueue }
 
-module.exports = { paymentQueueConfig, scheduleQueueConfig }
+module.exports = { paymentQueue, scheduleQueue }
