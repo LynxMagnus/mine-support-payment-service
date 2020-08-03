@@ -13,6 +13,7 @@ services:
       POSTGRES_DB: ffc_demo_payments
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
+      POSTGRES_SCHEMA: ${POSTGRES_SCHEMA}
       POSTGRES_HOST: ffc-demo-payment-postgres
       POSTGRES_PORT: 5432
       MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST:-notset}
