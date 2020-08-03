@@ -19,15 +19,11 @@ describe('message receiver', () => {
   })
 
   test('message receiver can receive messages', async () => {
-    // expect.assertions(1)
+    expect.assertions(1)
     let done
     const promise = new Promise((resolve) => { done = resolve })
     const action = (result) => done(result.hello === message.hello)
     messageReceiver = new MessageReceiver('test-receiver', testConfig, undefined, action)
-
-    console.log('promise NOT resolved')
-    const r = await promise
-    console.log('promise resolved', r)
 
     return expect(promise).resolves.toEqual(true)
   })

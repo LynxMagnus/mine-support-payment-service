@@ -1,3 +1,4 @@
+jest.mock('../../../../server/services/message-service')
 const createServer = require('../../../../server')
 
 function mockScheduleService () {
@@ -24,10 +25,12 @@ describe('API', () => {
     mockOktaJwtVerifier()
   })
 
-  test('GET /schedule route returns 200 for valid token', async () => {
+  beforeEach(async () => {
     server = await createServer()
     await server.initialize()
+  })
 
+  test('GET /schedule route returns 200 for valid token', async () => {
     const options = {
       method: 'GET',
       url: '/schedule',
@@ -40,9 +43,6 @@ describe('API', () => {
   })
 
   test('GET /schedule route returns 401 error for missing token', async () => {
-    server = await createServer()
-    await server.initialize()
-
     const options = {
       method: 'GET',
       url: '/schedule',
