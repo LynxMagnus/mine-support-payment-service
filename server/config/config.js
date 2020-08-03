@@ -1,6 +1,6 @@
 const Joi = require('@hapi/joi')
 const mqConfig = require('./mq-config')
-const dbConfig = require('./datbase-config')
+const dbConfig = require('./database-config')
 const { environments: env } = require('./constants')
 
 const getOktaConfig = require('./get-okta-config')
