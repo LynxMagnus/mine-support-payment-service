@@ -1,4 +1,4 @@
-const db = require('../models')
+let db = require('../models')
 
 const { getPaymentDates } = require('./scheduler')
 
@@ -14,6 +14,7 @@ function scheduleMapper (schedule) {
 }
 
 async function getAll () {
+  db = await db
   const schedule = await db.schedule.findAll({
     include: [db.payment],
     order: [['paymentDate', 'DESC']]
@@ -22,6 +23,7 @@ async function getAll () {
 }
 
 async function getById (claimId) {
+  db = await db
   const schedule = await db.schedule.findAll({
     where: { claimId: claimId },
     include: [db.payment],
@@ -39,6 +41,7 @@ async function create (claim, startDate) {
 
   const paymentDates = getPaymentDates(startDate)
 
+  db = await db
   for (let i = 0; i < paymentDates.length; i++) {
     console.log('creating schedule')
     await db.schedule.upsert({

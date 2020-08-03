@@ -1,8 +1,9 @@
 const paymentMapper = require('./payment-mapper')
 
-const db = require('../models')
+let db = require('../models')
 
 async function getById (claimId) {
+  db = await db
   const payment = await db.payment.findOne({
     where: { claimId: claimId },
     include: [db.schedule]
@@ -17,13 +18,14 @@ async function create (calculation) {
     return
   }
   console.log('creating payment')
-  await db.payment.upsert({
+  await (await db).payment.upsert({
     claimId: calculation.claimId,
     value: calculation.value
   })
 }
 
 async function getAll () {
+  db = await db
   const payments = await db.payment.findAll({ include: [db.schedule] })
   return payments.map(paymentMapper)
 }

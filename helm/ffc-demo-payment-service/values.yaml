@@ -56,16 +56,14 @@ container:
   args: ["npm --no-update-notifier run migrate; node index"]
 
 postgresService:
-  postgresExternalName:
-  postgresUsername: postgres
-  postgresPassword: changeme
-  postgresDatabase: mine_payments
-  postgresHost: ffc-demo-payments-postgres
+  postgresDb: ffc_demo_payment_service
   # postgresExternalName is the external host name to which PostgreSQL
   # requests should be forwarded. If empty, PostgreSQL is assumed to be
   # within the cluster and accessible via postgresHost
   postgresExternalName:
+  postgresHost: ffc-demo-payments-postgres
   postgresPort: 5432
+  postgresUser: postgres
 
 readinessProbe:
   path: /healthy
