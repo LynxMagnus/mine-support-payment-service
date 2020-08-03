@@ -13,7 +13,9 @@ module.exports = (async function () {
     })
     .forEach(file => {
       const model = dbService.import(path.join(__dirname, file))
-      models[model.name] = model
+      if (model && model.name) {
+        models[model.name] = model
+      }
     })
   Object.keys(models).forEach((modelName) => {
     if (models[modelName].associate) {
