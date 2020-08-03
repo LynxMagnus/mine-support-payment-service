@@ -33,6 +33,5 @@ let messageService
 
 module.exports = (async function () {
   const credentials = isProd ? await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net' }) : undefined
-  messageService = new MessageService(credentials)
-  return messageService
+  return new MessageService(credentials)
 }())
