@@ -36,11 +36,6 @@ module.exports = {
   testEnvironment: 'node',
   testPathIgnorePatterns: [
     'test/integration/local',
-    // 'test/integration',
-    // 'test/unit',
-    'test/contract/',
-    // 'test/contract/payment.test.js',
-    'test/contract/ffc-demo-payment-service.test.js',
-    'test/contract/schedule.test.js'
+    'test/contract/'
   ]
 }
