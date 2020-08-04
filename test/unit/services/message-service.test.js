@@ -3,10 +3,11 @@ const MessageReceiver = require('../../../server/services/messaging/message-rece
 jest.mock('../../../server/services/messaging/message-receiver')
 
 describe('message service', () => {
+  const createMessageService = require('../../../server/services/message-service')
   let messageService
 
   beforeAll(async () => {
-    messageService = await require('../../../server/services/message-service')
+    messageService = await createMessageService()
   })
 
   test('MessageService should create a MessageReceiver for schedule and payment queues', async () => {
