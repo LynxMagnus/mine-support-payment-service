@@ -9,7 +9,7 @@ module.exports = {
   options: {
     handler: async (request, h) => {
       try {
-        await (await databaseService).authenticate()
+        await databaseService.authenticate()
         return h.response('ok').code(OK)
       } catch (ex) {
         console.error('error running healthy check', ex)
