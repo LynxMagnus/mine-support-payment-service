@@ -6,11 +6,10 @@ describe('Server tests', () => {
     jest.mock('../../../../server/config', () => {
       return {
         port: 3004,
-        env: 'production'
+        isDev: false
       }
     })
 
-    jest.mock('../../../../server/services/message-service')
     createServer = require('../../../../server')
     server = await createServer()
 
@@ -25,10 +24,22 @@ describe('Server tests', () => {
       }
     })
 
-    jest.mock('../../../../server/services/message-service')
     createServer = require('../../../../server')
     server = await createServer()
 
     expect(server).toBeDefined()
+  })
+
+  beforeEach(() => {
+    jest.resetModules()
+    jest.mock('../../../../server/services/message-service')
+    jest.mock('../../../../server/plugins/router', () => {
+      return {
+        plugin: {
+          name: 'mockrouter',
+          register: () => {}
+        }
+      }
+    })
   })
 })
