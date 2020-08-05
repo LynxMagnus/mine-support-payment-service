@@ -4,16 +4,6 @@ const scheduleMessageAction = require('./schedule-message-action')
 const paymentMessageAction = require('./payment-message-action')
 const { isProd, paymentQueue, scheduleQueue } = require('../config')
 
-process.on('SIGTERM', async function () {
-  await messageService.closeConnections()
-  process.exit(0)
-})
-
-process.on('SIGINT', async function () {
-  await messageService.closeConnections()
-  process.exit(0)
-})
-
 class MessageService {
   constructor (credentials) {
     this.closeConnections = this.closeConnections.bind(this)
@@ -29,10 +19,7 @@ class MessageService {
   }
 }
 
-let messageService
-
 module.exports = async function () {
   const credentials = isProd ? await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net' }) : undefined
-  messageService = new MessageService(credentials)
-  return messageService
+  return new MessageService(credentials)
 }
