@@ -1,25 +1,26 @@
 describe('Healthy test', () => {
   let server
-  let databaseService
+
+  jest.mock('../../../../server/services/database-service')
+  const createServer = require('../../../../server')
+  const { sequelize } = require('../../../../server/services/database-service')
+  sequelize.authenticate = jest.fn()
+  jest.mock('../../../../server/services/message-service')
 
   beforeEach(async () => {
-    jest.mock('../../../../server/services/message-service')
-    const createServer = require('../../../../server')
-    databaseService = require('../../../../server/services/database-service')
-    databaseService.authenticate = jest.fn()
     server = await createServer()
     await server.initialize()
   })
 
-  test('GET /healthy route returns 200', async () => {
+  test('GET /healthy returns 200', async () => {
     const options = {
       method: 'GET',
       url: '/healthy'
     }
-
-    databaseService.authenticate.mockReturnValue(true)
+    sequelize.authenticate.mockReturnValue(true)
 
     const response = await server.inject(options)
+
     expect(response.statusCode).toBe(200)
   })
 
@@ -30,7 +31,7 @@ describe('Healthy test', () => {
     }
 
     const errorMessage = 'database connection timeout'
-    databaseService.authenticate.mockImplementation(() => { throw new Error(errorMessage) })
+    sequelize.authenticate.mockImplementation(() => { throw new Error(errorMessage) })
 
     const response = await server.inject(options)
 
@@ -43,7 +44,7 @@ describe('Healthy test', () => {
     jest.clearAllMocks()
   })
 
-  afterAll(async () => {
+  afterAll(() => {
     jest.resetAllMocks()
   })
 })
