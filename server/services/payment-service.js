@@ -17,7 +17,7 @@ async function create (calculation) {
     return
   }
   console.log('creating payment')
-  await (await models).payment.upsert({
+  await models.payment.upsert({
     claimId: calculation.claimId,
     value: calculation.value
   })
