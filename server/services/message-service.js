@@ -6,7 +6,6 @@ const { isProd, paymentQueue, scheduleQueue } = require('../config')
 
 class MessageService {
   constructor (credentials) {
-    this.closeConnections = this.closeConnections.bind(this)
     const paymentAction = payment => paymentMessageAction(payment)
     this.paymentMessageReceiver = new MessageReceiver('payment-queue-receiver', paymentQueue, credentials, paymentAction)
     const scheduleAction = claim => scheduleMessageAction(claim)
