@@ -1,4 +1,4 @@
-const models = require('../server/models')
+const { models, sequelize } = require('../services/database-service')
 
 async function truncate () {
   await models.payment.destroy({ truncate: true })
@@ -14,7 +14,7 @@ async function createPaymentRecords (schedules) {
 }
 
 async function close () {
-  await models.sequelize.close()
+  await sequelize.close()
 }
 
 module.exports = {
