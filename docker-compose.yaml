@@ -30,6 +30,7 @@ services:
       SCHEDULE_QUEUE_ADDRESS: ffc-demo-schedule-${MESSAGE_QUEUE_SUFFIX}
     volumes:
       - ./server/:/home/node/server/
+      - ./test/:/home/node/test/
       - ./scripts/:/home/node/scripts/
       - ./index.js:/home/node/index.js
       - ./package.json:/home/node/package.json

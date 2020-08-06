@@ -9,7 +9,7 @@ services:
       context: .
       target: development
     image: ffc-demo-payment-service
-    command: sh -c "scripts/wait-for-dependencies && npm run start:watch"
+    command: sh -c "npm run start:watch"
     ports:
       - "3004:3004"
 

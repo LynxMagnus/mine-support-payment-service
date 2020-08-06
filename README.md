@@ -94,9 +94,7 @@ The [package.json](package.json) contains scripts to run the different suites of
 
 Tests that rely on containers to provide databases may be run by passing the suite to be run to the docker-compose command. An example command to run the integration tests is shown below.
 
-`docker-compose -f docker-compose.yaml -f docker-compose.test.yaml run ffc-demo-payment-service sh -c "scripts/wait-for-dependencies scripts/wait-for-dependencies && npm run test:integration"`
-
-Note that the command makes use of the [wait-for-dependencies](scripts/wait-for-dependencies) script to ensure the database is ready for the tests to run, and wraps the command in a `sh -c` for compatibility with `tini` in the Docker container.
+`docker-compose -f docker-compose.yaml -f docker-compose.test.yaml run ffc-demo-payment-service sh -c "pm run test:integration"`
 
 ### Contract testing
 
@@ -119,6 +117,11 @@ Container images are built using Docker Compose, with the same images used to ru
 
 Use Docker Compose to run service locally.
 
+The service uses [Liquibase](https://www.liquibase.org/) to manage database migrations. To ensure the appropriate migrations have been run the utility script `scripts/start` may be run to execute the migrations, then the application.
+
+Alternatively the steps can be run manually:
+* run migrations
+  * `docker-compose -f docker-compose.migrate.yaml run database-up`
 * start
   * `docker-compose up`
 * stop
@@ -136,7 +139,9 @@ This service reacts to messages retrieved from an Azure Service Bus.
 
 `docker-compose up` to start the service with a connection to the configured Azure Service Bus instance and developer queues.
 
-Test messages can be sent via a client that supports sending to Azure Service Bus. Messages should match the format of the sample JSON below.
+A utility script `scripts/send-test-message` is provided to send a message once a service has been started.
+
+Alternatively test messages can be sent via a client that supports sending to Azure Service Bus.
 
 Sample valid JSON for each message queue is:
 
@@ -152,6 +157,8 @@ Sample valid JSON for each message queue is:
   "claimId": "MINE123"
 }
 ```
+
+
 **Database**
 
 The insertion of records into the postgres db can be checked using psql. For example
