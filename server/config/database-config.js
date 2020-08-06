@@ -1,12 +1,12 @@
 const auth = require('@azure/ms-rest-nodeauth')
-const { environments: env } = require('./constants')
+const { development, production, test } = require('./constants').environments
 
 function logRetry (message) {
   console.log(message)
 }
 
 function isProd () {
-  return process.env.NODE_ENV === env.production
+  return process.env.NODE_ENV === production
 }
 
 const hooks = {
@@ -45,8 +45,8 @@ const dbConfig = {
 }
 
 const config = {}
-config[env.development] = dbConfig
-config[env.production] = dbConfig
-config[env.test] = dbConfig
+config[development] = dbConfig
+config[production] = dbConfig
+config[test] = dbConfig
 
 module.exports = config

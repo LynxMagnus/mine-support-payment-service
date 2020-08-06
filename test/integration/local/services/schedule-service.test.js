@@ -1,4 +1,3 @@
-
 const dbHelper = require('../../../db-helper')
 const scheduleService = require('../../../../server/services/schedule-service')
 
@@ -7,8 +6,8 @@ describe('Payment service test', () => {
     await dbHelper.truncate()
   })
 
-  afterAll(() => {
-    dbHelper.close()
+  afterAll(async () => {
+    await dbHelper.close()
   })
 
   test('create creates payment schedules', async () => {

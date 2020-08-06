@@ -1,4 +1,3 @@
-
 const scheduleService = require('../../../server/services/schedule-service')
 jest.mock('../../../server/services/schedule-service')
 
@@ -14,9 +13,11 @@ describe('schedule message action', () => {
     expect(scheduleService.create).toHaveBeenCalledTimes(1)
     expect(scheduleService.create).toHaveBeenCalledWith(claim, expect.any(Date))
   })
+
   afterEach(() => {
     jest.clearAllMocks()
   })
+
   afterAll(() => {
     jest.resetAllMocks()
   })

@@ -17,8 +17,8 @@ describe('Schedule AMQP contract test', () => {
     })
   })
 
-  afterAll(() => {
-    dbHelper.close()
+  afterAll(async () => {
+    await dbHelper.close()
   })
 
   test('scheduleMessageAction can process message', async () => {

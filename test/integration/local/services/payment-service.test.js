@@ -16,8 +16,8 @@ describe('Payment service test', () => {
     await dbHelper.truncate()
   })
 
-  afterAll(() => {
-    dbHelper.close()
+  afterAll(async () => {
+    await dbHelper.close()
   })
 
   test('create creates payment', async () => {
@@ -30,6 +30,7 @@ describe('Payment service test', () => {
     expect(result.claimId).toEqual(payment1.claimId)
     expect(result.paymentAmount).toEqual('101.00')
   })
+
   test('getById returns undefined for unknown record', async () => {
     await paymentService.create(payment1)
     const result = await paymentService.getById('noSuchId')

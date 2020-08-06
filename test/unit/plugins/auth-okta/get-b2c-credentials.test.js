@@ -1,4 +1,3 @@
-
 const config = require('../../../../server/config')
 const getB2cConfig = require('../../../../server/config/get-b2c-config')
 

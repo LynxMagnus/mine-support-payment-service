@@ -1,7 +1,7 @@
 const Joi = require('@hapi/joi')
 const mqConfig = require('./mq-config')
 const dbConfig = require('./database-config')
-const { environments: env } = require('./constants')
+const { development, production, test } = require('./constants').environments
 
 const getOktaConfig = require('./get-okta-config')
 const getB2cConfig = require('./get-b2c-config')
@@ -9,7 +9,7 @@ const getB2cConfig = require('./get-b2c-config')
 // Define config schema
 const schema = Joi.object({
   port: Joi.number().default(3004),
-  env: Joi.string().valid(env.development, env.test, env.production).default(env.development),
+  env: Joi.string().valid(development, test, production).default(development),
   oidcProvider: Joi.string().default('dev').lowercase()
 })
 
@@ -34,11 +34,11 @@ if (result.error) {
 const value = result.value
 
 // Add some helper props
-value.isDev = value.env === env.development
-value.isProd = value.env === env.production
+value.isDev = value.env === development
+value.isProd = value.env === production
 
-value.scheduleQueueConfig = mqConfig.scheduleQueueConfig
-value.paymentQueueConfig = mqConfig.paymentQueueConfig
+value.scheduleQueue = mqConfig.scheduleQueue
+value.paymentQueue = mqConfig.paymentQueue
 
 value.dbConfig = dbConfig
 if (value.oidcProvider === 'okta') {

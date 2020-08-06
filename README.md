@@ -92,11 +92,11 @@ npm run test:unit
 The [package.json](package.json) contains scripts to run the different suites of tests individually: `test:unit`,
 `test:integration`, and `test:pact`. Unit tests may be run locally with the appropriate environment variables found in the [docker-compose](docker-compose.yaml) file.
 
-Tests that rely on containers to provide message queues and databases may be run by passing the suite to be run to the docker-compose command. An example command to run the integation tests is shown below.
+Tests that rely on containers to provide databases may be run by passing the suite to be run to the docker-compose command. An example command to run the integration tests is shown below.
 
 `docker-compose -f docker-compose.yaml -f docker-compose.test.yaml run ffc-demo-payment-service sh -c "scripts/wait-for-dependencies scripts/wait-for-dependencies && npm run test:integration"`
 
-Note that the command makes use of the [wait-for-dependencies](scripts/wait-for-dependencies) script to ensure the database and queues are ready for the tests to run, and wraps the command in a `sh -c` for compatibility with `tini` in the Docker container.
+Note that the command makes use of the [wait-for-dependencies](scripts/wait-for-dependencies) script to ensure the database is ready for the tests to run, and wraps the command in a `sh -c` for compatibility with `tini` in the Docker container.
 
 ### Contract testing
 
@@ -129,7 +129,6 @@ Additional Docker Compose files are provided for scenarios such as linking to ot
 Link to other services and expose inspection Artemis and Postgres ports:
 * `docker network create ffc-demo`
 * `docker-compose -f docker-compose.yaml -f docker-compose.link.yaml -f docker-compose.override.yaml up`
-
 
 ### Test the service
 
@@ -165,9 +164,9 @@ Note: the dev postgres password is defined in docker-compose.yaml
 
 ### Link to sibling services
 
-To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as message queues. The most convenient approach for this is to start the entire application stack from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository.
+To test interactions with sibling services in the FFC demo application, it is necessary to connect each service to an external Docker network, along with shared dependencies such as databases. The most convenient approach for this is to start the entire application stack from the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) repository.
 
-It is also possible to run a limited subset of the application stack. See the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) Readme for instructions.
+It is also possible to run a limited subset of the application stack. See the [`ffc-demo-development`](https://github.com/DEFRA/ffc-demo-development) README for instructions.
 
 ### Deploy to Kubernetes
 

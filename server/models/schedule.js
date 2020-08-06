@@ -1,4 +1,3 @@
-'use strict'
 module.exports = (sequelize, DataTypes) => {
   const Schedule = sequelize.define('schedule', {
     scheduleId: { type: DataTypes.INTEGER, primaryKey: true },

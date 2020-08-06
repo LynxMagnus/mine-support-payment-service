@@ -3,16 +3,17 @@ const MessageReceiver = require('../../../server/services/messaging/message-rece
 jest.mock('../../../server/services/messaging/message-receiver')
 
 describe('message service', () => {
+  const createMessageService = require('../../../server/services/message-service')
   let messageService
 
   beforeAll(async () => {
-    messageService = await require('../../../server/services/message-service')
+    messageService = await createMessageService()
   })
 
   test('MessageService should create a MessageReceiver for schedule and payment queues', async () => {
     expect(MessageReceiver).toHaveBeenCalledTimes(2)
-    expect(MessageReceiver).toHaveBeenNthCalledWith(1, 'payment-queue-receiver', config.paymentQueueConfig, undefined, expect.any(Function))
-    expect(MessageReceiver).toHaveBeenNthCalledWith(2, 'schedule-queue-receiver', config.scheduleQueueConfig, undefined, expect.any(Function))
+    expect(MessageReceiver).toHaveBeenNthCalledWith(1, 'payment-queue-receiver', config.paymentQueue, undefined, expect.any(Function))
+    expect(MessageReceiver).toHaveBeenNthCalledWith(2, 'schedule-queue-receiver', config.scheduleQueue, undefined, expect.any(Function))
   })
 
   test('close connections calls closeConnection on both receivers', async () => {

@@ -1,20 +1,20 @@
-let db = require('../server/models')
+const { models, sequelize } = require('../services/database-service')
 
 async function truncate () {
-  db = await db
-  await db.payment.destroy({ truncate: true })
-  await db.schedule.destroy({ truncate: true })
+  await models.payment.destroy({ truncate: true })
+  await models.schedule.destroy({ truncate: true })
 }
 
 async function createScheduleRecords (schedules) {
-  await (await db).schedule.bulkCreate(schedules)
+  await models.schedule.bulkCreate(schedules)
 }
+
 async function createPaymentRecords (schedules) {
-  await (await db).payment.bulkCreate(schedules)
+  await models.payment.bulkCreate(schedules)
 }
 
 async function close () {
-  await (await db).sequelize.close()
+  await sequelize.close()
 }
 
 module.exports = {

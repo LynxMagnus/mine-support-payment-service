@@ -2,25 +2,14 @@ const auth = require('@azure/ms-rest-nodeauth')
 const MessageReceiver = require('./messaging/message-receiver')
 const scheduleMessageAction = require('./schedule-message-action')
 const paymentMessageAction = require('./payment-message-action')
-const { isProd, paymentQueueConfig, scheduleQueueConfig } = require('../config')
-
-process.on('SIGTERM', function () {
-  messageService.closeConnections()
-  process.exit(0)
-})
-
-process.on('SIGINT', function () {
-  messageService.closeConnections()
-  process.exit(0)
-})
+const { isProd, paymentQueue, scheduleQueue } = require('../config')
 
 class MessageService {
   constructor (credentials) {
-    this.closeConnections = this.closeConnections.bind(this)
     const paymentAction = payment => paymentMessageAction(payment)
-    this.paymentMessageReceiver = new MessageReceiver('payment-queue-receiver', paymentQueueConfig, credentials, paymentAction)
+    this.paymentMessageReceiver = new MessageReceiver('payment-queue-receiver', paymentQueue, credentials, paymentAction)
     const scheduleAction = claim => scheduleMessageAction(claim)
-    this.scheduleMessageReceiver = new MessageReceiver('schedule-queue-receiver', scheduleQueueConfig, credentials, scheduleAction)
+    this.scheduleMessageReceiver = new MessageReceiver('schedule-queue-receiver', scheduleQueue, credentials, scheduleAction)
   }
 
   async closeConnections () {
@@ -29,10 +18,7 @@ class MessageService {
   }
 }
 
-let messageService
-
-module.exports = (async function createConnections () {
+module.exports = async function () {
   const credentials = isProd ? await auth.loginWithVmMSI({ resource: 'https://servicebus.azure.net' }) : undefined
-  messageService = new MessageService(credentials)
-  return messageService
-}())
+  return new MessageService(credentials)
+}
