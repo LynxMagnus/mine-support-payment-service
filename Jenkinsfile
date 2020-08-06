@@ -1,3 +1,3 @@
-@Library('defra-library@v-8') _
+@Library('defra-library@psd-631-liquibase-migrations') _
 
 buildNodeJs environment: 'dev'
