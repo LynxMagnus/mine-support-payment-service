@@ -1,3 +1,3 @@
-@Library('defra-library@v-8') _
+@Library('defra-library@psd-901-deletecustom-github') _
 
 buildNodeJs environment: 'dev'
