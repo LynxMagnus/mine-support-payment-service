@@ -23,7 +23,7 @@ compose() {
 
   # Ensure container images are up to date
   compose build
-  docker-compose -f docker-compose.migrate.yaml  -p "${service}-test" run database-up
+  docker-compose -f docker-compose.migrate.yaml  -p "${service}-test" run --rm database-up
   # Run tests
   compose run ${service} ${command}
 

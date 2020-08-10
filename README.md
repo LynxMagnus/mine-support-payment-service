@@ -94,7 +94,7 @@ The [package.json](package.json) contains scripts to run the different suites of
 
 Tests that rely on containers to provide databases may be run by passing the suite to be run to the docker-compose command. An example command to run the integration tests is shown below.
 
-`docker-compose -f docker-compose.yaml -f docker-compose.test.yaml run ffc-demo-payment-service sh -c "pm run test:integration"`
+`docker-compose -f docker-compose.yaml -f docker-compose.test.yaml run ffc-demo-payment-service sh -c "npm run test:integration"`
 
 ### Contract testing
 
@@ -121,7 +121,7 @@ The service uses [Liquibase](https://www.liquibase.org/) to manage database migr
 
 Alternatively the steps can be run manually:
 * run migrations
-  * `docker-compose -f docker-compose.migrate.yaml run database-up`
+  * `docker-compose -f docker-compose.migrate.yaml run --rm database-up`
 * start
   * `docker-compose up`
 * stop
