@@ -8,11 +8,6 @@ services:
     build:
       context: .
       target: development
-    command: >
-      sh -c "
-        scripts/wait-for/wait-for ffc-demo-payment-postgres:5432 --
-        npm run migrate &&
-        npm run start:watch"
     environment:
       MESSAGE_QUEUE_HOST : ffc-demo-message-queue
     networks:

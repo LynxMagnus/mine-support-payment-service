@@ -1,11 +1,10 @@
 {
   "name": "ffc-demo-payment-service",
-  "version": "3.10.0",
+  "version": "3.11.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build:watch": "nodemon --exec npm run build --ext scss --legacy-watch",
-    "migrate": "sequelize db:migrate",
     "pretest": "npm run test:lint",
     "test": "jest --runInBand",
     "test:lint": "standard",
@@ -26,8 +25,7 @@
     "applicationinsights": "^1.8.2",
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.12.1",
-    "sequelize": "^5.22.3",
-    "sequelize-cli": "^5.5.1"
+    "sequelize": "^5.22.3"
   },
   "devDependencies": {
     "@hapi/good": "^9.0.0",
