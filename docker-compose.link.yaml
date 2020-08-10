@@ -8,8 +8,6 @@ services:
     build:
       context: .
       target: development
-    command: >
-      sh -c "npm run start:watch"
     environment:
       MESSAGE_QUEUE_HOST : ffc-demo-message-queue
     networks:
