@@ -1,3 +1,3 @@
-@Library('defra-library@v-8') _
+@Library('defra-library@psd-907-dynamic-schema') _
 
 buildNodeJs environment: 'dev'
