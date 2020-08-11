@@ -3,6 +3,7 @@ version: '3.7'
 x-common-migration: &common-migration
   POSTGRES_HOST: ${POSTGRES_HOST:-ffc-demo-payment-postgres}
   SCHEMA_ROLE: ${SCHEMA_ROLE:-postgres}
+  SCHEMA_USERNAME: ${SCHEMA_USERNAME:-postgres}
   SCHEMA_PASSWORD: ${SCHEMA_PASSWORD:-ppp}
   SCHEMA_NAME: ${SCHEMA_NAME:-public}
 
@@ -39,6 +40,31 @@ services:
       - ./changelog/:/liquibase/changelog/
       - ./scripts/:/scripts/
 
+  schema-up:
+    image: liquibase/liquibase:3.10.x
+    environment:
+      << : *common-migration
+      << : *common-postgres
+    entrypoint: >
+      sh -c "/scripts/migration/schema-up"
+    depends_on:
+      - ffc-demo-payment-postgres
+    volumes:
+      - ./changelog/:/liquibase/changelog/
+      - ./scripts/:/scripts/
+      
+  schema-down:
+    image: liquibase/liquibase:3.10.x
+    environment:
+      << : *common-migration
+      << : *common-postgres
+    entrypoint: >
+      sh -c "/scripts/migration/schema-down"
+    depends_on:
+      - ffc-demo-payment-postgres
+    volumes:
+      - ./changelog/:/liquibase/changelog/
+      - ./scripts/:/scripts/
   ffc-demo-payment-postgres:
     image: postgres:11.4-alpine
     environment: *common-postgres
