@@ -5,7 +5,7 @@ x-common-migration: &common-migration
   SCHEMA_ROLE: ${POSTGRES_SCHEMA_ROLE:-postgres}
   SCHEMA_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
   SCHEMA_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
-  SCHEMA_NAME: ${SCHEMA_NAME:-public}
+  SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
 
 x-common-postgres: &common-postgres
   POSTGRES_PORT: 5432
