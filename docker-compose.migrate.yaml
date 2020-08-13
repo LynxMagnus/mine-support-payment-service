@@ -2,8 +2,8 @@ version: '3.7'
 
 x-common-migration: &common-migration
   POSTGRES_HOST: ${POSTGRES_HOST:-ffc-demo-payment-postgres}
-  SCHEMA_ROLE: ${SCHEMA_ROLE:-postgres}
-  SCHEMA_USERNAME: ${SCHEMA_USERNAME:-postgres}
+  SCHEMA_ROLE: ${POSTGRES_SCHEMA_ROLE:-postgres}
+  SCHEMA_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
   SCHEMA_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
   SCHEMA_NAME: ${SCHEMA_NAME:-public}
 
