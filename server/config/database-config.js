@@ -41,7 +41,7 @@ const dbConfig = {
   password: process.env.POSTGRES_PASSWORD,
   port: process.env.POSTGRES_PORT || 5432,
   retry,
-  schema: process.env.POSTGRES_SCHEMA || 'public',
+  schema: process.env.POSTGRES_SCHEMA_NAME || 'public',
   username: process.env.POSTGRES_USERNAME
 }
 

@@ -40,21 +40,25 @@ and
 
 The following environment variables are required by the application container. Values for development are set in the Docker Compose configuration. Default values for production-like deployments are set in the Helm chart and may be overridden by build and release pipelines.
 
-| Name                           | Description                             | Required  | Default     | Valid                       | Notes                                                                             |
-| ----                           | -----------                             | :-------: | -------     | -----                       | -----                                                                             |
-| APPINSIGHTS_CLOUDROLE          | Role used for filtering metrics         | no        |             |                             | Set to `ffc-demo-payment-service-local` in docker compose files                   |
-| APPINSIGHTS_INSTRUMENTATIONKEY | Key for application insight             | no        |             |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
-| B2C_CLIENT_ID                  | Client ID of B2C OpenID Connect app     | no        |             |                             |                                                                                   |
-| B2C_CLIENT_SECRET              | Client Secret of B2C OpenID Connect app | no        |             |                             |                                                                                   |
-| B2C_URL                        | OAuth URL of B2C OpenID Connect app     | no        |             |                             |                                                                                   |
-| NODE_ENV                       | Node environment                        | no        | development | development,test,production |                                                                                   |
-| PAYMENT_QUEUE_ADDRESS          | 'Payment' message queue name            | no        | payment     |                             |                                                                                   |
-| PORT                           | Port number                             | no        | 3004        |                             |                                                                                   |
-| OIDC_PROVIDER                  | set the OIDC provider to use            | no        | dev         | dev, okta, b2c              |                                                                                   |
-| OKTA_AUTH_SERVER_ID            | ID of Okta custom authorisation server  | no        |             |                             |                                                                                   |
-| OKTA_CLIENT_ID                 | Client ID of Okta OpenID Connect app    | no        |             |                             |                                                                                   |
-| OKTA_DOMAIN                    | Okta domain, i.e. `mysite.okta.com`     | no        |             |                             |                                                                                   |
-| SCHEDULE_QUEUE_ADDRESS         | 'Schedule' message queue name           | no        | schedule    |                             |                                                                                   |
+| Name                           | Description                             | Required  | Default                   | Valid                       | Notes                                                                             |
+| ----                           | -----------                             | :-------: | -------                   | -----                       | -----                                                                             |
+| APPINSIGHTS_CLOUDROLE          | Role used for filtering metrics         | no        |                           |                             | Set to `ffc-demo-payment-service-local` in docker compose files                   |
+| APPINSIGHTS_INSTRUMENTATIONKEY | Key for application insight             | no        |                           |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
+| B2C_CLIENT_ID                  | Client ID of B2C OpenID Connect app     | no        |                           |                             |                                                                                   |
+| B2C_CLIENT_SECRET              | Client Secret of B2C OpenID Connect app | no        |                           |                             |                                                                                   |
+| B2C_URL                        | OAuth URL of B2C OpenID Connect app     | no        |                           |                             |                                                                                   |
+| NODE_ENV                       | Node environment                        | no        | development               | development,test,production |                                                                                   |
+| PAYMENT_QUEUE_ADDRESS          | 'Payment' message queue name            | no        | payment                   |                             |                                                                                   |
+| PORT                           | Port number                             | no        | 3004                      |                             |                                                                                   |
+| POSTGRES_HOST                  | Host of database server                 | no        | ffc-demo-payment-postgres |                             | the service can be run against an external database by setting the database host and schema credentials as env vars |
+| POSTGRES_SCHEMA_PASSWORD       | Password of schema user                 | no        | ppp                       |                             | see above                                                                         |
+| POSTGRES_SCHEMA_NAME           | Name of postgres schema                 | no        | public                    |                             | see above                                                                         |
+| POSTGRES_SCHEMA_USER           | schema user account                     | no        | postgres                  |                             | see above                                                                         |
+| OIDC_PROVIDER                  | set the OIDC provider to use            | no        | dev                       | dev, okta, b2c              |                                                                                   |
+| OKTA_AUTH_SERVER_ID            | ID of Okta custom authorisation server  | no        |                           |                             |                                                                                   |
+| OKTA_CLIENT_ID                 | Client ID of Okta OpenID Connect app    | no        |                           |                             |                                                                                   |
+| OKTA_DOMAIN                    | Okta domain, i.e. `mysite.okta.com`     | no        |                           |                             |                                                                                   |
+| SCHEDULE_QUEUE_ADDRESS         | 'Schedule' message queue name           | no        | schedule                  |                             |                                                                                   |
 
 ## Building the project locally
 

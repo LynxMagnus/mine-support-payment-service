@@ -23,10 +23,11 @@ services:
       OKTA_DOMAIN: ${OKTA_DOMAIN}
       PAYMENT_QUEUE_ADDRESS: ffc-demo-payment-${MESSAGE_QUEUE_SUFFIX}
       POSTGRES_DB: ffc_demo_payments
-      POSTGRES_HOST: ffc-demo-payment-postgres
-      POSTGRES_PASSWORD: ppp
+      POSTGRES_HOST: ${POSTGRES_HOST:-ffc-demo-payment-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
       POSTGRES_PORT: 5432
-      POSTGRES_USERNAME: postgres
+      POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
+      POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
       SCHEDULE_QUEUE_ADDRESS: ffc-demo-schedule-${MESSAGE_QUEUE_SUFFIX}
     volumes:
       - ./server/:/home/node/server/
