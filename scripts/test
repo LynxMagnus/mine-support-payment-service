@@ -7,11 +7,7 @@ command="$@"
 service="ffc-demo-payment-service"
 
 compose() {
-  docker-compose \
-    -f docker-compose.yaml \
-    -f docker-compose.test.yaml \
-    -p "${service}-test" \
-    $@
+  docker-compose -f docker-compose.yaml -f docker-compose.test.yaml -p "${service}-test" $@
 }
 
 (
@@ -19,15 +15,15 @@ compose() {
 
   # Guarantee clean environment
   compose down -v
-  docker-compose -f docker-compose.migrate.yaml  -p "${service}-test" down
+  docker-compose -f docker-compose.migrate.yaml -p "${service}-test" down
 
   # Ensure container images are up to date
   compose build
-  docker-compose -f docker-compose.migrate.yaml  -p "${service}-test" run --rm database-up
+  docker-compose -f docker-compose.migrate.yaml -p "${service}-test" run --rm database-up
   # Run tests
   compose run ${service} ${command}
 
   # Clean up
   compose down -v
-  docker-compose -f docker-compose.migrate.yaml  -p "${service}-test" down
+  docker-compose -f docker-compose.migrate.yaml -p "${service}-test" down
 )

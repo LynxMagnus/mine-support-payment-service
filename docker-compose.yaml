@@ -26,6 +26,7 @@ services:
       POSTGRES_HOST: ffc-demo-payment-postgres
       POSTGRES_PASSWORD: ppp
       POSTGRES_PORT: 5432
+      POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
       POSTGRES_USERNAME: postgres
       SCHEDULE_QUEUE_ADDRESS: ffc-demo-schedule-${MESSAGE_QUEUE_SUFFIX}
     volumes:
