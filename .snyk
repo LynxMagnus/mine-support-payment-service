@@ -4,9 +4,16 @@ version: v1.14.1
 ignore:
   SNYK-JS-AJV-584908:
     - '@okta/jwt-verifier > jwks-rsa > request > har-validator > ajv':
-        reason: No known exploit, Okta no longer used
+        reason: 'No known exploit, Okta no longer used'
         expires: '2020-12-31T00:00:00.000Z'
     - '@azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv':
         reason: No known exploit
         expires: '2020-12-31T00:00:00.000Z'
+  SNYK-JS-LODASH-590103:
+    - '@okta/jwt-verifier > jwks-rsa > lru-memoizer > lodash':
+        reason: no known exploit
+        expires: '2020-09-16T10:03:38.944Z'
+    - sequelize > lodash:
+        reason: no known exploit
+        expires: '2020-09-16T10:03:38.944Z'
 patch: {}
