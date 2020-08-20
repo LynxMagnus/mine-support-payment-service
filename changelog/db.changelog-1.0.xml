@@ -16,13 +16,6 @@
         </createTable>
     </changeSet>
     <changeSet author="liquibase (generated)" id="1596113695614-2">
-        <createTable tableName="SequelizeMeta">
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="SequelizeMeta_pkey"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="liquibase (generated)" id="1596113695614-3">
         <createTable tableName="payments">
             <column name="claimId" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="payments_pkey"/>
