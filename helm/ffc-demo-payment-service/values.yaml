@@ -64,8 +64,6 @@ postgresService:
   postgresHost: ffc-demo-payments-postgres
   postgresPort: 5432
   postgresUser: postgres
-  postgresSchema: ffc_demo_payment_service119
-  postgresSchemaUser: ffc_demo_payment_service119_role@sndffcdbssq1002
 
 readinessProbe:
   path: /healthy
