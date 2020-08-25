@@ -32,7 +32,7 @@
             </column>
         </createTable>
     </changeSet>
-      <changeSet author="Mark Harrop" id="1596113695614-3">
+    <changeSet author="Mark Harrop" id="1596113695614-3">
       <tagDatabase tag="v1.0.0" />
     </changeSet>
 </databaseChangeLog>
