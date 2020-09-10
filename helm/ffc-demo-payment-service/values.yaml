@@ -63,6 +63,7 @@ postgresService:
   postgresExternalName:
   postgresHost: ffc-demo-payments-postgres
   postgresPort: 5432
+  postgresSchema: public
   postgresUser: postgres
 
 readinessProbe:
