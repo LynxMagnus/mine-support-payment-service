@@ -1,7 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
-    <changeSet author="liquibase (generated)" id="1596113695614-1">
+    <changeSet author="Fay Toward" id="1596113695614-0">
       <tagDatabase tag="v0.0.0" />
+    </changeSet>
+    <changeSet author="liquibase (generated)" id="1596113695614-1">
         <createTable tableName="schedules">
             <column autoIncrement="true" name="scheduleId" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="schedules_pkey"/>
@@ -17,7 +19,6 @@
         </createTable>
     </changeSet>
     <changeSet author="liquibase (generated)" id="1596113695614-2">
-    <tagDatabase tag="v1.0.0" />
         <createTable tableName="SequelizeMeta">
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SequelizeMeta_pkey"/>
@@ -25,7 +26,6 @@
         </createTable>
     </changeSet>
     <changeSet author="liquibase (generated)" id="1596113695614-3">
-    <tagDatabase tag="v2.0.0" />
         <createTable tableName="payments">
             <column name="claimId" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="payments_pkey"/>
@@ -38,5 +38,8 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+    </changeSet>
+    <changeSet author="Fay Toward" id="1596113695614-4">
+      <tagDatabase tag="v1.0.0" />
     </changeSet>
 </databaseChangeLog>
