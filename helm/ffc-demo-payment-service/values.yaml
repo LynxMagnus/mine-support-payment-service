@@ -52,8 +52,6 @@ container:
   messageQueueHost: amq
   scheduleQueueAddress: schedule
   paymentQueueAddress: payment
-  command: ["/bin/sh","-c"]
-  args: ["npm --no-update-notifier run migrate; node index"]
 
 postgresService:
   postgresDb: ffc_demo_payment_service
@@ -63,6 +61,7 @@ postgresService:
   postgresExternalName:
   postgresHost: ffc-demo-payments-postgres
   postgresPort: 5432
+  postgresSchema: public
   postgresUser: postgres
 
 readinessProbe:
