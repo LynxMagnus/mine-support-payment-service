@@ -3,7 +3,7 @@ const MessageSender = require('../../../../server/services/messaging/message-sen
 const config = require('../../../../server/config')
 
 describe('message receiver', () => {
-  const message = { content: 'hello', claimId: 'jeff' }
+  const message = { content: 'hello', claimId: 'testClaimId' }
   const testConfig = { ...config.paymentQueue }
   let messageReceiver
   let messageSender
@@ -20,6 +20,7 @@ describe('message receiver', () => {
 
   test('message receiver can receive messages', (done) => {
     const action = (result) => {
+      expect(result.claimId).toEqual(message.claimId)
       done()
     }
     messageReceiver = new MessageReceiver('test-receiver', testConfig, undefined, action)

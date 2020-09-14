@@ -6,7 +6,7 @@
   "scripts": {
     "build:watch": "nodemon --exec npm run build --ext scss --legacy-watch",
     "pretest": "npm run test:lint",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --forceExit",
     "test:lint": "standard",
     "test:pact": "jest --testPathPattern=test/contract --coverage=false",
     "test:integration": "jest --testPathPattern=test/integration --coverage=false",
@@ -18,7 +18,7 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@azure/ms-rest-nodeauth": "^3.0.5",
-    "@azure/service-bus": "^1.1.7",
+    "@azure/service-bus": "^1.1.9",
     "@hapi/hapi": "^19.2.0",
     "@hapi/joi": "^17.1.1",
     "@okta/jwt-verifier": "^1.0.0",
