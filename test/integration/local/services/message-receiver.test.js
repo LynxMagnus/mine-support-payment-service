@@ -18,11 +18,13 @@ describe('message receiver', () => {
     await messageReceiver.closeConnection()
   })
 
-  test('message receiver can receive messages', (done) => {
-    const action = (result) => {
-      expect(result.claimId).toEqual(message.claimId)
-      done()
-    }
+  test('message receiver can receive messages', () => {
+    expect.assertions(1)
+    let done
+    const promise = new Promise((resolve) => { done = resolve })
+    const action = (result) => done(result.hello === message.hello)
     messageReceiver = new MessageReceiver('test-receiver', testConfig, undefined, action)
+
+    return expect(promise).resolves.toEqual(true)
   })
 })
