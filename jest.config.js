@@ -21,7 +21,6 @@ module.exports = {
     'node_modules'
   ],
   testPathIgnorePatterns: [
-    'test/contract/'
   ],
   reporters: [
     'default',

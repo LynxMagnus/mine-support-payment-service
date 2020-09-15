@@ -27,6 +27,7 @@ describe('Pact Verification', () => {
     jest.mock('../../server/plugins/auth/okta-jwt-verifier')
     oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { roles: ['payment-admin'] } }))
 
+    jest.mock('../../server/services/message-service')
     createServer = require('../../server')
   })
 
