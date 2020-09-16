@@ -6,9 +6,10 @@ Digital service mock to claim public money in the event property subsides into m
 
 ## Prerequisites
 
-- Azure Service Bus instance
+- Access to an instance of an
+[Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/)(ASB).
 
-Either:
+And either:
 - Docker
 - Docker Compose
 
@@ -33,7 +34,6 @@ and
 | ---------------------------------- | -------------------------------------------------------------------------------------------- |
 | MESSAGE_QUEUE_HOST                 | Azure Service Bus hostname, e.g. `myservicebus.servicebus.windows.net`                       |
 | MESSAGE_QUEUE_PASSWORD             | Azure Service Bus SAS policy key                                                             |
-| MESSAGE_QUEUE_SUFFIX               | Developer specific queue suffix to prevent collisions, only required for local development   |
 | MESSAGE_QUEUE_USER                 | Azure Service Bus SAS policy name, e.g. `RootManageSharedAccessKey`                          |
 
 ## Environment variables
@@ -99,6 +99,15 @@ The [package.json](package.json) contains scripts to run the different suites of
 Tests that rely on containers to provide databases may be run by passing the suite to be run to the docker-compose command. An example command to run the integration tests is shown below.
 
 `docker-compose -f docker-compose.yaml -f docker-compose.test.yaml run ffc-demo-payment-service sh -c "npm run test:integration"`
+
+Running the integration tests locally requires access to ASB, this can be
+achieved by setting the following environment variables:
+
+`MESSAGE_QUEUE_HOST`, `MESSAGE_QUEUE_PASSWORD`, `MESSAGE_QUEUE_USER`.
+`PAYMENT_QUEUE_ADDRESS` & `SCHEDULE_QUEUE_ADDRESS`
+must be set to valid, developer specific queues that are available on ASB, e.g.
+for the payment queue that would be `ffc-demo-payment-<initials>` where
+`<initials>` are the initials of the developer.
 
 ### Contract testing
 
