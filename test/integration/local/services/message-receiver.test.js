@@ -3,7 +3,7 @@ const MessageSender = require('../../../../server/services/messaging/message-sen
 const config = require('../../../../server/config')
 
 describe('message receiver', () => {
-  const message = { content: 'hello', claimId: 'testClaimId' }
+  const message = { content: 'hello' }
   const testConfig = { ...config.paymentQueue }
   let messageReceiver
   let messageSender
@@ -22,7 +22,10 @@ describe('message receiver', () => {
     expect.assertions(1)
     let done
     const promise = new Promise((resolve) => { done = resolve })
-    const action = (result) => done(result.hello === message.hello)
+    const action = (result) => {
+      done(result.content === message.content)
+    }
+
     messageReceiver = new MessageReceiver('test-receiver', testConfig, undefined, action)
 
     return expect(promise).resolves.toEqual(true)
