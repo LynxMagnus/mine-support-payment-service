@@ -9,7 +9,7 @@ services:
       - ffc-demo-payment-postgres
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-demo-payment-service-local
-      APPINSIGHTS_INSTRUMENTATIONKEY:
+      APPINSIGHTS_INSTRUMENTATIONKEY: ${APPINSIGHTS_INSTRUMENTATIONKEY}
       B2C_CLIENT_ID: ${B2C_CLIENT_ID}
       B2C_CLIENT_SECRET: ${B2C_CLIENT_SECRET}
       B2C_URL: ${B2C_URL}
