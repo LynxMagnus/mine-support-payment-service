@@ -3,7 +3,10 @@
     <changeSet author="Fay Toward" id="1596113695614-0">
       <tagDatabase tag="v0.0.0" />
     </changeSet>
-    <changeSet author="liquibase (generated)" id="1596113695614-1">
+    <changeSet author="Fay Toward" id="1596113695614-1">
+      <tagDatabase tag="v1.0.0" />
+    </changeSet>
+    <changeSet author="liquibase (generated)" id="1596113695614-2">
         <createTable tableName="schedules">
             <column autoIncrement="true" name="scheduleId" type="INTEGER">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="schedules_pkey"/>
@@ -18,14 +21,14 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="liquibase (generated)" id="1596113695614-2">
+    <changeSet author="liquibase (generated)" id="1596113695614-3">
         <createTable tableName="SequelizeMeta">
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SequelizeMeta_pkey"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="liquibase (generated)" id="1596113695614-3">
+    <changeSet author="liquibase (generated)" id="1596113695614-4">
         <createTable tableName="payments">
             <column name="claimId" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="payments_pkey"/>
@@ -38,8 +41,5 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-    </changeSet>
-    <changeSet author="Fay Toward" id="1596113695614-4">
-      <tagDatabase tag="v1.0.0" />
     </changeSet>
 </databaseChangeLog>
