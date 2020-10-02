@@ -7,27 +7,22 @@ const modelPath = path.join(__dirname, '..', 'models')
 
 module.exports = (function () {
   const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig)
-  const models = {}
 
   fs
     .readdirSync(modelPath)
     .filter(file => {
       return (file.indexOf('.') !== 0) && (file !== 'index.js') && (file.slice(-3) === '.js')
     })
-    .forEach(file => {
-      const model = require(path.join(modelPath, file))(sequelize, DataTypes)
-      if (model && model.name) {
-        models[model.name] = model
-      }
-    })
-  Object.keys(models).forEach((modelName) => {
-    if (models[modelName].associate) {
-      models[modelName].associate(models)
+    .forEach(file => require(path.join(modelPath, file))(sequelize, DataTypes))
+
+  for (const model of Object.values(sequelize.models)) {
+    if (model.associate) {
+      model.associate(sequelize.models)
     }
-  })
+  }
 
   return {
-    models,
+    models: sequelize.models,
     sequelize
   }
 }())
