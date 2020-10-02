@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const Sequelize = require('sequelize')
+const { Sequelize, DataTypes } = require('sequelize')
 const config = require('../config')
 const dbConfig = config.dbConfig[config.env]
 const modelPath = path.join(__dirname, '..', 'models')
@@ -15,7 +15,7 @@ module.exports = (function () {
       return (file.indexOf('.') !== 0) && (file !== 'index.js') && (file.slice(-3) === '.js')
     })
     .forEach(file => {
-      const model = sequelize.import(path.join(modelPath, file))
+      const model = require(path.join(modelPath, file))(sequelize, DataTypes)
       if (model && model.name) {
         models[model.name] = model
       }
