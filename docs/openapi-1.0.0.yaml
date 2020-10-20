@@ -5,8 +5,8 @@ info:
   version: 1.0.0
 servers:
   - description: local
-    url: localhost:3004/
-​
+    url: localhost:3004/​
+
 components:
   schemas:
     paymentResponse:
@@ -31,7 +31,7 @@ components:
           format: date-time
         paymentAmount:
           type: number
-        
+
 paths:
   /payment:
     get:
