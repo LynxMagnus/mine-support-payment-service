@@ -21,6 +21,16 @@ components:
           items:
             type: string
             format: date-time
+    scheduleResponse:
+      type: object
+      properties:
+        claimId:
+          type: string
+        paymentDate:
+          type: string
+          format: date-time
+        paymentAmount:
+          type: number
         
 paths:
   /payment:
