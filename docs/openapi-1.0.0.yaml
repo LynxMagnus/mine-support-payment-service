@@ -1,0 +1,65 @@
+openapi: '3.0.2'
+info:
+  title: ffc-demo-payment-service
+  description: FFC demo payment service
+  version: 1.0.0
+servers:
+  - description: local
+    url: localhost:3004/
+​
+components:
+  schemas:
+    paymentResponse:
+      type: object
+      properties:
+        claimId:
+          type: string
+        paymentAmount:
+          type: number
+        schedule:
+          type: array
+          items:
+            type: string
+            format: date-time
+        
+paths:
+  /payment:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/paymentResponse'
+  /payment/{claimId}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/paymentResponse'
+  /schedule:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/scheduleResponse'
+  /schedule/{claimId}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/scheduleResponse'
