@@ -26,6 +26,6 @@ ENV PORT ${PORT}
 EXPOSE ${PORT}
 
 COPY --from=development /home/node/package*.json /home/node/
-COPY --from=development /home/node/server  /home/node/server
+COPY --from=development /home/node/app  /home/node/app
 RUN npm ci
 CMD [ "node", "app" ]
