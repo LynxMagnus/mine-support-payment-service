@@ -2,7 +2,7 @@ const path = require('path')
 const { MessageConsumerPact } = require('@pact-foundation/pact')
 const Matchers = require('@pact-foundation/pact/dsl/matchers')
 const asbHelper = require('../asb-helper')
-const paymentMessageAction = require('../../app/services/payment-message-action')
+const { createPayment } = require('../../app/payment')
 const dbHelper = require('../db-helper')
 
 describe('receiving a new claim', () => {
@@ -39,6 +39,6 @@ describe('receiving a new claim', () => {
       .withMetadata({
         'content-type': 'application/json'
       })
-      .verify(message => paymentMessageAction(message.contents))
+      .verify(message => createPayment(message.contents))
   })
 })

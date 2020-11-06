@@ -1,4 +1,4 @@
-const { models, sequelize } = require('../services/database-service')()
+const { models, sequelize } = require('../services/database-service')
 const { getPaymentDates } = require('./scheduler')
 
 async function createSchedule (claim, scheduleStartDate) {

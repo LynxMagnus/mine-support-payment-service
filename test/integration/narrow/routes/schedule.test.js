@@ -1,15 +1,15 @@
-jest.mock('../../../../server/services/message-service')
+jest.mock('../../../../app/messaging')
 const createServer = require('../../../../app/server')
 
 function mockScheduleService () {
-  const scheduleService = require('../../../../app/services/schedule-service')
-  jest.mock('../../../../server/services/schedule-service')
+  const scheduleService = require('../../../../app/schedule')
+  jest.mock('../../../../app/schedule')
   scheduleService.getAll.mockImplementation(() => [])
 }
 
 function mockOktaJwtVerifier () {
   const oktaJwtVerifier = require('../../../../app/plugins/auth/okta-jwt-verifier')
-  jest.mock('../../../../server/plugins/auth/okta-jwt-verifier')
+  jest.mock('../../../../app/plugins/auth/okta-jwt-verifier')
   oktaJwtVerifier.verifyAccessToken.mockImplementation(
     () => {
       return Promise.resolve({ claims: { roles: ['payment-admin'] } })

@@ -1,7 +1,7 @@
 const MockHapiH = require('./mock-hapi-h')
 
-const scheduleService = require('../../../app/services/schedule-service')
-jest.mock('../../../server/services/schedule-service')
+const scheduleService = require('../../../app/schedule')
+jest.mock('../../../app/schedule')
 const scheduleHandler = require('../../../app/routes/schedule-handler')
 
 describe('schedule handler', () => {
@@ -14,7 +14,7 @@ describe('schedule handler', () => {
     const request = { params: { id: 'noSuchClaim' } }
     await scheduleHandler.getClaim(request, h)
     // assert
-    expect(h.data).toEqual('Claim id not found')
+    expect(h.data).toEqual('Claim not found')
     expect(h.code).toEqual(404)
   })
 

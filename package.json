@@ -40,6 +40,7 @@
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
+    "@azure/service-bus": "^1.1.10",
     "@hapi/good": "^9.0.0",
     "@hapi/good-console": "^9.0.0",
     "@hapi/good-squeeze": "^6.0.0",

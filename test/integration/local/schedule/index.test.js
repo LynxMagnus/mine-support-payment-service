@@ -1,5 +1,5 @@
 const dbHelper = require('../../../db-helper')
-const scheduleService = require('../../../../app/services/schedule-service')
+const scheduleService = require('../../../../app/schedule')
 
 describe('Payment service test', () => {
   beforeEach(async () => {
@@ -15,7 +15,7 @@ describe('Payment service test', () => {
       claimId: 'MINE001'
     }
     const startDate = new Date(2020, 2, 8)
-    await scheduleService.create(claim, startDate)
+    await scheduleService.createSchedule(claim, startDate)
   })
 
   test('getById returns payment schedules in descending order by date', async () => {
@@ -23,7 +23,7 @@ describe('Payment service test', () => {
       claimId: 'MINE003'
     }
     const startDate = new Date(2020, 3, 7)
-    await scheduleService.create(claim, startDate)
+    await scheduleService.createSchedule(claim, startDate)
     const result = await scheduleService.getById(claim.claimId)
     expect(result.length).toEqual(6)
     expect(result.every(r => r.claimId === claim.claimId)).toEqual(true)
@@ -40,8 +40,8 @@ describe('Payment service test', () => {
       claimId: 'MINE003'
     }
     const startDate = new Date(2020, 3, 7)
-    await scheduleService.create(claim, startDate)
-    await scheduleService.create(claim, startDate)
+    await scheduleService.createSchedule(claim, startDate)
+    await scheduleService.createSchedule(claim, startDate)
     const result = await scheduleService.getById(claim.claimId)
     expect(result.length).toEqual(6)
     expect(result.every(r => r.claimId === claim.claimId)).toEqual(true)
@@ -62,8 +62,8 @@ describe('Payment service test', () => {
     }
     const startDate1 = new Date(2020, 3, 7)
     const startDate2 = new Date(2020, 4, 7)
-    await scheduleService.create(claim1, startDate1)
-    await scheduleService.create(claim2, startDate2)
+    await scheduleService.createSchedule(claim1, startDate1)
+    await scheduleService.createSchedule(claim2, startDate2)
     const result = await scheduleService.getAll()
     expect(result.length).toEqual(12)
     expect(result[0].paymentDate).toEqual(new Date(2020, 10, 1))

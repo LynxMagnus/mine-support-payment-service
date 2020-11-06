@@ -1,11 +1,11 @@
 describe('Healthy test', () => {
   let server
 
-  jest.mock('../../../../server/services/database-service')
+  jest.mock('../../../../app/services/database-service')
   const createServer = require('../../../../app/server')
   const { sequelize } = require('../../../../app/services/database-service')
   sequelize.authenticate = jest.fn()
-  jest.mock('../../../../server/services/message-service')
+  jest.mock('../../../../app/messaging')
 
   beforeEach(async () => {
     server = await createServer()
@@ -36,7 +36,7 @@ describe('Healthy test', () => {
     const response = await server.inject(options)
 
     expect(response.statusCode).toBe(503)
-    expect(response.payload).toBe(`error running healthy check: ${errorMessage}`)
+    expect(response.payload).toBe(`Error running healthy check: ${errorMessage}`)
   })
 
   afterEach(async () => {

@@ -24,10 +24,10 @@ describe('Pact Verification', () => {
   beforeAll(async () => {
     await createTestData()
     const oktaJwtVerifier = require('../../app/plugins/auth/okta-jwt-verifier')
-    jest.mock('../../server/plugins/auth/okta-jwt-verifier')
+    jest.mock('../../app/plugins/auth/okta-jwt-verifier')
     oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { roles: ['payment-admin'] } }))
 
-    jest.mock('../../server/services/message-service')
+    jest.mock('../../app/messaging')
     createServer = require('../../app/server')
   })
 

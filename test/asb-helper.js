@@ -1,4 +1,4 @@
-const { ReceiveMode, ServiceBusClient } = require('../app/messaging/node_modules/@azure/service-bus')
+const { ReceiveMode, ServiceBusClient } = require('@azure/service-bus')
 const config = require('../app/config/mq-config')
 
 // When calling this within a test script, ensure there is a generous timeout
