@@ -1,8 +1,8 @@
 const MockHapiH = require('./mock-hapi-h')
 
-const paymentService = require('../../../server/services/payment-service')
+const paymentService = require('../../../app/services/payment-service')
 jest.mock('../../../server/services/payment-service')
-const paymentHandler = require('../../../server/routes/payment-handler')
+const paymentHandler = require('../../../app/routes/payment-handler')
 
 describe('payment handler', () => {
   test('getPayment returns 200 and payment data', async () => {

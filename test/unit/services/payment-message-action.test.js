@@ -1,8 +1,8 @@
 
-const paymentService = require('../../../server/services/payment-service')
+const paymentService = require('../../../app/services/payment-service')
 jest.mock('../../../server/services/payment-service')
 
-const messageAction = require('../../../server/services/payment-message-action')
+const messageAction = require('../../../app/services/payment-message-action')
 
 describe('payment message action', () => {
   test('should call payment service create', async () => {

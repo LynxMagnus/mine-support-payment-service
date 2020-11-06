@@ -1,6 +1,6 @@
-const MessageReceiver = require('../../../../server/services/messaging/message-receiver')
-const MessageSender = require('../../../../server/services/messaging/message-sender')
-const config = require('../../../../server/config')
+const MessageReceiver = require('../../../../app/messaging/message-receiver')
+const MessageSender = require('../../../../app/messaging/message-sender')
+const config = require('../../../../app/config')
 
 describe('message receiver', () => {
   const message = { content: 'hello' }

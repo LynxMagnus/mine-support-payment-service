@@ -1,7 +1,7 @@
-const scheduleService = require('../../../server/services/schedule-service')
+const scheduleService = require('../../../app/services/schedule-service')
 jest.mock('../../../server/services/schedule-service')
 
-const messageAction = require('../../../server/services/schedule-message-action')
+const messageAction = require('../../../app/services/schedule-message-action')
 
 describe('schedule message action', () => {
   test('should call schedule service create with claim and date', async () => {

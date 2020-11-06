@@ -11,7 +11,18 @@ services:
     image: ffc-demo-payment-service
     ports:
       - "3004:3004"
+      - "9233:9229"
+    volumes:
+      - ./app/:/home/node/app/
+      - ./test/:/home/node/test/
+      - ./scripts/:/home/node/scripts/
+      - ./package.json:/home/node/package.json
 
   ffc-demo-payment-postgres:
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}

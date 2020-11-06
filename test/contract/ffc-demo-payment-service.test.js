@@ -1,4 +1,4 @@
-const config = require('../../server/config')
+const config = require('../../app/config')
 const dbHelper = require('../db-helper')
 
 describe('Pact Verification', () => {
@@ -23,12 +23,12 @@ describe('Pact Verification', () => {
 
   beforeAll(async () => {
     await createTestData()
-    const oktaJwtVerifier = require('../../server/plugins/auth/okta-jwt-verifier')
+    const oktaJwtVerifier = require('../../app/plugins/auth/okta-jwt-verifier')
     jest.mock('../../server/plugins/auth/okta-jwt-verifier')
     oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { roles: ['payment-admin'] } }))
 
     jest.mock('../../server/services/message-service')
-    createServer = require('../../server')
+    createServer = require('../../app/server')
   })
 
   beforeEach(async () => {

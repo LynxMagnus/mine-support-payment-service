@@ -28,13 +28,7 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
-      SCHEDULE_QUEUE_ADDRESS: ${SCHEDULE_QUEUE_ADDRESS:-notset}
-    volumes:
-      - ./server/:/home/node/server/
-      - ./test/:/home/node/test/
-      - ./scripts/:/home/node/scripts/
-      - ./index.js:/home/node/index.js
-      - ./package.json:/home/node/package.json
+      SCHEDULE_QUEUE_ADDRESS: ${SCHEDULE_QUEUE_ADDRESS:-notset}    
 
   ffc-demo-payment-postgres:
     image: postgres:11.4-alpine
@@ -42,8 +36,3 @@ services:
       POSTGRES_DB: ffc_demo_payments
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data: {}

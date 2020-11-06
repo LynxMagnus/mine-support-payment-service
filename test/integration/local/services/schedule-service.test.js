@@ -1,5 +1,5 @@
 const dbHelper = require('../../../db-helper')
-const scheduleService = require('../../../../server/services/schedule-service')
+const scheduleService = require('../../../../app/services/schedule-service')
 
 describe('Payment service test', () => {
   beforeEach(async () => {

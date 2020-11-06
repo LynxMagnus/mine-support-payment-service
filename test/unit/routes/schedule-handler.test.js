@@ -1,8 +1,8 @@
 const MockHapiH = require('./mock-hapi-h')
 
-const scheduleService = require('../../../server/services/schedule-service')
+const scheduleService = require('../../../app/services/schedule-service')
 jest.mock('../../../server/services/schedule-service')
-const scheduleHandler = require('../../../server/routes/schedule-handler')
+const scheduleHandler = require('../../../app/routes/schedule-handler')
 
 describe('schedule handler', () => {
   test('getClaim returns 404 and "not found" message for unknown claim', async () => {

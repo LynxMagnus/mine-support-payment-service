@@ -2,7 +2,7 @@ describe('Schedule AMQP contract test', () => {
   const path = require('path')
   const { MessageConsumerPact } = require('@pact-foundation/pact')
   const Matchers = require('@pact-foundation/pact/dsl/matchers')
-  const scheduleMessageAction = require('../../server/services/schedule-message-action')
+  const scheduleMessageAction = require('../../app/services/schedule-message-action')
   const dbHelper = require('../db-helper')
   let messagePact
 

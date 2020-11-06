@@ -6,8 +6,8 @@ describe('Payment test', () => {
   beforeAll(async () => {
     jest.mock('../../../../server/services/payment-service')
     jest.mock('../../../../server/services/message-service')
-    paymentService = require('../../../../server/services/payment-service')
-    createServer = require('../../../../server')
+    paymentService = require('../../../../app/services/payment-service')
+    createServer = require('../../../../app/server')
   })
 
   beforeEach(async () => {

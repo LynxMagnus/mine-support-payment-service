@@ -1,5 +1,5 @@
 const dbHelper = require('../../../db-helper')
-const paymentService = require('../../../../server/services/payment-service')
+const paymentService = require('../../../../app/services/payment-service')
 
 const payment1 = {
   claimId: 'MINE123',

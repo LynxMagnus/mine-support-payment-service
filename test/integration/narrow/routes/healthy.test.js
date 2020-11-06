@@ -2,8 +2,8 @@ describe('Healthy test', () => {
   let server
 
   jest.mock('../../../../server/services/database-service')
-  const createServer = require('../../../../server')
-  const { sequelize } = require('../../../../server/services/database-service')
+  const createServer = require('../../../../app/server')
+  const { sequelize } = require('../../../../app/services/database-service')
   sequelize.authenticate = jest.fn()
   jest.mock('../../../../server/services/message-service')
 

@@ -1,5 +1,5 @@
 
-const verifyScopes = require('../../../../server/plugins/auth/verify-scopes')
+const verifyScopes = require('../../../../app/plugins/auth/verify-scopes')
 describe('Verify scopes', () => {
   test('throws no error if all scopes present', () => {
     verifyScopes(['scopeOne', 'scopeTwo'], ['scopeTwo', 'scopeOne'])

@@ -1,9 +1,9 @@
-const config = require('../../../server/config')
-const MessageReceiver = require('../../../server/services/messaging/message-receiver')
+const config = require('../../../app/config')
+const MessageReceiver = require('../../../app/messaging/message-receiver')
 jest.mock('../../../server/services/messaging/message-receiver')
 
 describe('message service', () => {
-  const createMessageService = require('../../../server/services/message-service')
+  const createMessageService = require('../../../app/services/message-service')
   let messageService
 
   beforeAll(async () => {
