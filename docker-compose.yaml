@@ -5,6 +5,7 @@ services:
       context: .
       target: production
     image: ffc-demo-payment-service
+    container_name: ffc-demo-payment-service
     depends_on:
       - ffc-demo-payment-postgres
     environment:
