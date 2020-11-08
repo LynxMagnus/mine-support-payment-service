@@ -6,17 +6,17 @@ ignore:
     - '@okta/jwt-verifier > jwks-rsa > request > har-validator > ajv':
         reason: 'No known exploit, Okta no longer used'
         expires: '2020-12-31T00:00:00.000Z'
-      ffc-messaging > @azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv:
-        reason: None given
-        expires: '2020-12-06T17:17:37.102Z'
     - '@azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv':
         reason: No known exploit
         expires: '2020-12-31T00:00:00.000Z'
+    - ffc-messaging > @azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv:
+        reason: None given
+        expires: '2020-12-06T17:17:37.102Z'
   SNYK-JS-LODASH-590103:
     - '@okta/jwt-verifier > jwks-rsa > lru-memoizer > lodash':
         reason: No known vulnerbility
-        expires: '2020-11-07T15:00:40.591Z'
+        expires: '2020-12-08T20:28:59.720Z'
     - sequelize > lodash:
         reason: No known vulnerbility
-        expires: '2020-11-07T15:00:40.591Z'
+        expires: '2020-12-08T20:28:59.721Z'
 patch: {}
