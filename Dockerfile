@@ -1,5 +1,5 @@
 ARG PORT=3004
-ARG PARENT_VERSION=1.2.1-node12.18.3
+ARG PARENT_VERSION=1.2.1-node14.15.0
 
 # Development
 FROM defradigital/node-development:${PARENT_VERSION} AS development
@@ -25,7 +25,7 @@ LABEL uk.gov.defra.ffc.parent-image=defradigital/node:${PARENT_VERSION}
 ENV PORT ${PORT}
 EXPOSE ${PORT}
 
-COPY --from=development /home/node/index.js /home/node/package*.json /home/node/
-COPY --from=development /home/node/server  /home/node/server
+COPY --from=development /home/node/package*.json /home/node/
+COPY --from=development /home/node/app  /home/node/app
 RUN npm ci
-CMD [ "node", "index" ]
+CMD [ "node", "app" ]

@@ -1,8 +1,8 @@
 const MockHapiH = require('./mock-hapi-h')
 
-const scheduleService = require('../../../server/services/schedule-service')
-jest.mock('../../../server/services/schedule-service')
-const scheduleHandler = require('../../../server/routes/schedule-handler')
+const scheduleService = require('../../../app/schedule')
+jest.mock('../../../app/schedule')
+const scheduleHandler = require('../../../app/routes/schedule-handler')
 
 describe('schedule handler', () => {
   test('getClaim returns 404 and "not found" message for unknown claim', async () => {
@@ -14,7 +14,7 @@ describe('schedule handler', () => {
     const request = { params: { id: 'noSuchClaim' } }
     await scheduleHandler.getClaim(request, h)
     // assert
-    expect(h.data).toEqual('Claim id not found')
+    expect(h.data).toEqual('Claim not found')
     expect(h.code).toEqual(404)
   })
 

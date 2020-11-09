@@ -152,8 +152,6 @@ This service reacts to messages retrieved from an Azure Service Bus.
 
 `docker-compose up` to start the service with a connection to the configured Azure Service Bus instance and developer queues.
 
-A utility script `scripts/send-test-message` is provided to send a message once a service has been started.
-
 Alternatively test messages can be sent via a client that supports sending to Azure Service Bus.
 
 Sample valid JSON for each message queue is:
@@ -191,16 +189,6 @@ It is also possible to run a limited subset of the application stack. See the [`
 ### Deploy to Kubernetes
 
 For production deployments, a helm chart is included in the `.\helm` folder. This service connects to an AMQP 1.0 message broker, using credentials defined in [values.yaml](./helm/ffc-demo-payment-service/values.yaml), which must be made available prior to deployment.
-
-Scripts are provided to test the Helm chart by deploying the service, along with an appropriate message broker, into the current Helm/Kubernetes context.
-
-```
-# Deploy to current Kubernetes context
-scripts/helm/install
-
-# Remove from current Kubernetes context
-scripts/helm/delete
-```
 
 #### Accessing the pod
 

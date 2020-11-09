@@ -1,4 +1,4 @@
-const { models, sequelize } = require('../server/services/database-service')
+const { models, sequelize } = require('../app/services/database-service')
 
 async function truncate () {
   await models.payment.destroy({ truncate: true })

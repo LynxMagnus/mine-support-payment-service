@@ -1,5 +1,5 @@
 
-const verifyAudience = require('../../../../server/plugins/auth/verify-audience')
+const verifyAudience = require('../../../../app/plugins/auth/verify-audience')
 describe('Verify scopes', () => {
   test('throws no error if audiences match', () => {
     verifyAudience('aud1', 'aud1')

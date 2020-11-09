@@ -1,7 +1,7 @@
 {
   "name": "ffc-demo-payment-service",
-  "version": "3.16.4",
-  "description": "",
+  "version": "3.17.0",
+  "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
   "main": "index.js",
   "scripts": {
     "build:watch": "nodemon --exec npm run build --ext scss --legacy-watch",
@@ -12,23 +12,35 @@
     "test:integration": "jest --runInBand --testPathPattern=test/integration --coverage=false",
     "test:unit": "jest --testPathPattern=test/unit --coverage=false",
     "test:watch": "jest --runInBand --coverage=false --onlyChanged --watch",
-    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch index.js"
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch app/index.js"
   },
-  "author": "John Watson, Mark Harrop, Matthew Collins, David Bingham, Fay Toward, Steve Hunt",
+  "author": "Defra DDTS",
+  "contributors": [
+    "John Watson <john.watson2@rpa.gov.uk>",
+    "Mark Harrop <mark.harrop@defra.gov.uk>",
+    "Matthew Collins <matthew.collins@defra.gov.uk>",
+    "Paul Andrews <paul.andrews@defra.gov.uk>",
+    "David Bingham <david.bingham@defra.gov.uk>",
+    "Phil Benson <phil.benson@defra.gov.uk>",
+    "Fay Toward <fay.toward@rpa.gov.uk>",
+    "Steve Hunt <steven.hunt@defra.gov.uk>",
+    "Fareed Mohammed <fareed.mohammed@defra.gov.uk"
+  ],
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@azure/ms-rest-nodeauth": "^3.0.5",
-    "@azure/service-bus": "^1.1.9",
     "@hapi/hapi": "^19.2.0",
     "@hapi/joi": "^17.1.1",
     "@okta/jwt-verifier": "^1.0.0",
     "applicationinsights": "^1.8.2",
+    "ffc-messaging": "^1.0.3",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
+    "@azure/service-bus": "^1.1.10",
     "@hapi/good": "^9.0.0",
     "@hapi/good-console": "^9.0.0",
     "@hapi/good-squeeze": "^6.0.0",

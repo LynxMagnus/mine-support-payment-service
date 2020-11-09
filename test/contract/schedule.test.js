@@ -1,8 +1,8 @@
-describe('Schedule AMQP contract test', () => {
+describe('Schedule contract test', () => {
   const path = require('path')
   const { MessageConsumerPact } = require('@pact-foundation/pact')
   const Matchers = require('@pact-foundation/pact/dsl/matchers')
-  const scheduleMessageAction = require('../../server/services/schedule-message-action')
+  const { createSchedule } = require('../../app/schedule')
   const dbHelper = require('../db-helper')
   let messagePact
 
@@ -21,7 +21,7 @@ describe('Schedule AMQP contract test', () => {
     await dbHelper.close()
   })
 
-  test('scheduleMessageAction can process message', async () => {
+  test('schedule can process message', async () => {
     await messagePact
       .given('valid message')
       .expectsToReceive('a request for new payment schedule')
@@ -31,6 +31,6 @@ describe('Schedule AMQP contract test', () => {
       .withMetadata({
         'content-type': 'application/json'
       })
-      .verify(message => scheduleMessageAction(message.contents))
+      .verify(message => createSchedule(message.contents, new Date(2020, 11, 6)))
   })
 })
