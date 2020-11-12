@@ -5,7 +5,7 @@ const mqSchema = joi.object({
     host: joi.string().default('localhost'),
     usePodIdentity: joi.bool().default(false),
     type: joi.string(),
-    appInsights: joi.string()
+    appInsights: joi.object()
   },
   scheduleQueue: {
     address: joi.string().default('schedule'),
