@@ -8,12 +8,10 @@ Digital service mock to claim public money in the event property subsides into m
 
 - Access to an instance of an
 [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/)(ASB).
-
-And either:
 - Docker
 - Docker Compose
 
-Or:
+Optional:
 - Kubernetes
 - Helm
 
