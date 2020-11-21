@@ -1,7 +1,0 @@
-persistence:
-  enabled: false
-postgresqlDatabase: mine_payments
-postgresqlPassword: changeme
-postgresqlUsername: postgres@mine-support2
-service:
-  port: 5432

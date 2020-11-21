@@ -1,6 +1,6 @@
 {
   "name": "ffc-demo-payment-service",
-  "version": "3.17.1",
+  "version": "3.17.2",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
   "main": "index.js",
   "scripts": {

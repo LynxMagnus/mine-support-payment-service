@@ -23,7 +23,7 @@ const mqConfig = {
     host: process.env.MESSAGE_QUEUE_HOST,
     usePodIdentity: process.env.NODE_ENV === 'production',
     type: 'queue',
-    appInsights: require('applicationinsights')
+    appInsights: process.env.NODE_ENV === 'production' ? require('applicationinsights') : undefined
   },
   scheduleQueue: {
     address: process.env.SCHEDULE_QUEUE_ADDRESS,
