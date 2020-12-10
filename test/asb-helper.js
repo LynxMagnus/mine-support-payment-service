@@ -42,6 +42,6 @@ async function clearAllSubscriptions () {
 }
 
 module.exports = {
-  clearAllQueues: clearAllSubscriptions,
-  clearQueue: clearSubscription
+  clearAllSubscriptions,
+  clearSubscription
 }
