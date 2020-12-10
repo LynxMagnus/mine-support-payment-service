@@ -9,7 +9,7 @@ describe('receiving a new claim', () => {
   let messagePact
 
   beforeAll(async () => {
-    await asbHelper.clearAllQueues()
+    await asbHelper.clearAllSubscriptions()
     await dbHelper.truncate()
 
     messagePact = new MessageConsumerPact({
@@ -21,7 +21,7 @@ describe('receiving a new claim', () => {
   }, 30000)
 
   afterAll(async () => {
-    await asbHelper.clearAllQueues()
+    await asbHelper.clearAllSubscriptions()
     await dbHelper.close()
   }, 30000)
 

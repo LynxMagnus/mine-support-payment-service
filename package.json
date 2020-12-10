@@ -1,6 +1,6 @@
 {
   "name": "ffc-demo-payment-service",
-  "version": "3.17.4",
+  "version": "4.0.0",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,8 @@
     "Phil Benson <phil.benson@defra.gov.uk>",
     "Fay Toward <fay.toward@rpa.gov.uk>",
     "Steve Hunt <steven.hunt@defra.gov.uk>",
-    "Fareed Mohammed <fareed.mohammed@defra.gov.uk"
+    "Fareed Mohammed <fareed.mohammed@defra.gov.uk>",
+    "Steve Dickinson <steve.dickinson@defra.gov.uk>"
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
