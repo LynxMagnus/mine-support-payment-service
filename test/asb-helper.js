@@ -8,7 +8,7 @@ async function clearSubscription (subscriptionName) {
   // credentials, however, atm there is only the single instance. KIS.
   let sbClient
   try {
-    const connectionString = `Endpoint=sb://${config.paymentSubscription.host}/;SharedAccessKeyName=${config.paymentQueue.username};SharedAccessKey=${config.paymentQueue.password}`
+    const connectionString = `Endpoint=sb://${config.paymentSubscription.host}/;SharedAccessKeyName=${config.paymentSubscription.username};SharedAccessKey=${config.paymentSubscription.password}`
     sbClient = ServiceBusClient.createFromConnectionString(connectionString)
 
     const subscriptionAddress = config[subscriptionName].address
