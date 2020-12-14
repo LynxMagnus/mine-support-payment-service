@@ -6,9 +6,9 @@ let scheduleReceiver
 let paymentReceiver
 
 async function start () {
-  scheduleReceiver = new MessageReceiver(config.scheduleQueue, processScheduleMessage)
+  scheduleReceiver = new MessageReceiver(config.scheduleSubscription, processScheduleMessage)
   await scheduleReceiver.connect()
-  paymentReceiver = new MessageReceiver(config.paymentQueue, processPaymentMessage)
+  paymentReceiver = new MessageReceiver(config.paymentSubscription, processPaymentMessage)
   await paymentReceiver.connect()
   console.info('Ready to receive messages')
 }

@@ -7,8 +7,10 @@ data:
   POSTGRES_PORT: {{ quote .Values.postgresService.postgresPort }}
   POSTGRES_SCHEMA_NAME: {{ quote .Values.postgresService.postgresSchema }}
   MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
-  SCHEDULE_QUEUE_ADDRESS: {{ quote .Values.container.scheduleQueueAddress }}
-  PAYMENT_QUEUE_ADDRESS: {{ quote .Values.container.paymentQueueAddress }}
+  SCHEDULE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.scheduleSubscriptionAddress }}
+  SCHEDULE_TOPIC_ADDRESS: {{ quote .Values.container.scheduleTopicAddress }}
+  PAYMENT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.paymentSubscriptionAddress }}
+  PAYMENT_TOPIC_ADDRESS: {{ quote .Values.container.paymentTopicAddress }}
   OIDC_PROVIDER: {{ quote .Values.oidcProvider }}
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
   PORT: {{ quote .Values.container.port }}

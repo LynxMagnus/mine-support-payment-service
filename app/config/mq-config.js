@@ -7,33 +7,37 @@ const mqSchema = joi.object({
     type: joi.string(),
     appInsights: joi.object()
   },
-  scheduleQueue: {
+  scheduleSubscription: {
     address: joi.string().default('schedule'),
     username: joi.string(),
-    password: joi.string()
+    password: joi.string(),
+    topic: joi.string()
   },
-  paymentQueue: {
+  paymentSubscription: {
     address: joi.string().default('payment'),
     username: joi.string(),
-    password: joi.string()
+    password: joi.string(),
+    topic: joi.string()
   }
 })
 const mqConfig = {
   messageQueue: {
     host: process.env.MESSAGE_QUEUE_HOST,
     usePodIdentity: process.env.NODE_ENV === 'production',
-    type: 'queue',
+    type: 'subscription',
     appInsights: process.env.NODE_ENV === 'production' ? require('applicationinsights') : undefined
   },
-  scheduleQueue: {
-    address: process.env.SCHEDULE_QUEUE_ADDRESS,
+  scheduleSubscription: {
+    address: process.env.SCHEDULE_SUBSCRIPTION_ADDRESS,
     username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD
+    password: process.env.MESSAGE_QUEUE_PASSWORD,
+    topic: process.env.SCHEDULE_TOPIC_ADDRESS
   },
-  paymentQueue: {
-    address: process.env.PAYMENT_QUEUE_ADDRESS,
+  paymentSubscription: {
+    address: process.env.PAYMENT_SUBSCRIPTION_ADDRESS,
     username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD
+    password: process.env.MESSAGE_QUEUE_PASSWORD,
+    topic: process.env.PAYMENT_TOPIC_ADDRESS
   }
 }
 
@@ -46,7 +50,7 @@ if (mqResult.error) {
   throw new Error(`The message queue config is invalid. ${mqResult.error.message}`)
 }
 
-const paymentQueue = { ...mqResult.value.messageQueue, ...mqResult.value.paymentQueue }
-const scheduleQueue = { ...mqResult.value.messageQueue, ...mqResult.value.scheduleQueue }
+const paymentSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.paymentSubscription }
+const scheduleSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.scheduleSubscription }
 
-module.exports = { paymentQueue, scheduleQueue }
+module.exports = { paymentSubscription, scheduleSubscription }

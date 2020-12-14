@@ -50,8 +50,10 @@ container:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   messageQueueHost: amq
-  scheduleQueueAddress: schedule
-  paymentQueueAddress: payment
+  scheduleSubscriptionAddress: schedule
+  paymentSubscriptionAddress: payment
+  scheduleTopicAddress: schedule
+  paymentTopicAddress: payment
 
 postgresService:
   postgresDb: ffc_demo_payment_service
