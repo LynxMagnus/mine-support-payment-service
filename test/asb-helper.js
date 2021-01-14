@@ -12,7 +12,7 @@ async function clearSubscription (subscriptionName) {
     sbClient = ServiceBusClient.createFromConnectionString(connectionString)
 
     const subscriptionAddress = config[subscriptionName].address
-    const queueClient = sbClient.createSubscriptionClient(subscriptionAddress, config[subscriptionName].topic)
+    const queueClient = sbClient.createSubscriptionClient(config[subscriptionName].topic, subscriptionAddress)
     const receiver = queueClient.createReceiver(ReceiveMode.receiveAndDelete)
     console.log(`Setup to receive messages from '${subscriptionAddress}'.`)
 

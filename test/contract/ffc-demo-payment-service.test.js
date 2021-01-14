@@ -3,7 +3,6 @@ const dbHelper = require('../db-helper')
 
 describe('Pact Verification', () => {
   const { Verifier } = require('@pact-foundation/pact')
-  const path = require('path')
 
   let createServer
   let server
@@ -40,10 +39,11 @@ describe('Pact Verification', () => {
     const opts = {
       providerBaseUrl: `http://localhost:${config.port}`,
       provider: 'ffc-demo-payment-service',
-      pactUrls: [
-        path.resolve(__dirname, './pacts/ffc-demo-payment-web-ffc-demo-payment-service.json')
-      ],
-      customProviderHeaders: ['Authorization: Bearer token']
+      customProviderHeaders: ['Authorization: Bearer token'],
+      consumerVersionTags: ['main', 'dev', 'test', 'preprod', 'prod'],
+      pactBrokerUrl: process.env.PACT_BROKER_URL,
+      pactBrokerUsername: process.env.PACT_BROKER_USERNAME,
+      pactBrokerPassword: process.env.PACT_BROKER_PASSWORD
     }
 
     await new Verifier(opts).verifyProvider()
