@@ -18,6 +18,9 @@ services:
       B2C_CLIENT_ID: test-client-id
       B2C_CLIENT_SECRET: test-client-secret
       B2C_URL: https://test/v2.0/
+      PACT_BROKER_URL: ${PACT_BROKER_URL:-notset}
+      PACT_BROKER_USERNAME: ${PACT_BROKER_USERNAME:-notset}
+      PACT_BROKER_PASSWORD: ${PACT_BROKER_PASSWORD:-notset}
     volumes:
       - ./app/:/home/node/app/
       - ./test/:/home/node/test/
