@@ -7,9 +7,12 @@ describe('processing claim message', () => {
     body: {
       claimId: 'MINE1',
       value: 10
-    },
-    complete: jest.fn(),
-    abandon: jest.fn()
+    }
+  }
+
+  const receiver = {
+    completeMessage: jest.fn(),
+    abandonMessage: jest.fn()
   }
 
   beforeEach(async () => {
@@ -25,26 +28,26 @@ describe('processing claim message', () => {
   })
 
   test('should save valid claim', async () => {
-    await processPaymentMessage(message)
+    await processPaymentMessage(message, receiver)
     const payments = await models.payment.findAll({ where: { claimId: message.body.claimId }, raw: true })
     expect(payments.length).toBe(1)
   })
 
   test('should not save duplicate claim', async () => {
-    await processPaymentMessage(message)
-    await processPaymentMessage(message)
+    await processPaymentMessage(message, receiver)
+    await processPaymentMessage(message, receiver)
     const payments = await models.payment.findAll({ where: { claimId: message.body.claimId }, raw: true })
     expect(payments.length).toBe(1)
   })
 
   test('should complete valid claim', async () => {
-    await processPaymentMessage(message)
-    expect(message.complete).toHaveBeenCalled()
+    await processPaymentMessage(message, receiver)
+    expect(receiver.completeMessage).toHaveBeenCalled()
   })
 
   test('should abandon invalid claim', async () => {
     message.body = 'not a claim'
-    await processPaymentMessage(message)
-    expect(message.abandon).toHaveBeenCalled()
+    await processPaymentMessage(message, receiver)
+    expect(receiver.abandonMessage).toHaveBeenCalled()
   })
 })

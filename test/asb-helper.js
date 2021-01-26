@@ -1,4 +1,4 @@
-const { ReceiveMode, ServiceBusClient } = require('@azure/service-bus')
+const { ServiceBusClient } = require('@azure/service-bus')
 const config = require('../app/config/mq-config')
 
 // When calling this within a test script, ensure there is a generous timeout
@@ -9,11 +9,10 @@ async function clearSubscription (subscriptionName) {
   let sbClient
   try {
     const connectionString = `Endpoint=sb://${config.paymentSubscription.host}/;SharedAccessKeyName=${config.paymentSubscription.username};SharedAccessKey=${config.paymentSubscription.password}`
-    sbClient = ServiceBusClient.createFromConnectionString(connectionString)
+    sbClient = new ServiceBusClient(connectionString)
 
     const subscriptionAddress = config[subscriptionName].address
-    const queueClient = sbClient.createSubscriptionClient(config[subscriptionName].topic, subscriptionAddress)
-    const receiver = queueClient.createReceiver(ReceiveMode.receiveAndDelete)
+    const receiver = sbClient.createReceiver(config[subscriptionName].topic, subscriptionAddress, { receiveMode: 'receiveAndDelete' })
     console.log(`Setup to receive messages from '${subscriptionAddress}'.`)
 
     const batchSize = 10
@@ -27,7 +26,7 @@ async function clearSubscription (subscriptionName) {
     } while (messages.length > 0 && messages.length === batchSize)
 
     console.log(`No more messages in: '${subscriptionAddress}'.`)
-    await queueClient.close()
+    receiver.close()
   } catch (err) {
     console.log(err)
     throw err
