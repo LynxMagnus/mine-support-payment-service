@@ -20,13 +20,12 @@ async function clearSubscription (subscriptionName) {
     let messages
     do {
       console.log(`Receiving messages, batch ${counter}.`)
-      messages = await receiver.receiveMessages(batchSize, 5)
+      messages = await receiver.receiveMessages(batchSize)
       console.log(`Received (and deleted) ${messages.length} messages.`)
       counter++
     } while (messages.length > 0 && messages.length === batchSize)
-
     console.log(`No more messages in: '${subscriptionAddress}'.`)
-    receiver.close()
+    await receiver.close()
   } catch (err) {
     console.log(err)
     throw err
