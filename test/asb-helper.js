@@ -20,7 +20,7 @@ async function clearSubscription (subscriptionName) {
     let messages
     do {
       console.log(`Receiving messages, batch ${counter}.`)
-      messages = await receiver.receiveMessages(batchSize)
+      messages = await receiver.receiveMessages(batchSize, { maxWaitTimeInMs: 500, maxTimeAfterFirstMessageInMs: 5000 })
       console.log(`Received (and deleted) ${messages.length} messages.`)
       counter++
     } while (messages.length > 0 && messages.length === batchSize)
