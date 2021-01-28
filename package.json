@@ -34,7 +34,7 @@
     "@hapi/joi": "^17.1.1",
     "@okta/jwt-verifier": "^1.0.0",
     "applicationinsights": "^1.8.2",
-    "ffc-messaging": "^2.0.0-pre.7",
+    "ffc-messaging": "^2.0.0-pre.9",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
