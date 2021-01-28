@@ -8,12 +8,10 @@ let paymentReceiver
 async function start () {
   const scheduleAction = message => processScheduleMessage(message, scheduleReceiver)
   scheduleReceiver = new MessageReceiver(config.scheduleSubscription, scheduleAction)
-  await scheduleReceiver.connect()
   await scheduleReceiver.subscribe()
 
   const paymentAction = message => processPaymentMessage(message, paymentReceiver)
   paymentReceiver = new MessageReceiver(config.paymentSubscription, paymentAction)
-  await paymentReceiver.connect()
   await paymentReceiver.subscribe()
   console.info('Ready to receive messages')
 }
