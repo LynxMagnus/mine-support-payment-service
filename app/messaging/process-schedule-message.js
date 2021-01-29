@@ -1,13 +1,13 @@
 const { createSchedule } = require('../schedule')
 
-async function processScheduleMessage (message) {
+async function processScheduleMessage (message, receiver) {
   try {
     const scheduleStartDate = new Date()
     await createSchedule(message.body, scheduleStartDate)
-    await message.complete()
+    await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)
-    await message.abandon()
+    await receiver.abandonMessage(message)
   }
 }
 

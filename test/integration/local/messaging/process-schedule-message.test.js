@@ -6,9 +6,12 @@ describe('processing claim message', () => {
   const message = {
     body: {
       claimId: 'MINE1'
-    },
-    complete: jest.fn(),
-    abandon: jest.fn()
+    }
+  }
+
+  const receiver = {
+    completeMessage: jest.fn(),
+    abandonMessage: jest.fn()
   }
 
   beforeEach(async () => {
@@ -24,26 +27,26 @@ describe('processing claim message', () => {
   })
 
   test('should save valid claim', async () => {
-    await processScheduleMessage(message)
+    await processScheduleMessage(message, receiver)
     const schedule = await models.schedule.findAll({ where: { claimId: message.body.claimId }, raw: true })
     expect(schedule.length).toBe(6)
   })
 
   test('should not save duplicate claim', async () => {
-    await processScheduleMessage(message)
-    await processScheduleMessage(message)
+    await processScheduleMessage(message, receiver)
+    await processScheduleMessage(message, receiver)
     const schedule = await models.schedule.findAll({ where: { claimId: message.body.claimId }, raw: true })
     expect(schedule.length).toBe(6)
   })
 
   test('should complete valid claim', async () => {
-    await processScheduleMessage(message)
-    expect(message.complete).toHaveBeenCalled()
+    await processScheduleMessage(message, receiver)
+    expect(receiver.completeMessage).toHaveBeenCalled()
   })
 
   test('should abandon invalid claim', async () => {
     message.body = 'not a claim'
-    await processScheduleMessage(message)
-    expect(message.abandon).toHaveBeenCalled()
+    await processScheduleMessage(message, receiver)
+    expect(receiver.abandonMessage).toHaveBeenCalled()
   })
 })

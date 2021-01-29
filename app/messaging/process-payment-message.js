@@ -1,12 +1,12 @@
 const { createPayment } = require('../payment')
 
-async function processPaymentMessage (message) {
+async function processPaymentMessage (message, receiver) {
   try {
     await createPayment(message.body)
-    await message.complete()
+    await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)
-    await message.abandon()
+    await receiver.abandonMessage(message)
   }
 }
 
