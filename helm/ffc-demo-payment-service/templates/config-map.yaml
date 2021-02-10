@@ -28,4 +28,7 @@ data:
   {{- if .Values.b2c.url }}
   B2C_URL: {{ quote .Values.b2c.url }}
   {{- end }}
+  {{- if .Values.pr }}
+  EVENT_ROUTING_KEY: {{ .Values.name }}-{{ .Values.pr }}
+  {{- end }}
 {{- end -}}
