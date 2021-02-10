@@ -1,5 +1,6 @@
 const Joi = require('@hapi/joi')
 const mqConfig = require('./mq-config')
+const eventConfig = require('./event-config')
 const dbConfig = require('./database-config')
 const { development, production, test } = require('./constants').environments
 
@@ -41,6 +42,7 @@ value.scheduleSubscription = mqConfig.scheduleSubscription
 value.paymentSubscription = mqConfig.paymentSubscription
 
 value.dbConfig = dbConfig
+value.eventConfig = eventConfig
 if (value.oidcProvider === 'okta') {
   value.okta = getOktaConfig()
 }

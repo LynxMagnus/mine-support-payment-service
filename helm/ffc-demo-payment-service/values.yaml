@@ -54,6 +54,14 @@ container:
   paymentSubscriptionAddress: payment
   scheduleTopicAddress: schedule
   paymentTopicAddress: payment
+  eventHost: kafka
+  eventPort: 9093
+  eventMechanism: scram-sha-512
+  eventClientId: ffc-demo-payment-service
+  eventConsumerGroupId: ffc-demo-payment-service
+  claimUpdateTopicName: ffc-demo-collector-claim-update
+  claimUpdateTopic: ffc-demo-claim-update
+  claimUpdateFromBeginning: true
 
 postgresService:
   postgresDb: ffc_demo_payment_service
