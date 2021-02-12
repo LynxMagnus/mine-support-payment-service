@@ -45,6 +45,8 @@ services:
 
   zookeeper:
     image: bitnami/zookeeper
+    tmpfs: "/datalog"
+
     environment:
       ALLOW_ANONYMOUS_LOGIN: "yes"
     

@@ -30,9 +30,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  zookeeper:
-    tmpfs: "/datalog"
-    
   kafka:
     ports:
       - "9095:9094"
