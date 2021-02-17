@@ -25,4 +25,12 @@ ignore:
     - sequelize > lodash:
         reason: Not exploitable
         expires: '2021-02-13T15:34:14.800Z'
+  SNYK-JS-LODASH-1018905:
+    - sequelize > lodash:
+        reason: No fix
+        expires: '2021-03-19T09:14:34.195Z'
+  SNYK-JS-LODASH-1040724:
+    - sequelize > lodash:
+        reason: No fix
+        expires: '2021-03-19T09:14:34.195Z'
 patch: {}
