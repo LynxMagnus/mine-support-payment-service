@@ -34,7 +34,7 @@
     "@hapi/joi": "^17.1.1",
     "@okta/jwt-verifier": "^2.0.1",
     "applicationinsights": "^1.8.2",
-    "ffc-events": "^1.0.0-alpha.32",
+    "ffc-events": "^1.0.0-alpha.33",
     "ffc-messaging": "^2.1.1",
     "jsonwebtoken": "^8.5.1",
     "kafkajs": "^1.15.0",
