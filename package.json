@@ -32,6 +32,7 @@
     "@azure/identity": "^1.2.2",
     "@hapi/hapi": "^19.2.0",
     "@hapi/joi": "^17.1.1",
+    "@okta/jwt-verifier": "^2.0.1",
     "applicationinsights": "^1.8.2",
     "ffc-events": "^1.0.0-alpha.32",
     "ffc-messaging": "^2.1.1",
