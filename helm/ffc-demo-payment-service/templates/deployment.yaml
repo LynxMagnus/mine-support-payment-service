@@ -2,9 +2,6 @@
 {{- define "ffc-demo-payment-service.deployment" -}}
 spec:
   template:
-    metadata:
-      annotations:
-        linkerd.io/inject: disabled
     spec:
       containers:
       - {{ include "ffc-helm-library.container" (list . "ffc-demo-payment-service.container") }}
