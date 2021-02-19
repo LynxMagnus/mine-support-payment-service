@@ -32,6 +32,9 @@ services:
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
       SCHEDULE_SUBSCRIPTION_ADDRESS: ${SCHEDULE_SUBSCRIPTION_ADDRESS:-notset}
       SCHEDULE_TOPIC_ADDRESS: ${SCHEDULE_TOPIC_ADDRESS:-notset}
+      EVENT_HOST: kafka
+      EVENT_USERNAME: kafka
+      EVENT_PASSWORD: kafka
 
   ffc-demo-payment-postgres:
     image: postgres:11.4-alpine
@@ -39,3 +42,24 @@ services:
       POSTGRES_DB: ffc_demo_payments
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
+
+  zookeeper:
+    image: bitnami/zookeeper
+    tmpfs: "/datalog"
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+    
+  kafka:
+    image: bitnami/kafka
+    environment:
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,CLIENT:SASL_PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_LISTENERS: INTERNAL://:9092,CLIENT://:9093,EXTERNAL://:9094
+      KAFKA_CFG_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,CLIENT://kafka:9093,EXTERNAL://host.docker.internal:9094
+      KAFKA_CFG_SASL_ENABLED_MECHANISMS: PLAIN,SCRAM-SHA-256,SCRAM-SHA-512
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CLIENT_USERS: kafka
+      KAFKA_CLIENT_PASSWORDS: kafka
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+    depends_on:
+      - zookeeper

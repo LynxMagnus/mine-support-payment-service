@@ -1,6 +1,6 @@
 {
   "name": "ffc-demo-payment-service",
-  "version": "4.0.3",
+  "version": "4.1.0",
   "description": "Digital service mock to claim public money in the event property subsides into mine shaft.",
   "main": "index.js",
   "scripts": {
@@ -29,13 +29,15 @@
   ],
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "@azure/ms-rest-nodeauth": "^3.0.5",
+    "@azure/identity": "^1.2.2",
     "@hapi/hapi": "^19.2.0",
     "@hapi/joi": "^17.1.1",
-    "@okta/jwt-verifier": "^1.0.0",
+    "@okta/jwt-verifier": "^2.0.1",
     "applicationinsights": "^1.8.2",
-    "ffc-messaging": "^2.1.0",
+    "ffc-events": "^1.0.0-alpha.33",
+    "ffc-messaging": "^2.1.1",
     "jsonwebtoken": "^8.5.1",
+    "kafkajs": "^1.15.0",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.5.0"

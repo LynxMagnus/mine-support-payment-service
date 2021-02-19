@@ -1,5 +1,5 @@
 ARG PORT=3004
-ARG PARENT_VERSION=1.2.1-node14.15.0
+ARG PARENT_VERSION=1.2.3-node14.15.3
 
 # Development
 FROM defradigital/node-development:${PARENT_VERSION} AS development
@@ -12,6 +12,7 @@ ENV PORT ${PORT}
 EXPOSE ${PORT} ${PORT_DEBUG}
 
 COPY --chown=node:node package*.json ./
+COPY --chown=node:node ./scripts/ ./scripts/
 RUN npm install
 COPY --chown=node:node . .
 CMD [ "npm", "run", "start:watch" ]
