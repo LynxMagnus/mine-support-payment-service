@@ -1,14 +1,11 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.14.1
+version: v1.19.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-AJV-584908:
     - '@okta/jwt-verifier > jwks-rsa > request > har-validator > ajv':
         reason: 'No known exploit, Okta no longer used'
         expires: '2021-03-31T00:00:00.000Z'
-      ffc-messaging > @azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv:
-        reason: None given
-        expires: '2021-04-18T18:54:36.530Z'
     - '@azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv':
         reason: No known exploit
         expires: '2021-03-31T00:00:00.000Z'
@@ -21,6 +18,9 @@ ignore:
     - '@okta/jwt-verifier > jwks-rsa > request > har-validator > ajv':
         reason: 'No known exploit, Okta no longer used'
         expires: '2021-02-13T15:34:14.800Z'
+    - ffc-messaging > @azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv:
+        reason: None given
+        expires: '2021-04-18T18:54:36.530Z'
   SNYK-JS-LODASH-590103:
     - '@okta/jwt-verifier > jwks-rsa > lru-memoizer > lodash':
         reason: None given
@@ -38,34 +38,34 @@ ignore:
     - sequelize > lodash:
         reason: No fix
         expires: '2021-03-19T09:14:34.195Z'
-      '@okta/jwt-verifier > jwks-rsa > lru-memoizer > lodash':
-        reason: None given
-        expires: '2021-04-18T18:54:36.530Z'
     - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > node-cache > lodash':
         reason: 'No fix, Okta not used'
         expires: '2021-03-19T11:19:15.525Z'
-      sequelize > lodash:
-        reason: No fix
-        expires: '2021-04-18T18:54:36.530Z'
     - '@okta/jwt-verifier > @okta/configuration-validation > lodash':
         reason: 'No fix, Okta not used'
         expires: '2021-03-19T11:19:15.525Z'
+    - '@okta/jwt-verifier > jwks-rsa > lru-memoizer > lodash':
+        reason: None given
+        expires: '2021-04-18T18:54:36.530Z'
+    - sequelize > lodash:
+        reason: No fix
+        expires: '2021-04-18T18:54:36.530Z'
   SNYK-JS-LODASH-1040724:
     - sequelize > lodash:
         reason: No fix
         expires: '2021-03-19T09:14:34.195Z'
-      '@okta/jwt-verifier > jwks-rsa > lru-memoizer > lodash':
-        reason: None given
-        expires: '2021-04-18T18:54:36.530Z'
     - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > node-cache > lodash':
         reason: 'No fix, Okta not used'
         expires: '2021-03-19T11:19:15.525Z'
-      sequelize > lodash:
-        reason: No fix
-        expires: '2021-04-18T18:54:36.530Z'
     - '@okta/jwt-verifier > @okta/configuration-validation > lodash':
         reason: 'No fix, Okta not used'
         expires: '2021-03-19T11:19:15.525Z'
+    - '@okta/jwt-verifier > jwks-rsa > lru-memoizer > lodash':
+        reason: None given
+        expires: '2021-04-18T18:54:36.530Z'
+    - sequelize > lodash:
+        reason: No fix
+        expires: '2021-04-18T18:54:36.530Z'
   SNYK-JS-XMLDOM-1084960:
     - ffc-messaging > @azure/ms-rest-nodeauth > adal-node > xmldom:
         reason: None given
