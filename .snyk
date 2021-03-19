@@ -5,10 +5,10 @@ ignore:
   SNYK-JS-AJV-584908:
     - '@okta/jwt-verifier > jwks-rsa > request > har-validator > ajv':
         reason: 'No known exploit, Okta no longer used'
-        expires: '2021-12-31T00:00:00.000Z'
+        expires: '2021-03-31T00:00:00.000Z'
     - '@azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv':
         reason: No known exploit
-        expires: '2021-12-31T00:00:00.000Z'
+        expires: '2021-03-31T00:00:00.000Z'
     - ffc-messaging > @azure/ms-rest-nodeauth > adal-node > request > har-validator > ajv:
         reason: None given
         expires: '2021-02-13T15:34:14.800Z'
@@ -24,7 +24,7 @@ ignore:
         expires: '2021-02-13T15:34:14.800Z'
       '@okta/jwt-verifier > @okta/configuration-validation > lodash':
         reason: No fix
-        expires: '2021-03-19T11:19:15.525Z'
+        expires: '2021-04-19T11:19:15.525Z'
     - sequelize > lodash:
         reason: Not exploitable
         expires: '2021-02-13T15:34:14.800Z'
