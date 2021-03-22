@@ -9,17 +9,7 @@ const hooks = {
   beforeConnect: async (cfg) => {
     if (isProd()) {
       const credential = new DefaultAzureCredential()
-      console.log('### Credential ###')
-      console.log(credential)
-      console.log('### End of Credential ###')
-      let accessToken = await credential.getToken('https://ossrdbms-aad.database.windows.net')
-      console.log('### Access Token ###')
-      console.log(accessToken.token)
-      console.log('### End of Access Token ###')
-      accessToken = await credential.getToken('https://ossrdbms-aad.database.windows.net')
-      console.log('### Access Token ###')
-      console.log(accessToken.token)
-      console.log('### End of Access Token ###')
+      const accessToken = await credential.getToken('https://ossrdbms-aad.database.windows.net')
       cfg.password = accessToken.token
     }
   }
