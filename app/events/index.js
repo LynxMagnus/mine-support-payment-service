@@ -11,8 +11,7 @@ async function sendEvent (claim, type) {
     await sender.sendEvents([event])
     console.info(`published event for claim ${claim.claimId} of type ${type}`)
   } catch (err) {
-    console.error(`Unable to send payment event: ${err}`)
-    throw err
+    console.error('Unable to send payment event')
   } finally {
     await sender.closeConnection()
   }
