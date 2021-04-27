@@ -36,19 +36,15 @@ deployment:
   replicas: 1
   minReadySeconds: 5
   imagePullSecret:
-  runAsNonRoot: true
-  runAsUser: 1000
-  useLinkerd: false
+  useLinkerd: true
 
 container:
   port: 3004
   imagePullPolicy: IfNotPresent
-  requestMemory: 60Mi
-  requestCpu: 40m
+  requestMemory: 5Mi
+  requestCpu: 5m
   limitMemory: 120Mi
   limitCpu: 80m
-  readOnlyRootFilesystem: true
-  allowPrivilegeEscalation: false
   messageQueueHost: amq
   scheduleSubscriptionAddress: schedule
   paymentSubscriptionAddress: payment

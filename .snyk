@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.14.1
+version: v1.19.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-AJV-584908:
@@ -25,9 +25,6 @@ ignore:
     - '@okta/jwt-verifier > jwks-rsa > lru-memoizer > lodash':
         reason: None given
         expires: '2021-04-18T18:54:36.530Z'
-      '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > node-cache > lodash':
-        reason: 'No fix, Okta not used'
-        expires: '2021-04-18T21:19:48.176Z'
     - sequelize > lodash:
         reason: No fix
         expires: '2021-04-18T18:54:36.530Z'
@@ -37,13 +34,13 @@ ignore:
     - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > node-cache > lodash':
         reason: No fix
         expires: '2021-03-19T11:19:15.525Z'
+    - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > node-cache > lodash':
+        reason: 'No fix, Okta not used'
+        expires: '2021-04-18T21:19:48.176Z'
   SNYK-JS-LODASH-1018905:
     - sequelize > lodash:
         reason: No fix
         expires: '2021-03-19T09:14:34.195Z'
-      '@okta/jwt-verifier > @okta/configuration-validation > lodash':
-        reason: 'No fix, Okta not used'
-        expires: '2021-04-18T21:19:48.176Z'
     - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > node-cache > lodash':
         reason: 'No fix, Okta not used'
         expires: '2021-04-18T21:19:48.176Z'
@@ -56,13 +53,13 @@ ignore:
     - sequelize > lodash:
         reason: No fix
         expires: '2021-04-18T18:54:36.530Z'
+    - '@okta/jwt-verifier > @okta/configuration-validation > lodash':
+        reason: 'No fix, Okta not used'
+        expires: '2021-04-18T21:19:48.176Z'
   SNYK-JS-LODASH-1040724:
     - sequelize > lodash:
         reason: No fix
         expires: '2021-03-19T09:14:34.195Z'
-      '@okta/jwt-verifier > @okta/configuration-validation > lodash':
-        reason: 'No fix, Okta not used'
-        expires: '2021-04-18T21:19:48.176Z'
     - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > node-cache > lodash':
         reason: 'No fix, Okta not used'
         expires: '2021-04-18T21:19:48.176Z'
@@ -75,6 +72,9 @@ ignore:
     - sequelize > lodash:
         reason: No fix
         expires: '2021-04-18T18:54:36.530Z'
+    - '@okta/jwt-verifier > @okta/configuration-validation > lodash':
+        reason: 'No fix, Okta not used'
+        expires: '2021-04-18T21:19:48.176Z'
   SNYK-JS-XMLDOM-1084960:
     - ffc-messaging > @azure/ms-rest-nodeauth > adal-node > xmldom:
         reason: None given
@@ -82,4 +82,38 @@ ignore:
     - '@azure/ms-rest-nodeauth > adal-node > xmldom':
         reason: None given
         expires: '2021-04-18T18:54:36.530Z'
+  SNYK-JS-VALIDATOR-1090599:
+    - sequelize > validator:
+        reason: None given
+        expires: '2021-05-27T15:14:45.160Z'
+  SNYK-JS-VALIDATOR-1090600:
+    - sequelize > validator:
+        reason: None given
+        expires: '2021-05-27T15:14:45.160Z'
+  SNYK-JS-VALIDATOR-1090601:
+    - sequelize > validator:
+        reason: None given
+        expires: '2021-05-27T15:14:45.160Z'
+  SNYK-JS-VALIDATOR-1090602:
+    - sequelize > validator:
+        reason: None given
+        expires: '2021-05-27T15:14:45.160Z'
+  SNYK-JS-GLOBPARENT-1016905:
+    - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > tsd > globby > fast-glob > glob-parent':
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
+  SNYK-JS-HOSTEDGITINFO-1088355:
+    - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > tsd > meow > normalize-package-data > hosted-git-info':
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
+    - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > tsd > read-pkg-up > read-pkg > normalize-package-data > hosted-git-info':
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
+    - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > tsd > meow > read-pkg-up > read-pkg > normalize-package-data > hosted-git-info':
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
+  SNYK-JS-UNDERSCORE-1080984:
+    - pg-hstore > underscore:
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
 patch: {}
