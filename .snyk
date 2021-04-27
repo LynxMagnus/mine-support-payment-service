@@ -98,4 +98,22 @@ ignore:
     - sequelize > validator:
         reason: None given
         expires: '2021-05-27T15:14:45.160Z'
+  SNYK-JS-GLOBPARENT-1016905:
+    - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > tsd > globby > fast-glob > glob-parent':
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
+  SNYK-JS-HOSTEDGITINFO-1088355:
+    - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > tsd > meow > normalize-package-data > hosted-git-info':
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
+    - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > tsd > read-pkg-up > read-pkg > normalize-package-data > hosted-git-info':
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
+    - '@okta/jwt-verifier > @okta/configuration-validation > @okta/okta-auth-js > tsd > meow > read-pkg-up > read-pkg > normalize-package-data > hosted-git-info':
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
+  SNYK-JS-UNDERSCORE-1080984:
+    - pg-hstore > underscore:
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
 patch: {}
