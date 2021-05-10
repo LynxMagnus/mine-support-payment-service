@@ -117,13 +117,16 @@ ignore:
         reason: None given
         expires: '2021-05-27T15:22:39.676Z'
   SNYK-JS-PATHPARSE-1077067:
+    - '@okta/jwt-verifier › @okta/configuration-validation › @okta/okta-auth-js › karma-coverage › istanbul-lib-instrument › @babel/core › resolve › path-parse':
+        reason: None given
+        expires: '2021-05-27T15:22:39.676Z'
     - '@okta/jwt-verifier › @okta/configuration-validation › @okta/okta-auth-js › tsd › meow › normalize-package-data › resolve › path-parse':
         reason: None given
         expires: '2021-05-27T15:22:39.676Z'
-    - '@okta/jwt-verifier › @okta/configuration-validation › @okta/okta-auth-js › tsd › read-pkg-up › read-pkg › normalize-package-data › resolve › path-parse':
+    - '@okta/jwt-verifier@2.0.1 › @okta/configuration-validation › @okta/okta-auth-js › tsd › read-pkg-up › read-pkg › normalize-package-data › resolve › path-parse':
         reason: None given
         expires: '2021-05-27T15:22:39.676Z'
-    - '@okta/jwt-verifier › @okta/configuration-validation › @okta/okta-auth-js › tsd › meow › read-pkg-up › read-pkg › normalize-package-data › resolve › path-parse':
+    - '@okta/jwt-verifier@2.0.1 › @okta/configuration-validation › @okta/okta-auth-js › tsd › meow › read-pkg-up › read-pkg › normalize-package-data › resolve › path-parse':
         reason: None given
-        expires: '2021-05-27T15:22:39.676Z'
+        expires: '2021-05-27T15:22:39.676Z'   
 patch: {}
