@@ -116,4 +116,8 @@ ignore:
     - pg-hstore > underscore:
         reason: None given
         expires: '2021-05-27T15:22:39.676Z'
+  SNYK-JS-PATHPARSE-1077067:
+    - '*':
+        reason: None Given
+        expires: 2021-05-27T00:00:00.000Z  
 patch: {}
