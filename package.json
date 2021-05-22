@@ -30,9 +30,8 @@
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@azure/identity": "^1.2.2",
-    "@hapi/hapi": "^19.2.0",
-    "@hapi/joi": "^17.1.1",
-    "@okta/jwt-verifier": "^2.0.1",
+    "@hapi/hapi": "^20.1.0",
+    "joi": "^17.4.0",
     "applicationinsights": "^1.8.2",
     "ffc-events": "^1.0.0-alpha.33",
     "ffc-messaging": "^2.1.1",
@@ -52,7 +51,6 @@
     "jest": "^26.6.3",
     "jest-junit": "^11.1.0",
     "nodemon": "^2.0.4",
-    "sequelize-mock": "^0.10.2",
     "standard": "^14.3.4"
   },
   "standard": {

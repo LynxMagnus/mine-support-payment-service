@@ -1,24 +1,19 @@
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 const mqConfig = require('./mq-config')
 const eventConfig = require('./event-config')
 const dbConfig = require('./database-config')
 const { development, production, test } = require('./constants').environments
 
-const getOktaConfig = require('./get-okta-config')
-const getB2cConfig = require('./get-b2c-config')
-
 // Define config schema
 const schema = Joi.object({
   port: Joi.number().default(3004),
-  env: Joi.string().valid(development, test, production).default(development),
-  oidcProvider: Joi.string().default('dev').lowercase()
+  env: Joi.string().valid(development, test, production).default(development)
 })
 
 // Build config
 const config = {
   port: process.env.PORT,
-  env: process.env.NODE_ENV,
-  oidcProvider: process.env.OIDC_PROVIDER
+  env: process.env.NODE_ENV
 }
 
 // Validate config
@@ -43,10 +38,5 @@ value.paymentSubscription = mqConfig.paymentSubscription
 
 value.dbConfig = dbConfig
 value.eventConfig = eventConfig
-if (value.oidcProvider === 'okta') {
-  value.okta = getOktaConfig()
-}
-if (value.oidcProvider === 'b2c') {
-  value.b2c = getB2cConfig()
-}
+
 module.exports = value
