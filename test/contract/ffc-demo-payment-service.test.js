@@ -35,7 +35,6 @@ describe('Pact Verification', () => {
     const opts = {
       providerBaseUrl: `http://localhost:${config.port}`,
       provider: 'ffc-demo-payment-service',
-      customProviderHeaders: ['Authorization: Bearer token'],
       consumerVersionTags: ['main', 'dev', 'test', 'preprod', 'prod'],
       pactBrokerUrl: process.env.PACT_BROKER_URL,
       pactBrokerUsername: process.env.PACT_BROKER_USERNAME,
