@@ -22,10 +22,6 @@ describe('Pact Verification', () => {
 
   beforeAll(async () => {
     await createTestData()
-    const oktaJwtVerifier = require('../../app/plugins/auth/okta-jwt-verifier')
-    jest.mock('../../app/plugins/auth/okta-jwt-verifier')
-    oktaJwtVerifier.verifyAccessToken.mockImplementation(() => Promise.resolve({ claims: { roles: ['payment-admin'] } }))
-
     jest.mock('../../app/messaging')
     createServer = require('../../app/server')
   })
@@ -39,7 +35,6 @@ describe('Pact Verification', () => {
     const opts = {
       providerBaseUrl: `http://localhost:${config.port}`,
       provider: 'ffc-demo-payment-service',
-      customProviderHeaders: ['Authorization: Bearer token'],
       consumerVersionTags: ['main', 'dev', 'test', 'preprod', 'prod'],
       pactBrokerUrl: process.env.PACT_BROKER_URL,
       pactBrokerUsername: process.env.PACT_BROKER_USERNAME,

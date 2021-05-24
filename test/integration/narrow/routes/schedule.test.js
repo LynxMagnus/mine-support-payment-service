@@ -7,22 +7,11 @@ function mockScheduleService () {
   scheduleService.getAll.mockImplementation(() => [])
 }
 
-function mockOktaJwtVerifier () {
-  const oktaJwtVerifier = require('../../../../app/plugins/auth/okta-jwt-verifier')
-  jest.mock('../../../../app/plugins/auth/okta-jwt-verifier')
-  oktaJwtVerifier.verifyAccessToken.mockImplementation(
-    () => {
-      return Promise.resolve({ claims: { roles: ['payment-admin'] } })
-    }
-  )
-}
-
 describe('API', () => {
   let server
 
   beforeAll(() => {
     mockScheduleService()
-    mockOktaJwtVerifier()
   })
 
   beforeEach(async () => {
@@ -30,28 +19,13 @@ describe('API', () => {
     await server.initialize()
   })
 
-  test('GET /schedule route returns 200 for valid token', async () => {
+  test('GET /schedule route returns 200', async () => {
     const options = {
       method: 'GET',
-      url: '/schedule',
-      headers: {
-        authorization: 'Bearer fakevalidtoken'
-      }
+      url: '/schedule'
     }
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
-  })
-
-  test('GET /schedule route returns 401 error for missing token', async () => {
-    const options = {
-      method: 'GET',
-      url: '/schedule',
-      headers: {
-        authorization: undefined
-      }
-    }
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(401)
   })
 
   afterEach(async () => {
