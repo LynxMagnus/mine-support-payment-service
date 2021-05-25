@@ -5,16 +5,6 @@ workstream: ffc-demo
 image: ffc-demo-payment-service
 
 labels: {}
-oidcProvider: dev
-okta:
-  domain:
-  clientId: dummy
-  authorizationServerId: dummy
-  clientSecret: dummy
-b2c:
-  url:
-  clientId: dummy
-  clientSecret: dummy
 
 appInsights:
   key:

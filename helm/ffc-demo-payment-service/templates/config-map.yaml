@@ -19,15 +19,8 @@ data:
   SCHEDULE_TOPIC_ADDRESS: {{ quote .Values.container.scheduleTopicAddress }}
   PAYMENT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.paymentSubscriptionAddress }}
   PAYMENT_TOPIC_ADDRESS: {{ quote .Values.container.paymentTopicAddress }}
-  OIDC_PROVIDER: {{ quote .Values.oidcProvider }}
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
   PORT: {{ quote .Values.container.port }}
-  {{- if .Values.okta.domain }}
-  OKTA_DOMAIN: {{ quote .Values.okta.domain }}
-  {{- end }}
-  {{- if .Values.b2c.url }}
-  B2C_URL: {{ quote .Values.b2c.url }}
-  {{- end }}
   {{- if .Values.pr }}
   EVENT_ROUTING_KEY: {{ .Values.name }}-{{ .Values.pr }}
   {{- end }}
